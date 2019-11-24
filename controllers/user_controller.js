@@ -1,21 +1,26 @@
-const User = require('../models/users');
+const Usermodel  = require('../models/users');
+const Sequelize = require("sequelize");
+const sequelize = require("../config/databaseConfig");
+const User = new Usermodel(sequelize,Sequelize);
 
-// register a user
-exports.signup = async (req, res) => {
+
+
+const signup = async (req, res, next) => {
 	try {
 		console.log(req.body);
 
-		let user = await User.findOne({ email: req.body.email });
+		const checkUser = await Usermodel.findOne({ email: req.body.email });
 
-		if (user)
-			return {
-				error: 'Account already exists',
-				statusCode: 409
-			};
+		if (checkUser){
+			return res.status(404).json({
+				status: 'Failure',
+				message:'This account already exists'
+			})
+		}
+			
 
-		// Save to postgres database
-
-		User.create({
+		var user = await Usermodel.create({
+			
 			first_name: req.body.first_name,
 			last_name: req.body.last_name,
 			email: req.body.email,
@@ -26,22 +31,23 @@ exports.signup = async (req, res) => {
 			address: req.body.address,
 			rating: req.body.rating
 		})
-			.then((userData) => {
-				return {
-					message: 'sign up successful',
-					userData,
-					statusCode: 201
-				};
+		if(!user){
+			return res.status(404).json({
+				status: 'Failure',
+				message:'Something went wrong, Your account cannot be created !'
 			})
-			.catch((err) => {
-				return {
-					message: 'error signing up',
-					statusCode: 400
-				};
-			});
+		}
+		return res.status(200).json({
+			user,
+			status:'success',
+			message: 'Your account has been created successfully !'
+		})	
 	} catch (error) {
-		console.log(error);
-
-		return { statusCode: 404 };
+		console.log(error)
+		return next(error)
 	}
 };
+
+module.exports = {
+	signup
+}
