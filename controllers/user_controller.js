@@ -44,31 +44,6 @@ const signup = async (req, res, next) => {
 	}
 };
 
-//view user info by id
-const viewInfo = async (req, res, next) => {
-	try {
-		var user = User.findById(req.params.userid);
-		if (!user) {
-			return res.status(404).json({
-				message: 'error viewing info',
-				data: user
-			});
-		} else {
-			return res.status(200).json({
-				message: 'info view success',
-				data: user
-			});
-		}
-	} catch (error) {
-		console.log(error);
-
-		return res.status(400).json({
-			message: 'error'
-		});
-	}
-};
-
 module.exports = {
-	signup,
-	viewInfo
+	signup
 };
