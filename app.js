@@ -14,12 +14,12 @@ Sequelize.authenticate()
 		console.log(error);
 	});
 
-// const eraseDatabaseOnSync = false;
+const eraseDatabaseOnSync = true;
 
-// Sequelize.sync({ force: eraseDatabaseOnSync })
-// 	.then(() => console.log('Synced models with database .'))
-// 	.then(() => {})
-// 	.catch((error) => console.log('Could not sync models with database .', error));
+Sequelize.sync({ force: eraseDatabaseOnSync })
+	.then(() => console.log('Synced models with database .'))
+	.then(() => {})
+	.catch((error) => console.log('Could not sync models with database .', error));
 
 app.use(express.json());
 
