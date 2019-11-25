@@ -171,7 +171,6 @@ const getInfo = async (req, res, next) => {
 
 const editInfo = async (req, res, next) => {
   try {
-    console.log("llllllllllllllllllllllllllllllllll");
     const user = await UserModel.findByPk(req.params.id);
 
     console.log(user);
@@ -234,7 +233,10 @@ const editInfo = async (req, res, next) => {
         for (let j = 0; j <= req.body.mobile_number.length; j++) {
           if (count2 === req.body.mobile_number.length && i < mobile.length) {
             const deleteMobNo = await MobileModel.destroy({
-              where: { mobile_number: mobile[i].mobile_number }
+              where: {
+                mobile_number: mobile[i].mobile_number,
+                user_id: user.id
+              }
             });
 
             count2 = -1;
