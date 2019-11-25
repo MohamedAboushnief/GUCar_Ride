@@ -3,9 +3,9 @@ const sequelize = require('../config/databaseConfig');
 const { Model } = Sequelize;
 
 const user = require('./users');
-class Reservation extends Model {}
+class Trip extends Model {}
 
-Reservation.init(
+Trip.init(
 	{
 		id: {
 			type: Sequelize.INTEGER,
@@ -31,5 +31,5 @@ Reservation.init(
 	}
 );
 
-Reservation.belongsTo(user, { foreignKey: 'user_id', targetKey: 'id' });
-module.exports = Reservation;
+Trip.belongsTo(user, { foreignKey: 'user_id', targetKey: 'id' });
+module.exports = Trip;
