@@ -144,18 +144,20 @@ const getInfo = async (req, res, next) => {
 	try {
 		const user = await UserModel.findByPk(req.params.id);
 		const mobile = await MobileModel.findOne({ user_id: req.params.id });
-		if (user) {
-			return res.status(200).json({
-				user,
-				mobile,
-				status: 'success',
-				message: 'Info retrieved successfully !'
-			});
-		} else {
+		const car = await CarModel.findOne({ user_id: req.params.id });
+		if (!user) {
 			console.log(user.params);
 			return res.status(400).json({
 				status: 'failure',
 				message: 'Something went wrong !'
+			});
+		} else {
+			return res.status(200).json({
+				user,
+				mobile,
+				car,
+				status: 'success',
+				message: 'Info retrieved successfully !'
 			});
 		}
 	} catch (error) {
