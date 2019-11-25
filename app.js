@@ -14,7 +14,7 @@ Sequelize.authenticate()
 		console.log(error);
 	});
 
-const eraseDatabaseOnSync = true;
+const eraseDatabaseOnSync = false;
 
 Sequelize.sync({ force: eraseDatabaseOnSync })
 	.then(() => console.log('Synced models with database .'))

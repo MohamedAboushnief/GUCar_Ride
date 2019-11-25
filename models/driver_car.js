@@ -49,3 +49,5 @@ Car.init({
 		}
 	}
 });
+
+module.exports = Car;
