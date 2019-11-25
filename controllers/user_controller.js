@@ -15,7 +15,9 @@ const signup = async (req, res, next) => {
   try {
     console.log(req.body);
 
-    const checkUser = await UserModel.findOne({ email: req.body.email });
+    const checkUser = await UserModel.findOne({
+      where: { email: req.body.email }
+    });
 
     if (checkUser) {
       return res.status(404).json({
