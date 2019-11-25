@@ -6,9 +6,7 @@ const jwt = require("jsonwebtoken");
 var passport = require("passport");
 const MobileModel = require("../models/mobile_numbers");
 const Mobile = new MobileModel(sequelize, Sequelize);
-
 const bcrypt = require("bcrypt");
-
 const { checkEncryptedEqualVal } = require("../helpers/encryption_helper");
 
 const signup = async (req, res, next) => {
@@ -74,7 +72,7 @@ const login = async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   try {
-    const user = await UserModel.findOne({ email: email });
+    const user = await UserModel.findOne({ where: { email } });
     if (!user) {
       return res.status(405).json({
         status: "Failure",
@@ -82,8 +80,8 @@ const login = async (req, res, next) => {
       });
     }
 
-    console.log(password + "   " + user.password);
-    const match = checkEncryptedEqualVal(password, user.password);
+    
+    const match = await checkEncryptedEqualVal(password, user.password);
 
     if (!match) {
       return res.status(422).json({
@@ -94,15 +92,16 @@ const login = async (req, res, next) => {
 
     const jwt_data = { user_id: user.id, email: user.email };
 
-    const token = jwt.sign(jwt_data, sequelize.secretOrKey, { expiresIn: "1h" });
-
+    const token = jwt.sign(jwt_data, sequelize.secretOrKey, {
+      expiresIn: "1h"
+    });
 
     if (match) {
       return res.status(200).json({
         id: user.id,
         email: user.email,
-		token: `Bearer ${token}`,
-		message: 'You are logged in'
+        token: `Bearer ${token}`,
+        message: "logged in successfully"
       });
     } else {
       return res.status(422).json({
