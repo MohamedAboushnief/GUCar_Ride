@@ -201,7 +201,7 @@ const editInfo = async (req, res, next) => {
     }
 
     if (req.body.mobile_number) {
-      const mobile = await MobileModel.findOne({ user_id: req.params.id });
+      const mobile = await MobileModel.findAll({ user_id: req.params.id });
 
       var count = 0;
       for (let i = 0; i <= req.body.mobile_number.length; i++) {
