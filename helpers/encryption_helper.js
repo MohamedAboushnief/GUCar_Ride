@@ -1,4 +1,4 @@
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcrypt')
 async function checkEncryptedEqualVal (nonEncryptedValue, encryptedValue) {
   return bcrypt.compare(nonEncryptedValue, encryptedValue)
 }
