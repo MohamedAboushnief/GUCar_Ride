@@ -5,6 +5,6 @@ const User = require('../models/users');
 
 // Create a new user
 router.post('/sign_up', users.signup);
-
+router.post('/login', users.login)
 
 module.exports = router;
