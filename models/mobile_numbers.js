@@ -27,5 +27,11 @@ Mobile_number.init(
   }
 );
 
-Mobile_number.belongsTo(user, { foreignKey: "user_id", targetKey: "id" });
+Mobile_number.belongsTo(user, {
+  foreignKey: "user_id",
+  foreignKeyConstraint: true,
+  targetKey: "id",
+  onDelete: "cascade",
+  hooks: true
+});
 module.exports = Mobile_number;
