@@ -173,7 +173,7 @@ const getInfo = async (req, res, next) => {
 
 const editInfo = async (req, res, next) => {
 	try {
-		const user = await UserModel.findByPk(req.params.id);
+		const user = await UserModel.findByPk(req.user.id);
 
 		console.log(user);
 		if (!user || user == null) {
@@ -204,7 +204,7 @@ const editInfo = async (req, res, next) => {
 		}
 
 		if (req.body.mobile_number) {
-			const mobile = await MobileModel.findOne({ user_id: req.params.id });
+			const mobile = await MobileModel.findAll({ user_id: req.user.id });
 
 			var count = 0;
 			for (let i = 0; i <= req.body.mobile_number.length; i++) {
@@ -229,7 +229,10 @@ const editInfo = async (req, res, next) => {
 				for (let j = 0; j <= req.body.mobile_number.length; j++) {
 					if (count2 === req.body.mobile_number.length && i < mobile.length) {
 						const deleteMobNo = await MobileModel.destroy({
-							where: { mobile_number: mobile[i].mobile_number }
+							where: {
+								mobile_number: mobile[i].mobile_number,
+								user_id: user.id
+							}
 						});
 
 						count2 = -1;
@@ -243,7 +246,7 @@ const editInfo = async (req, res, next) => {
 			}
 		}
 
-		const updatedOne = await UserModel.findByPk(req.params.id);
+		const updatedOne = await UserModel.findByPk(req.user.id);
 
 		return res.status(200).json({
 			status: 'success',
