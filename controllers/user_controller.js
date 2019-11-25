@@ -1,9 +1,11 @@
 const UserModel = require('../models/users');
 const MobileModel = require('../models/mobile_numbers');
+const CarModel = require('../models/driver_car');
 const Sequelize = require('sequelize');
 const sequelize = require('../config/databaseConfig');
 const User = new UserModel(sequelize, Sequelize);
 const Mobile = new MobileModel(sequelize, Sequelize);
+const Car = new CarModel(sequelize, Sequelize);
 
 const bcrypt = require('bcrypt');
 
@@ -19,6 +21,14 @@ const signup = async (req, res, next) => {
 				message: 'This account already exists'
 			});
 		}
+
+		if (req.body.mobile_number == null) {
+			return res.status(404).json({
+				status: 'Failure',
+				message: 'Something went wrong!'
+			});
+		}
+
 		const salt = await bcrypt.genSalt(10);
 		encryptedPassword = await bcrypt.hash(req.body.password, salt);
 
@@ -39,7 +49,13 @@ const signup = async (req, res, next) => {
 			mobile_number: req.body.mobile_number
 		});
 
-		if (!user && !mobile) {
+		if (!mobile) {
+			return res.status(404).json({
+				status: 'Failure',
+				message: 'Something went wrong, Your account cannot be created !'
+			});
+		}
+		if (!user) {
 			return res.status(404).json({
 				status: 'Failure',
 				message: 'Something went wrong, Your account cannot be created !'
