@@ -7,5 +7,7 @@ const User = require('../models/users');
 router.get('/userInfo/:id', users.getInfo);
 router.post('/sign_up', users.signup);
 router.post('/login', users.login);
+router.put('/edit_info/:id', users.editInfo);
+
 
 module.exports = router;
