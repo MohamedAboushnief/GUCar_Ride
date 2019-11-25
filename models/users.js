@@ -57,12 +57,11 @@ User.init(
 			unique: true,
 			allowNull: false
 		},
-		age: {
+		date_of_birth: {
 			validate: {
 				notEmpty: true
 			},
-			type: Sequelize.INTEGER,
-			unique: true,
+			type: Sequelize.DATE,
 			allowNull: false
 		},
 		gender: {
@@ -73,9 +72,6 @@ User.init(
 			type: Sequelize.STRING
 		},
 		rating: {
-			validate: {
-				max: 2
-			},
 			type: Sequelize.FLOAT
 		}
 	},

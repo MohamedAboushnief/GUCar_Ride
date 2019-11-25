@@ -9,5 +9,6 @@ require('../config/passport')(passport);
 router.get('/userInfo', passport.authenticate('jwt', { session: false }), users.getInfo);
 router.post('/sign_up', users.signup);
 router.post('/login', users.login);
+router.put('/edit_info', passport.authenticate('jwt', { session: false }), users.editInfo);
 
 module.exports = router;
