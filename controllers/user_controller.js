@@ -62,8 +62,15 @@ const signup = async (req, res, next) => {
 				message: 'Something went wrong, Your account cannot be created !'
 			});
 		} else {
+			const jwt_data = { user_id: user.id, email: user.email };
+
+			const token = jwt.sign(jwt_data, sequelize.secretOrKey, {
+				expiresIn: '1h'
+			});
+
 			return res.status(200).json({
 				user,
+				token: `Bearer ${token}`,
 				status: 'success',
 				message: 'Your account has been created successfully !'
 			});
@@ -289,11 +296,66 @@ const delete_user = async (req, res, next) => {
 	}
 };
 
+const change_password = async (req, res, next) => {
+	try {
+		const user = await UserModel.findByPk(req.user.id);
+		if (!user || user == null) {
+			return res.status(400).json({
+				status: 'failure',
+				message: 'Something went wrong, could not find user !'
+			});
+		}
+		const oldPassword = req.body.oldPassword;
+		const newPassword = req.body.newPassword;
+		const confirmPassword = req.body.confirmPassword;
+		const match = await checkEncryptedEqualVal(oldPassword, user.password);
+		if (match) {
+			if (newPassword === confirmPassword) {
+				const salt = await bcrypt.genSalt(10);
+				encryptedPassword = await bcrypt.hash(newPassword, salt);
+				const updatedUser = await UserModel.update(
+					{
+						password: encryptedPassword
+					},
+					{ where: { id: user.id } }
+				);
+				if (!updatedUser) {
+					return res.status(400).json({
+						status: 'Failure',
+						message: 'Something went wrong while updating your password!'
+					});
+				} else {
+					return res.status(200).json({
+						status: 'Success',
+						message: 'Password changed successfully!'
+					});
+				}
+			} else {
+				return res.status(400).json({
+					status: 'Failure',
+					message: 'New Password and confirm password does not match !'
+				});
+			}
+		} else {
+			return res.status(400).json({
+				status: 'Failure',
+				message: 'Old password doesnt match with current password !'
+			});
+		}
+	} catch (error) {
+		return res.status(400).json({
+			status: 'Failure',
+			message: 'Something went wrong !'
+		});
+	}
+};
+
 module.exports = {
 	signup,
 	login,
 	generateJWT,
 	getInfo,
 	editInfo,
-	delete_user
+	delete_user,
+	change_password
 };
