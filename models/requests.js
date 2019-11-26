@@ -24,7 +24,8 @@ Requests.belongsTo(user, {
   foreignKeyConstraint: true,
   targetKey: "id",
   onDelete: "cascade",
-  hooks: true
+  hooks: true,
+  unique: true
 });
 
 Requests.belongsTo(user, {
