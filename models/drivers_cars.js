@@ -26,7 +26,7 @@ Car.init(
 			type: Sequelize.STRING,
 			unique: true,
 			validate: {
-				min: 3,
+				min: 2,
 				max: 10,
 				notEmpty: true
 			}
@@ -45,5 +45,5 @@ Car.init(
 		timestamps: false
 	}
 );
-Car.belongsTo(user, { foreignKey: 'user_id', targetKey: 'id' });
+Car.belongsTo(user, { foreignKey: 'user_id', targetKey: 'id', unique: true });
 module.exports = Car;
