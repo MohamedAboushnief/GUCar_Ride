@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const user = require("./routes/user");
+const request = require("./routes/request");
+
 var passport = require("passport");
 const port = 3000;
 
@@ -24,5 +26,6 @@ Sequelize.sync({ force: eraseDatabaseOnSync })
 app.use(express.json());
 app.use(passport.initialize());
 app.use("/routes/users", user);
+app.use("/routes/request", request);
 
 app.listen(port, () => console.log(`app listening on port ${port}!`));
