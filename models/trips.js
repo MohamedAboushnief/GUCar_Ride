@@ -3,22 +3,26 @@ const sequelize = require('../config/databaseConfig');
 const { Model } = Sequelize;
 
 const user = require('./users');
-class Mobile_number extends Model {}
+class Trip extends Model {}
 
-Mobile_number.init(
+Trip.init(
 	{
 		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
 			autoIncrement: true
 		},
-		mobile_number: {
-			type: Sequelize.STRING,
-			unique: true,
+		pricing: {
+			type: Sequelize.FLOAT,
 			validate: {
+				max: 100,
 				notEmpty: true
-			},
-			allowNull: false
+			}
+		},
+		guc_slot: {
+			type: Sequelize.ENUM,
+			values: [ 'First', 'Second', 'Third', 'Fourth', 'Fifth' ],
+			notEmpty: true
 		}
 	},
 	{
@@ -27,11 +31,5 @@ Mobile_number.init(
 	}
 );
 
-Mobile_number.belongsTo(user, {
-	foreignKey: 'user_id',
-	foreignKeyConstraint: true,
-	targetKey: 'id',
-	onDelete: 'cascade',
-	hooks: true
-});
-module.exports = Mobile_number;
+Trip.belongsTo(user, { foreignKey: 'user_id', targetKey: 'id' });
+module.exports = Trip;
