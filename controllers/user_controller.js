@@ -56,12 +56,6 @@ const signup = async (req, res, next) => {
 			});
 		}
 
-		// if (!mobile) {
-		//   return res.status(404).json({
-		//     status: "Failure",
-		//     message: "Something went wrong, Your account cannot be created !"
-		//   });
-		// }
 		if (!user) {
 			return res.status(404).json({
 				status: 'Failure',
@@ -261,10 +255,45 @@ const editInfo = async (req, res, next) => {
 	}
 };
 
+const delete_user = async (req, res, next) => {
+	try {
+		const user = await UserModel.findByPk(req.user.id);
+
+		if (!user) {
+			return res.status(400).json({
+				status: 'failure',
+				message: 'Could not find user !'
+			});
+		}
+
+		const deletedUser = await UserModel.destroy({
+			where: {
+				id: user.id
+			}
+		});
+		if (!deletedUser) {
+			return res.status(400).json({
+				status: 'failure',
+				message: 'Cannot delete user !'
+			});
+		}
+		return res.status(200).json({
+			status: 'success',
+			message: 'User account deleted successfully !'
+		});
+	} catch (error) {
+		return res.status(400).json({
+			status: 'failure',
+			message: 'Something went wrong !'
+		});
+	}
+};
+
 module.exports = {
 	signup,
 	login,
 	generateJWT,
 	getInfo,
-	editInfo
+	editInfo,
+	delete_user
 };

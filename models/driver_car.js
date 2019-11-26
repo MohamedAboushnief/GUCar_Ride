@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/databaseConfig');
 const { Model } = Sequelize;
+const user = require('./users');
 
 class Car extends Model {}
 
