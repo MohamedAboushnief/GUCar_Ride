@@ -68,7 +68,7 @@ const create_trip = async (req, res, next) => {
 	try {
 		const checkTrip = await TripModel.findOne({
 			where: {
-				user_id: user.id
+				user_id: req.user.id
 			}
 		});
 
@@ -97,10 +97,7 @@ const create_trip = async (req, res, next) => {
 			});
 		}
 	} catch (error) {
-		return res.status(400).json({
-			status: 'Failure',
-			message: 'Something went wrong!'
-		});
+		next(error);
 	}
 };
 
