@@ -1,6 +1,6 @@
 const UserModel = require('../models/users');
 const MobileModel = require('../models/mobile_numbers');
-const CarModel = require('../models/driver_car');
+const CarModel = require('../models/drivers_cars');
 const TripModel = require('../models/trips');
 const Sequelize = require('sequelize');
 const sequelize = require('../config/keys_development');
