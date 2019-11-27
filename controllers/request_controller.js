@@ -4,6 +4,7 @@ const CarDriverModel = require('../models/drivers_cars');
 const Sequelize = require('sequelize');
 const sequelize = require('../config/keys_development');
 const TripModel = require('../models/trips');
+const pass_req = require('../models/passengers_requests');
 const User = new UserModel(sequelize, Sequelize);
 var passport = require('passport');
 
@@ -40,13 +41,6 @@ const add_request = async (req, res, next) => {
 					message: 'Could not create request !'
 				});
 			}
-
-			const status = await TripModel.update(
-				{
-					status: 'pending'
-				},
-				{ where: { user_id: req.params.driver_id } }
-			);
 
 			return res.status(200).json({
 				status: 'success',
@@ -105,7 +99,8 @@ const delete_request = async (req, res, next) => {
 	try {
 		const deletedRequest = await RequestModel.destroy({
 			where: {
-				passenger_id: req.params.passenger_id
+				passenger_id: req.params.passenger_id,
+				driver_id: req.user.id
 			}
 		});
 		if (!deletedRequest) {
@@ -114,9 +109,16 @@ const delete_request = async (req, res, next) => {
 				message: 'Cannot delete request !'
 			});
 		}
+		const status = await pass_req.update(
+			{
+				status: 'rejected'
+			},
+			{ where: { passenger_id: req.params.passenger_id } }
+		);
 		return res.status(200).json({
 			status: 'success',
-			message: 'Request deleted successfully !'
+			message: 'Request deleted successfully !',
+			requestStatus: 'rejected'
 		});
 	} catch (error) {
 		next(error);
@@ -127,8 +129,50 @@ const delete_request = async (req, res, next) => {
 	}
 };
 
+const accept_request = async (req, res, next) => {
+	try {
+		const checkDriver = await RequestModel.findOne({
+			where: {
+				passenger_id: req.params.passenger_id,
+				driver_id: req.user.id
+			}
+		});
+		if (!checkDriver) {
+			return res.status(400).json({
+				status: 'failure',
+				message: 'Something went wrong !'
+			});
+		}
+		const request = await pass_req.findOne({
+			where: {
+				passenger_id: req.params.passenger_id
+			}
+		});
+		if (!request) {
+			return res.status(400).json({
+				status: 'failure',
+				message: 'Cannot accept request !'
+			});
+		}
+		const status = await pass_req.update(
+			{
+				status: 'on his way'
+			},
+			{ where: { passenger_id: req.params.passenger_id } }
+		);
+		return res.status(200).json({
+			status: 'success',
+			message: 'Request accepted successfully !',
+			requestStatus: 'accepted'
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
 module.exports = {
 	add_request,
 	get_requests,
-	delete_request
+	delete_request,
+	accept_request
 };
