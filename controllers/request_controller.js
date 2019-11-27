@@ -3,6 +3,7 @@ const RequestModel = require('../models/requests');
 const CarDriverModel = require('../models/drivers_cars');
 const Sequelize = require('sequelize');
 const sequelize = require('../config/keys_development');
+const TripModel = require('../models/trips');
 const User = new UserModel(sequelize, Sequelize);
 var passport = require('passport');
 
@@ -39,9 +40,18 @@ const add_request = async (req, res, next) => {
 					message: 'Could not create request !'
 				});
 			}
+
+			const status = await TripModel.update(
+				{
+					status: 'pending'
+				},
+				{ where: { user_id: req.params.driver_id } }
+			);
+
 			return res.status(200).json({
 				status: 'success',
-				message: 'Request sent successfully !'
+				message: 'Request sent successfully !',
+				tripStatus: 'pending'
 			});
 		}
 	} catch (error) {
@@ -93,18 +103,9 @@ const get_requests = async (req, res, next) => {
 
 const delete_request = async (req, res, next) => {
 	try {
-		const request = await RequestModel.findOne({ where: { passenger_id: req.user.id } });
-
-		if (!request) {
-			return res.status(400).json({
-				status: 'failure',
-				message: 'No requests !'
-			});
-		}
-
 		const deletedRequest = await RequestModel.destroy({
 			where: {
-				passenger_id: req.user.id
+				passenger_id: req.params.passenger_id
 			}
 		});
 		if (!deletedRequest) {
