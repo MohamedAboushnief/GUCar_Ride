@@ -15,21 +15,12 @@ Car.init(
 
 		car_model: {
 			type: Sequelize.STRING,
-			validate: {
-				min: 3,
-				max: 10,
-				notEmpty: true
-			},
+
 			allowNull: false
 		},
 		car_plate_number: {
 			type: Sequelize.STRING,
-			unique: true,
-			validate: {
-				min: 2,
-				max: 10,
-				notEmpty: true
-			}
+			unique: true
 		},
 		car_color: {
 			type: Sequelize.STRING,

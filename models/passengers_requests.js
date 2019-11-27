@@ -14,7 +14,7 @@ passenger_requests.init(
 		},
 		status: {
 			type: Sequelize.ENUM,
-			values: [ 'rejected', 'pending', 'on his way' ],
+			values: [ 'rejected', 'pending', 'on his way', 'arrived to pickup location' ],
 			allowNull: false,
 			notEmpty: true
 		}
@@ -31,7 +31,18 @@ passenger_requests.belongsTo(user, {
 	targetKey: 'id',
 	onDelete: 'cascade',
 	hooks: true,
-	unique: true
+	unique: true,
+	allowNull: false
+});
+
+passenger_requests.belongsTo(user, {
+	foreignKey: 'driver_id',
+	foreignKeyConstraint: true,
+	targetKey: 'id',
+	onDelete: 'cascade',
+	hooks: true,
+	unique: true,
+	allowNull: false
 });
 
 module.exports = passenger_requests;
