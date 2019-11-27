@@ -129,6 +129,29 @@ const delete_request = async (req, res, next) => {
 	}
 };
 
+const delete_all_requests = async (req, res, next) => {
+	try {
+		const deletedRequest = await RequestModel.destroy({
+			where: {
+				driver_id: req.user.id
+			}
+		});
+		if (!deletedRequest) {
+			return res.status(400).json({
+				status: 'failure',
+				message: 'Cannot delete all requests !'
+			});
+		}
+
+		return res.status(200).json({
+			status: 'success',
+			message: 'Requests deleted successfully !'
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
 const accept_request = async (req, res, next) => {
 	try {
 		const checkDriver = await RequestModel.findOne({
@@ -170,9 +193,52 @@ const accept_request = async (req, res, next) => {
 	}
 };
 
+const arrived_to_pickUp = async (req, res, next) => {
+	try {
+		const checkDriver = await RequestModel.findOne({
+			where: {
+				passenger_id: req.params.passenger_id,
+				driver_id: req.user.id
+			}
+		});
+		if (!checkDriver) {
+			return res.status(400).json({
+				status: 'failure',
+				message: 'Something went wrong !'
+			});
+		}
+		const request = await pass_req.findOne({
+			where: {
+				passenger_id: req.params.passenger_id
+			}
+		});
+		if (!request) {
+			return res.status(400).json({
+				status: 'failure',
+				message: 'Cannot accept request !'
+			});
+		}
+		const status = await pass_req.update(
+			{
+				status: 'arrived to pickup location'
+			},
+			{ where: { passenger_id: req.params.passenger_id } }
+		);
+		return res.status(200).json({
+			status: 'success',
+			message: 'Notification to passenger sent successfully !',
+			requestStatus: 'arrived to pickup location'
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
 module.exports = {
 	add_request,
 	get_requests,
 	delete_request,
-	accept_request
+	accept_request,
+	arrived_to_pickUp,
+	delete_all_requests
 };
