@@ -29,7 +29,8 @@ Requests.belongsTo(user, {
 	targetKey: 'id',
 	onDelete: 'cascade',
 	hooks: true,
-	unique: true
+	unique: true,
+	allowNull: false
 });
 
 Requests.belongsTo(user, {
@@ -37,6 +38,7 @@ Requests.belongsTo(user, {
 	foreignKeyConstraint: true,
 	targetKey: 'id',
 	onDelete: 'cascade',
-	hooks: true
+	hooks: true,
+	allowNull: false
 });
 module.exports = Requests;

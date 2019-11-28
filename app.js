@@ -14,7 +14,7 @@ Sequelize.authenticate()
 	.then(() => {
 		console.log('database connected');
 	})
-	.catch((error) => {
+	.catch(error => {
 		console.log(error);
 	});
 
@@ -23,7 +23,7 @@ const eraseDatabaseOnSync = false;
 Sequelize.sync({ force: eraseDatabaseOnSync })
 	.then(() => console.log('Synced models with database .'))
 	.then(() => {})
-	.catch((error) => console.log('Could not sync models with database .', error));
+	.catch(error => console.log('Could not sync models with database .', error));
 
 app.use(express.json());
 app.use(passport.initialize());

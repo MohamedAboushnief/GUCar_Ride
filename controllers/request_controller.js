@@ -29,10 +29,9 @@ const add_request = async (req, res, next) => {
 					message: 'Driver doesnt exist'
 				});
 			}
-
 			const newRequest = await RequestModel.create({
 				passenger_id: req.user.id,
-				driver_id: driver.id,
+				driver_id: req.params.driver_id,
 				pick_up_location: req.body.pick_up_location
 			});
 			if (!newRequest) {
