@@ -4,6 +4,7 @@ const user = require('./routes/user');
 const request = require('./routes/request');
 const driver_car = require('./routes/driver_car');
 const trip = require('./routes/trip');
+const passenger_request = require('./routes/passenger_request');
 var passport = require('passport');
 const port = 3000;
 
@@ -30,5 +31,6 @@ app.use('/routes/users', user);
 app.use('/routes/requests', request);
 app.use('/routes/drivers_cars', driver_car);
 app.use('/routes/trips', trip);
+app.use('/routes/passenger_request', passenger_request);
 
 app.listen(port, () => console.log(`app listening on port ${port}!`));

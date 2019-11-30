@@ -36,11 +36,12 @@ const add_user_car_details = async (req, res, next) => {
 			status: 'success',
 			message: 'Car details added successfully !'
 		});
-	} catch {
-		return res.status(400).json({
-			status: 'failure',
-			message: 'Something went wrong !'
-		});
+	} catch (err) {
+		next(err);
+		// return res.status(400).json({
+		// 	status: 'failure',
+		// 	message: 'Something went wrong !'
+		// });
 	}
 };
 

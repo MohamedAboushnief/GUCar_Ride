@@ -66,6 +66,18 @@ const view_available_drivers = async (req, res, next) => {
 
 const create_trip = async (req, res, next) => {
 	try {
+		const car = await CarModel.findOne({
+			where: {
+				user_id: req.user.id
+			}
+		});
+		if (!car) {
+			return res.status(409).json({
+				status: 'Failure',
+				message: 'You cant create a trip while not having a car!'
+			});
+		}
+
 		const checkTrip = await TripModel.findOne({
 			where: {
 				user_id: req.user.id
