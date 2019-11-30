@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 
 //import { createStackNavigator, createAppContainer } from 'react-navigation';
 
-export default class SignUp extends React.Component {
+export default class SignIn extends React.Component {
 	constructor(props) {
 		super(props);
 	}
@@ -11,7 +11,7 @@ export default class SignUp extends React.Component {
 	render() {
 		return (
 			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-				<Text>Sign Up</Text>
+				<Text>Sign In</Text>
 			</View>
 		);
 	}

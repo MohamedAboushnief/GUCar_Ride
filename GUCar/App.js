@@ -1,8 +1,8 @@
 import React from 'react';
-import signUp from './pages/sign_up';
-import signIn from './pages/sign_in';
+import sign_up from './pages/sign_up';
+import sign_in from './pages/sign_in';
 import { StyleSheet, Text, View, TextInput, Button, TouchableHighlight, Image, Alert } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+//import { createStackNavigator, createAppContainer } from 'react-navigation-stack';
 
 class HomeScreen extends React.Component {
 	constructor(props) {
@@ -13,21 +13,34 @@ class HomeScreen extends React.Component {
 			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 				<Text>GUCar Ride</Text>
 				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-					<Button title="Sign Up" onPress={() => this.props.navigation.navigate('signUp')} />
+					{/* <Button title="Sign Up" onPress={() => this.props.navigation.navigate('sign_up')} /> */}
 				</View>
 				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-					<Button title="Sign In" onPress={() => this.props.navigation.navigate('signIn')} />
+					{/* <Button title="Sign In" onPress={() => this.props.navigation.navigate('sign_in')} /> */}
 				</View>
 			</View>
 		);
 	}
 }
 
-export default class App extends React.Component {
-	render() {
-		return <AppContainer />;
-	}
-}
+// export default createStackNavigator(
+// 	{
+// 		Home: HomeScreen,
+// 		sign_in: { screen: sign_in },
+// 		sign_up: { screen: sign_up }
+// 	},
+// 	{
+// 		initialRouteName: 'Home'
+// 	}
+// );
+
+// const AppContainer = createAppContainer(RootStack);
+
+// export default class App extends React.Component {
+// 	render() {
+// 		return <AppContainer />;
+// 	}
+// }
 
 const styles = StyleSheet.create({
 	container: {
