@@ -1,10 +1,11 @@
 import React from 'react';
-import sign_up from './pages/sign_up';
-import sign_in from './pages/sign_in';
+import SignUp from './pages/sign_up';
+import SignIn from './pages/sign_in';
 import { StyleSheet, Text, View, TextInput, Button, TouchableHighlight, Image, Alert } from 'react-native';
-//import { createStackNavigator, createAppContainer } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
-class HomeScreen extends React.Component {
+export default class HomeScreen extends React.Component {
 	constructor(props) {
 		super(props);
 	}
@@ -13,34 +14,34 @@ class HomeScreen extends React.Component {
 			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 				<Text>GUCar Ride</Text>
 				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-					{/* <Button title="Sign Up" onPress={() => this.props.navigation.navigate('sign_up')} /> */}
+					<Button title="Sign Up" onPress={() => this.props.navigation.navigate('SignUp')} />
 				</View>
 				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-					{/* <Button title="Sign In" onPress={() => this.props.navigation.navigate('sign_in')} /> */}
+					<Button title="Sign In" onPress={() => this.props.navigation.navigate('SignIn')} />
 				</View>
 			</View>
 		);
 	}
 }
 
-// export default createStackNavigator(
-// 	{
-// 		Home: HomeScreen,
-// 		sign_in: { screen: sign_in },
-// 		sign_up: { screen: sign_up }
-// 	},
-// 	{
-// 		initialRouteName: 'Home'
-// 	}
-// );
+const RootStack = createStackNavigator(
+	{
+		Home: HomeScreen,
+		SignUp: { screen: SignUp },
+		SignIn: { screen: SignIn }
+	},
+	{
+		initialRouteName: 'Home'
+	}
+);
 
-// const AppContainer = createAppContainer(RootStack);
+const AppContainer = createAppContainer(RootStack);
 
-// export default class App extends React.Component {
-// 	render() {
-// 		return <AppContainer />;
-// 	}
-// }
+class App extends React.Component {
+	render() {
+		return <AppContainer />;
+	}
+}
 
 const styles = StyleSheet.create({
 	container: {
