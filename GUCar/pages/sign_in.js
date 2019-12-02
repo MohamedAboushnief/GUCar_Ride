@@ -49,7 +49,7 @@ export default class SignIn extends React.Component {
 			<SafeAreaView style={{ flex: 1 }}>
 				<KeyboardAwareScrollView>
 					<ThemeProvider>
-						<Header
+						{/* <Header
 							leftComponent={{ icon: 'menu', color: 'grey' }}
 							containerStyle={{
 								backgroundColor: 'black',
@@ -71,7 +71,7 @@ export default class SignIn extends React.Component {
 									alignSelf: 'center'
 								}}
 							/>
-						</View>
+						</View> */}
 						<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 130 }}>
 							<Input
 								containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
@@ -97,7 +97,7 @@ export default class SignIn extends React.Component {
 								justifyContent: 'center',
 								position: 'absolute',
 								alignSelf: 'center',
-								marginTop: 117
+								marginTop: 75
 							}}
 						>
 							<Text h1 h1Style={{ marginLeft: 50 }}>
@@ -112,12 +112,12 @@ export default class SignIn extends React.Component {
 								justifyContent: 'center',
 								position: 'absolute',
 								alignSelf: 'center',
-								marginTop: 120
+								marginTop: 80
 							}}
 						>
 							<Icon name="sign-in" type="evilicon" color="grey" size={50} style={{ marginRight: 150 }} />
 						</View>
-						<View
+						{/* <View
 							style={{
 								flex: 1,
 								alignItems: 'center',
@@ -137,24 +137,23 @@ export default class SignIn extends React.Component {
 								titleStyle={{ color: 'grey' }}
 								onPress={() => this.onClickListener('Sign In')}
 							/>
-						</View>
+						</View> */}
 						<View
 							style={{
 								flex: 1,
 								alignItems: 'center',
+								justifyContent: 'center',
+
 								position: 'absolute',
-								marginTop: 32,
-								marginLeft: 300
+								alignSelf: 'center',
+								marginTop: 350
 							}}
 						>
 							<Button
 								buttonStyle={{ backgroundColor: 'black' }}
-								icon={{
-									name: 'home',
-									size: 25,
-									color: 'grey'
-								}}
-								onPress={() => this.props.navigation.navigate('Home')}
+								title="Sign in"
+								titleStyle={{ color: 'grey' }}
+								onPress={() => this.onClickListener('Sign In')}
 							/>
 						</View>
 					</ThemeProvider>
@@ -163,52 +162,3 @@ export default class SignIn extends React.Component {
 		);
 	}
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#DCDCDC'
-	},
-	inputContainer: {
-		borderBottomColor: '#F5FCFF',
-		backgroundColor: '#FFFFFF',
-		borderRadius: 30,
-		borderBottomWidth: 1,
-		width: 250,
-		height: 45,
-		marginBottom: 20,
-		flexDirection: 'row',
-		alignItems: 'center'
-	},
-	inputs: {
-		height: 45,
-		marginLeft: 16,
-		borderBottomColor: '#FFFFFF',
-		flex: 1,
-		borderColor: 'gray',
-		borderWidth: 1
-	},
-	inputIcon: {
-		width: 30,
-		height: 30,
-		marginLeft: 15,
-		justifyContent: 'center'
-	},
-	buttonContainer: {
-		height: 45,
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginBottom: 20,
-		width: 250,
-		borderRadius: 30
-	},
-	setupButton: {
-		backgroundColor: '#00b5ec'
-	},
-	setupText: {
-		color: 'white'
-	}
-});
