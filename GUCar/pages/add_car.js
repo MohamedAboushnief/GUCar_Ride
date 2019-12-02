@@ -13,31 +13,40 @@ import axios from 'axios';
 
 import { Button, ThemeProvider, Input, Image, Header, Text } from 'react-native-elements';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import * as SecureStore from 'expo-secure-store';
 
-export default class SignIn extends React.Component {
+export default class AddCar extends React.Component {
 	constructor(props) {
 		super(props);
 		state = {
-			email: '',
-			password: ''
+			car_model: '',
+			car_plate_number: '',
+			car_color: ''
 		};
 	}
 
-	onClickListener = viewId => {
-		var apiBaseUrl = `http://192.168.1.5:3000/routes/users/login`;
+	onClickListener = async () => {
+		//var apiBaseUrl = `http://192.168.1.5:3000/routes/drivers_cars/create`;
 
 		var payload = {
-			email: this.state.email,
-			password: this.state.password
+			car_model: this.state.car_model,
+			car_plate_number: this.state.car_plate_number,
+			car_color: this.state.car_color
 		};
+		console.log(payload.car_model + 'lllllllllllllllllllllllllllllllllllllllllll');
+		const token = JSON.parse(await SecureStore.getItemAsync('token'));
+		console.log(token);
+		axios.defaults.headers.common['Authorization'] = token;
 		axios
-			.post(apiBaseUrl, payload)
+			.post('http://192.168.1.5:3000/routes/drivers_cars/create', payload, {
+				method: 'POST',
+				mode: 'cors'
+			})
 			.then(res => {
 				console.log(res.data.message);
 				alert(res.data.message);
 			})
 			.catch(err => {
-				console.log(err);
 				alert(err.response.data.message);
 			});
 	};
@@ -47,49 +56,32 @@ export default class SignIn extends React.Component {
 			<SafeAreaView style={{ flex: 1 }}>
 				<KeyboardAwareScrollView>
 					<ThemeProvider>
-						<Header
-							leftComponent={{ icon: 'menu', color: 'grey' }}
-							onPress={() => this.props.navigation.navigate('SignIn')}
-							containerStyle={{
-								backgroundColor: 'black',
-								justifyContent: 'space-around'
-							}}
-						/>
-						<View
-							style={{
-								flex: 1,
-								position: 'absolute'
-							}}
-						>
-							<Image
-								source={require('../assets/gucarWhite.png')}
-								style={{
-									width: 400,
-									height: 100,
-									position: 'absolute',
-									alignSelf: 'center'
-								}}
-							/>
-						</View>
 						<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 130 }}>
 							<Input
 								containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-								placeholder="Email"
-								leftIcon={{ type: 'font-awesome', name: 'envelope-o', iconStyle: { marginRight: 13 } }}
-								onChangeText={email => this.setState({ email })}
+								placeholder="Car model"
+								leftIcon={{ type: 'font-awesome', name: 'car', iconStyle: { marginRight: 13 } }}
+								onChangeText={car_model => this.setState({ car_model })}
 							/>
-						</View>
-						<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom: 200 }}>
 							<Input
-								containerStyle={{ width: 280, alignSelf: 'center' }}
-								placeholder="Password"
-								leftIcon={{ type: 'font-awesome', name: 'lock', iconStyle: { marginRight: 13 } }}
-								onChangeText={password => this.setState({ password })}
-								secureTextEntry={true}
+								containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
+								placeholder="Car color"
+								leftIcon={{
+									type: 'font-awesome',
+									name: 'paint-brush',
+									iconStyle: { marginRight: 13 }
+								}}
+								onChangeText={car_color => this.setState({ car_color })}
+							/>
+							<Input
+								containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
+								placeholder="Car plate number"
+								leftIcon={{ type: 'font-awesome', name: 'language', iconStyle: { marginRight: 13 } }}
+								onChangeText={car_plate_number => this.setState({ car_plate_number })}
 							/>
 						</View>
 
-						<View
+						{/* <View
 							style={{
 								flex: 1,
 								alignItems: 'center',
@@ -102,9 +94,9 @@ export default class SignIn extends React.Component {
 							<Text h1 h1Style={{ marginLeft: 50 }}>
 								Log In
 							</Text>
-						</View>
+						</View> */}
 
-						<View
+						{/* <View
 							style={{
 								flex: 1,
 								alignItems: 'center',
@@ -115,47 +107,30 @@ export default class SignIn extends React.Component {
 							}}
 						>
 							<Icon name="sign-in" type="evilicon" color="grey" size={50} style={{ marginRight: 150 }} />
-						</View>
-						<View
+						</View> */}
+						{/* <View
 							style={{
 								flex: 1,
 								alignItems: 'center',
 								justifyContent: 'center',
 								position: 'absolute',
 								alignSelf: 'center',
-								marginTop: 470
+								marginTop: 350
 							}}
-						>
-							<Button
-								buttonStyle={{
-									backgroundColor: 'black',
-									width: 100,
-									height: 50
-								}}
-								title="Sign in"
-								titleStyle={{ color: 'grey' }}
-								onPress={() => this.onClickListener('Sign In')}
-							/>
-						</View>
-						<View
-							style={{
-								flex: 1,
-								alignItems: 'center',
-								position: 'absolute',
-								marginTop: 32,
-								marginLeft: 300
+						> */}
+						<Button
+							buttonStyle={{
+								backgroundColor: 'black',
+								width: 100,
+								height: 50,
+								alignSelf: 'center',
+								justifyContent: 'center',
+								marginTop: 80
 							}}
-						>
-							<Button
-								buttonStyle={{ backgroundColor: 'black' }}
-								icon={{
-									name: 'home',
-									size: 25,
-									color: 'grey'
-								}}
-								onPress={() => this.props.navigation.navigate('Home')}
-							/>
-						</View>
+							title="Add my car"
+							titleStyle={{ color: 'grey' }}
+							onPress={() => this.onClickListener('Add Car')}
+						/>
 					</ThemeProvider>
 				</KeyboardAwareScrollView>
 			</SafeAreaView>

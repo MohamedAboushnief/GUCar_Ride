@@ -37,10 +37,10 @@ const add_user_car_details = async (req, res, next) => {
 		});
 	} catch (err) {
 		next(err);
-		// return res.status(400).json({
-		// 	status: 'failure',
-		// 	message: 'Something went wrong !'
-		// });
+		return res.status(400).json({
+			status: 'failure',
+			message: 'Something went wrong !'
+		});
 	}
 };
 

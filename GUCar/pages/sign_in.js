@@ -24,18 +24,20 @@ export default class SignIn extends React.Component {
 		};
 	}
 
-	onClickListener = viewId => {
+	onClickListener = async () => {
 		var apiBaseUrl = `http://192.168.1.5:3000/routes/users/login`;
 
 		var payload = {
 			email: this.state.email,
 			password: this.state.password
 		};
+
 		axios
 			.post(apiBaseUrl, payload)
 			.then(res => {
 				console.log(res.data.message);
 				alert(res.data.message);
+				console.log(JSON.stringify(res.data.token));
 				SecureStore.setItemAsync('token', JSON.stringify(res.data.token));
 			})
 			.catch(err => {
@@ -49,30 +51,14 @@ export default class SignIn extends React.Component {
 			<SafeAreaView style={{ flex: 1 }}>
 				<KeyboardAwareScrollView>
 					<ThemeProvider>
-						{/* <Header
-							leftComponent={{ icon: 'menu', color: 'grey' }}
-							containerStyle={{
-								backgroundColor: 'black',
-								justifyContent: 'space-around'
-							}}
-						/>
 						<View
 							style={{
 								flex: 1,
-								position: 'absolute'
+								alignItems: 'center',
+								justifyContent: 'center',
+								marginTop: 150
 							}}
 						>
-							<Image
-								source={require('../assets/gucarWhite.png')}
-								style={{
-									width: 400,
-									height: 100,
-									position: 'absolute',
-									alignSelf: 'center'
-								}}
-							/>
-						</View> */}
-						<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 130 }}>
 							<Input
 								containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
 								placeholder="Email"
@@ -80,7 +66,15 @@ export default class SignIn extends React.Component {
 								onChangeText={email => this.setState({ email })}
 							/>
 						</View>
-						<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom: 200 }}>
+						<View
+							style={{
+								flex: 1,
+								alignItems: 'center',
+								justifyContent: 'center',
+								marginBottom: 200,
+								marginTop: 50
+							}}
+						>
 							<Input
 								containerStyle={{ width: 280, alignSelf: 'center' }}
 								placeholder="Password"
@@ -97,7 +91,7 @@ export default class SignIn extends React.Component {
 								justifyContent: 'center',
 								position: 'absolute',
 								alignSelf: 'center',
-								marginTop: 75
+								marginTop: 55
 							}}
 						>
 							<Text h1 h1Style={{ marginLeft: 50 }}>
@@ -112,19 +106,19 @@ export default class SignIn extends React.Component {
 								justifyContent: 'center',
 								position: 'absolute',
 								alignSelf: 'center',
-								marginTop: 80
+								marginTop: 60
 							}}
 						>
 							<Icon name="sign-in" type="evilicon" color="grey" size={50} style={{ marginRight: 150 }} />
 						</View>
-						{/* <View
+						<View
 							style={{
 								flex: 1,
 								alignItems: 'center',
 								justifyContent: 'center',
 								position: 'absolute',
 								alignSelf: 'center',
-								marginTop: 470
+								marginTop: 400
 							}}
 						>
 							<Button
@@ -133,24 +127,6 @@ export default class SignIn extends React.Component {
 									width: 100,
 									height: 50
 								}}
-								title="Sign in"
-								titleStyle={{ color: 'grey' }}
-								onPress={() => this.onClickListener('Sign In')}
-							/>
-						</View> */}
-						<View
-							style={{
-								flex: 1,
-								alignItems: 'center',
-								justifyContent: 'center',
-
-								position: 'absolute',
-								alignSelf: 'center',
-								marginTop: 350
-							}}
-						>
-							<Button
-								buttonStyle={{ backgroundColor: 'black' }}
 								title="Sign in"
 								titleStyle={{ color: 'grey' }}
 								onPress={() => this.onClickListener('Sign In')}

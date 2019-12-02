@@ -27,9 +27,9 @@ export default class SignUp extends React.Component {
 			guc_id: '',
 			date_of_birth: '',
 			gender: '',
-			genderList: [ 'male', 'female' ],
+			genderList: ['male', 'female'],
 			address: '',
-			addressList: [ 'Maadi', '5th Settlement', 'Heliopolis' ],
+			addressList: ['Maadi', '5th Settlement', 'Heliopolis'],
 			rating: '',
 			mobile_number: [],
 			isOpen: false
@@ -37,17 +37,17 @@ export default class SignUp extends React.Component {
 		this.onClickListener = this.onClickListener.bind(this);
 	}
 
-	updateAddress = (address) => {
+	updateAddress = address => {
 		this.setState({ address: address });
 	};
-	updateGender = (gender) => {
+	updateGender = gender => {
 		this.setState({ gender: gender });
 	};
 
 	componentDidMount() {}
 
 	onClickListener = async () => {
-		var apiBaseUrl = `http://192.168.43.245:3000/routes/users/sign_up`;
+		var apiBaseUrl = `http://192.168.1.5:3000/routes/users/sign_up`;
 		var payload = {
 			first_name: this.state.first_name,
 			last_name: this.state.last_name,
@@ -62,13 +62,13 @@ export default class SignUp extends React.Component {
 		};
 
 		axios({ method: 'post', url: apiBaseUrl, data: payload })
-			.then((res) => {
+			.then(res => {
 				console.log(res.data.message);
 				alert(res.data.message);
 				console.log(res.data.token);
 				SecureStore.setItemAsync('token', JSON.stringify(res.data.token));
 			})
-			.catch((err) => {
+			.catch(err => {
 				alert(err.response.data.message);
 				console.log(err.response.data.message);
 			});
@@ -132,39 +132,39 @@ export default class SignUp extends React.Component {
 					<ScrollView showsVerticalScrollIndicator={false}>
 						<Input
 							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-							onChangeText={(first_name) => this.setState({ first_name })}
+							onChangeText={first_name => this.setState({ first_name })}
 							placeholder="First Name"
 						/>
 						<Input
 							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-							onChangeText={(last_name) => this.setState({ last_name })}
+							onChangeText={last_name => this.setState({ last_name })}
 							placeholder="Last Name"
 						/>
 						<Input
 							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-							onChangeText={(email) => this.setState({ email })}
+							onChangeText={email => this.setState({ email })}
 							placeholder="Email"
 							leftIcon={{ type: 'font-awesome', name: 'envelope-o', iconStyle: { marginRight: 13 } }}
 						/>
 						<Input
 							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-							onChangeText={(password) => this.setState({ password })}
+							onChangeText={password => this.setState({ password })}
 							placeholder="Password"
 							leftIcon={{ type: 'font-awesome', name: 'lock', iconStyle: { marginRight: 13 } }}
 						/>
 						<Input
 							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-							onChangeText={(guc_id) => this.setState({ guc_id })}
+							onChangeText={guc_id => this.setState({ guc_id })}
 							placeholder="GUC ID"
 						/>
 						<Input
 							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-							onChangeText={(mobile_number) => this.setState({ mobile_number: [ mobile_number ] })}
+							onChangeText={mobile_number => this.setState({ mobile_number: [mobile_number] })}
 							placeholder="Mobile Number"
 						/>
 						<View>
 							<CalendarStrip
-								ref={(ref) => {
+								ref={ref => {
 									this.CalendarStrip = ref;
 								}}
 								onDateSelected={() =>
