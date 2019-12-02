@@ -83,7 +83,7 @@ export default class SignUp extends React.Component {
 					flex: 1
 				}}
 			>
-				<Header
+				{/* <Header
 					containerStyle={{
 						backgroundColor: 'black',
 						justifyContent: 'space-around'
@@ -126,7 +126,7 @@ export default class SignUp extends React.Component {
 							alignSelf: 'center'
 						}}
 					/>
-				</View>
+				</View> */}
 
 				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 					<ScrollView showsVerticalScrollIndicator={false}>
@@ -201,16 +201,7 @@ export default class SignUp extends React.Component {
 							<Picker.Item label="Maadi" value="Maadi" />
 							<Picker.Item label="Heliopolis" value="Heliopolis" />
 						</Picker>
-						{/* <View
-							style={{
-								flex: 1,
-								alignItems: 'center',
-								justifyContent: 'center',
-								position: 'absolute',
-								alignSelf: 'center',
-								marginTop: 550
-							}}
-						> */}
+
 						<Button
 							style={{
 								width: 100,
@@ -233,52 +224,3 @@ export default class SignUp extends React.Component {
 		);
 	}
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#DCDCDC'
-	},
-	inputContainer: {
-		borderBottomColor: '#F5FCFF',
-		backgroundColor: '#FFFFFF',
-		borderRadius: 30,
-		borderBottomWidth: 1,
-		width: 250,
-		height: 45,
-		marginBottom: 20,
-		flexDirection: 'row',
-		alignItems: 'center'
-	},
-	inputs: {
-		height: 45,
-		marginLeft: 16,
-		borderBottomColor: '#FFFFFF',
-		flex: 1,
-		borderColor: 'gray',
-		borderWidth: 1
-	},
-	inputIcon: {
-		width: 30,
-		height: 30,
-		marginLeft: 15,
-		justifyContent: 'center'
-	},
-	buttonContainer: {
-		height: 45,
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginBottom: 20,
-		width: 250,
-		borderRadius: 30
-	},
-	setupButton: {
-		backgroundColor: '#00b5ec'
-	},
-	setupText: {
-		color: 'white'
-	}
-});
