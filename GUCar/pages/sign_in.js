@@ -24,22 +24,32 @@ export default class SignIn extends React.Component {
 		};
 	}
 
+<<<<<<< HEAD
 	onClickListener = (viewId) => {
 		var apiBaseUrl = `http://192.168.1.34:3000/routes/users/login`;
+=======
+	onClickListener = async () => {
+		var apiBaseUrl = `http://192.168.1.5:3000/routes/users/login`;
+>>>>>>> 70fefb7d13f6cf2d73654fa4dfc10e293be689f3
 
 		var payload = {
 			email: this.state.email,
 			password: this.state.password
 		};
+
 		axios
 			.post(apiBaseUrl, payload)
-			.then((res) => {
+			.then(res => {
 				console.log(res.data.message);
 				alert(res.data.message);
+<<<<<<< HEAD
 				console.log(res.data.token);
+=======
+				console.log(JSON.stringify(res.data.token));
+>>>>>>> 70fefb7d13f6cf2d73654fa4dfc10e293be689f3
 				SecureStore.setItemAsync('token', JSON.stringify(res.data.token));
 			})
-			.catch((err) => {
+			.catch(err => {
 				console.log(err);
 				alert(err.response.data.message);
 			});
@@ -50,43 +60,35 @@ export default class SignIn extends React.Component {
 			<SafeAreaView style={{ flex: 1 }}>
 				<KeyboardAwareScrollView>
 					<ThemeProvider>
-						{/* <Header
-							leftComponent={{ icon: 'menu', color: 'grey' }}
-							containerStyle={{
-								backgroundColor: 'black',
-								justifyContent: 'space-around'
-							}}
-						/>
 						<View
 							style={{
 								flex: 1,
-								position: 'absolute'
+								alignItems: 'center',
+								justifyContent: 'center',
+								marginTop: 150
 							}}
 						>
-							<Image
-								source={require('../assets/gucarWhite.png')}
-								style={{
-									width: 400,
-									height: 100,
-									position: 'absolute',
-									alignSelf: 'center'
-								}}
-							/>
-						</View> */}
-						<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 130 }}>
 							<Input
 								containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
 								placeholder="Email"
 								leftIcon={{ type: 'font-awesome', name: 'envelope-o', iconStyle: { marginRight: 13 } }}
-								onChangeText={(email) => this.setState({ email })}
+								onChangeText={email => this.setState({ email })}
 							/>
 						</View>
-						<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom: 200 }}>
+						<View
+							style={{
+								flex: 1,
+								alignItems: 'center',
+								justifyContent: 'center',
+								marginBottom: 200,
+								marginTop: 50
+							}}
+						>
 							<Input
 								containerStyle={{ width: 280, alignSelf: 'center' }}
 								placeholder="Password"
 								leftIcon={{ type: 'font-awesome', name: 'lock', iconStyle: { marginRight: 13 } }}
-								onChangeText={(password) => this.setState({ password })}
+								onChangeText={password => this.setState({ password })}
 								secureTextEntry={true}
 							/>
 						</View>
@@ -98,7 +100,7 @@ export default class SignIn extends React.Component {
 								justifyContent: 'center',
 								position: 'absolute',
 								alignSelf: 'center',
-								marginTop: 75
+								marginTop: 55
 							}}
 						>
 							<Text h1 h1Style={{ marginLeft: 50 }}>
@@ -113,32 +115,11 @@ export default class SignIn extends React.Component {
 								justifyContent: 'center',
 								position: 'absolute',
 								alignSelf: 'center',
-								marginTop: 80
+								marginTop: 60
 							}}
 						>
 							<Icon name="sign-in" type="evilicon" color="grey" size={50} style={{ marginRight: 150 }} />
 						</View>
-
-						{/* <View
-							style={{
-								flex: 1,
-								alignItems: 'center',
-								position: 'absolute',
-								marginTop: 32,
-								marginLeft: 300
-							}}
-						>
-							<Button
-								buttonStyle={{ backgroundColor: 'black' }}
-								icon={{
-									name: 'home',
-									size: 25,
-									color: 'grey'
-								}}
-								onPress={() => this.props.navigation.navigate('Home')}
-							/>
-						</View> */}
-
 						<View
 							style={{
 								flex: 1,
@@ -146,11 +127,15 @@ export default class SignIn extends React.Component {
 								justifyContent: 'center',
 								position: 'absolute',
 								alignSelf: 'center',
-								marginTop: 350
+								marginTop: 400
 							}}
 						>
 							<Button
-								buttonStyle={{ backgroundColor: 'black' }}
+								buttonStyle={{
+									backgroundColor: 'black',
+									width: 100,
+									height: 50
+								}}
 								title="Sign in"
 								titleStyle={{ color: 'grey' }}
 								onPress={() => this.onClickListener('Sign In')}

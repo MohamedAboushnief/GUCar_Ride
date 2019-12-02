@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SignUp from './pages/sign_up';
 import SignIn from './pages/sign_in';
+<<<<<<< HEAD
 import EditInfo from './pages/edit_profile';
 import Profile from './pages/profile_page';
 import { ThemeProvider, Input, Header } from 'react-native-elements';
@@ -16,6 +17,12 @@ import {
 	SafeAreaView,
 	TouchableOpacity
 } from 'react-native';
+=======
+import AddCar from './pages/add_car';
+
+import { ThemeProvider, Input, Header, Image } from 'react-native-elements';
+import { Text, View, TextInput, Button, TouchableHighlight, Alert, SafeAreaView, TouchableOpacity } from 'react-native';
+>>>>>>> 70fefb7d13f6cf2d73654fa4dfc10e293be689f3
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
@@ -62,6 +69,10 @@ class HomeScreen extends React.Component {
 					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 						<Button title="Sign In" onPress={() => this.props.navigation.navigate('SignIn')} />
 					</View>
+
+					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+						<Button title="Test To Add car" onPress={() => this.props.navigation.navigate('AddCar')} />
+					</View>
 				</View>
 			</SafeAreaView>
 		);
@@ -80,6 +91,23 @@ class NavigationDrawerStructure extends Component {
 				<TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
 					{/*Donute Button Image */}
 					<Image source={require('./image/drawer.png')} style={{ width: 25, height: 25, marginLeft: 5 }} />
+					<View
+						style={{
+							flex: 1,
+							position: 'absolute',
+							marginBottom: 100
+						}}
+					>
+						<Image
+							source={require('./assets/gucarWhite.png')}
+							style={{
+								width: 385,
+								height: 35,
+								position: 'absolute',
+								alignSelf: 'center'
+							}}
+						/>
+					</View>
 				</TouchableOpacity>
 			</View>
 		);
@@ -157,6 +185,21 @@ const Screen4_StackNavigator = createStackNavigator({
 	}
 });
 
+const Screen3_StackNavigator = createStackNavigator({
+	//All the screen from the Screen2 will be indexed here
+	AddCar: {
+		screen: AddCar,
+		navigationOptions: ({ navigation }) => ({
+			title: 'Demo Screen 3',
+			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerStyle: {
+				backgroundColor: 'black'
+			},
+			headerTintColor: 'black'
+		})
+	}
+});
+
 const DrawerNavigatorExample = createDrawerNavigator({
 	//Drawer Optons and indexing
 	Screen1: {
@@ -192,6 +235,13 @@ const DrawerNavigatorExample = createDrawerNavigator({
 		screen: Screen4_StackNavigator,
 		navigationOptions: {
 			drawerLabel: 'Demo Screen 5'
+		}
+	},
+	Screen4: {
+		//Title
+		screen: Screen3_StackNavigator,
+		navigationOptions: {
+			drawerLabel: 'Demo Screen 3'
 		}
 	}
 });
