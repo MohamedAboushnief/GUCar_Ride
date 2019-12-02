@@ -1,6 +1,6 @@
 const UserModel = require('../models/users');
 const MobileModel = require('../models/mobile_numbers');
-const CarModel = require('../models/driver_car');
+const CarModel = require('../models/drivers_cars');
 const TripModel = require('../models/trips');
 const Sequelize = require('sequelize');
 const sequelize = require('../config/keys_development');
@@ -66,9 +66,21 @@ const view_available_drivers = async (req, res, next) => {
 
 const create_trip = async (req, res, next) => {
 	try {
+		const car = await CarModel.findOne({
+			where: {
+				user_id: req.user.id
+			}
+		});
+		if (!car) {
+			return res.status(409).json({
+				status: 'Failure',
+				message: 'You cant create a trip while not having a car!'
+			});
+		}
+
 		const checkTrip = await TripModel.findOne({
 			where: {
-				user_id: user.id
+				user_id: req.user.id
 			}
 		});
 
@@ -97,10 +109,7 @@ const create_trip = async (req, res, next) => {
 			});
 		}
 	} catch (error) {
-		return res.status(400).json({
-			status: 'Failure',
-			message: 'Something went wrong!'
-		});
+		next(error);
 	}
 };
 

@@ -3,18 +3,20 @@ const sequelize = require('../config/databaseConfig');
 const { Model } = Sequelize;
 
 const user = require('./users');
-class Requests extends Model {}
+class passenger_requests extends Model {}
 
-Requests.init(
+passenger_requests.init(
 	{
 		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
 			autoIncrement: true
 		},
-		pick_up_location: {
-			type: Sequelize.STRING,
-			allowNull: false
+		status: {
+			type: Sequelize.ENUM,
+			values: [ 'rejected', 'pending', 'on his way', 'arrived to pickup location' ],
+			allowNull: false,
+			notEmpty: true
 		}
 	},
 	{
@@ -23,7 +25,7 @@ Requests.init(
 	}
 );
 
-Requests.belongsTo(user, {
+passenger_requests.belongsTo(user, {
 	foreignKey: 'passenger_id',
 	foreignKeyConstraint: true,
 	targetKey: 'id',
@@ -33,12 +35,14 @@ Requests.belongsTo(user, {
 	allowNull: false
 });
 
-Requests.belongsTo(user, {
+passenger_requests.belongsTo(user, {
 	foreignKey: 'driver_id',
 	foreignKeyConstraint: true,
 	targetKey: 'id',
 	onDelete: 'cascade',
 	hooks: true,
+	unique: true,
 	allowNull: false
 });
-module.exports = Requests;
+
+module.exports = passenger_requests;
