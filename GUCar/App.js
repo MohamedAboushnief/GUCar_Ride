@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, TextInput, Button, TouchableHighlight, Image, A
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
 	constructor(props) {
 		super(props);
 	}
@@ -28,7 +28,7 @@ const RootStack = createStackNavigator(
 	{
 		Home: HomeScreen,
 		SignUp: { screen: SignUp },
-		SignIn: { screen: SignIn }
+		SignIn: { screen: SignIn, navigationOptions: { header: null } }
 	},
 	{
 		initialRouteName: 'Home'
@@ -37,7 +37,7 @@ const RootStack = createStackNavigator(
 
 const AppContainer = createAppContainer(RootStack);
 
-class App extends React.Component {
+export default class App extends React.Component {
 	render() {
 		return <AppContainer />;
 	}
