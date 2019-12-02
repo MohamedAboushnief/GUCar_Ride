@@ -1,20 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import SignUp from './pages/sign_up';
 import SignIn from './pages/sign_in';
-import { ThemeProvider, Input, Header } from 'react-native-elements';
-import {
-	StyleSheet,
-	Text,
-	View,
-	TextInput,
-	Button,
-	TouchableHighlight,
-	Image,
-	Alert,
-	SafeAreaView
-} from 'react-native';
+import AddCar from './pages/add_car';
+
+import { ThemeProvider, Input, Header, Image } from 'react-native-elements';
+import { Text, View, TextInput, Button, TouchableHighlight, Alert, SafeAreaView, TouchableOpacity } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createDrawerNavigator } from 'react-navigation-drawer';
 
 class HomeScreen extends React.Component {
 	constructor(props) {
@@ -27,7 +20,7 @@ class HomeScreen extends React.Component {
 					flex: 1
 				}}
 			>
-				<Header
+				{/* <Header
 					containerStyle={{
 						backgroundColor: 'black',
 						justifyContent: 'space-around'
@@ -49,7 +42,7 @@ class HomeScreen extends React.Component {
 							alignSelf: 'center'
 						}}
 					/>
-				</View>
+				</View> */}
 
 				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -58,76 +51,147 @@ class HomeScreen extends React.Component {
 					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 						<Button title="Sign In" onPress={() => this.props.navigation.navigate('SignIn')} />
 					</View>
+
+					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+						<Button title="Test To Add car" onPress={() => this.props.navigation.navigate('AddCar')} />
+					</View>
 				</View>
 			</SafeAreaView>
 		);
 	}
 }
 
-const RootStack = createStackNavigator(
-	{
-		Home: { screen: HomeScreen, navigationOptions: { header: null } },
-		SignUp: { screen: SignUp, navigationOptions: { header: null } },
-		SignIn: { screen: SignIn, navigationOptions: { header: null } }
-	},
-	{
-		initialRouteName: 'Home'
+class NavigationDrawerStructure extends Component {
+	//Structure for the navigatin Drawer
+	toggleDrawer = () => {
+		//Props to open/close the drawer
+		this.props.navigationProps.toggleDrawer();
+	};
+	render() {
+		return (
+			<View style={{ flexDirection: 'row' }}>
+				<TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
+					{/*Donute Button Image */}
+					<Image source={require('./image/drawer.png')} style={{ width: 25, height: 25, marginLeft: 5 }} />
+					<View
+						style={{
+							flex: 1,
+							position: 'absolute',
+							marginBottom: 100
+						}}
+					>
+						<Image
+							source={require('./assets/gucarWhite.png')}
+							style={{
+								width: 385,
+								height: 35,
+								position: 'absolute',
+								alignSelf: 'center'
+							}}
+						/>
+					</View>
+				</TouchableOpacity>
+			</View>
+		);
 	}
-);
+}
 
-const AppContainer = createAppContainer(RootStack);
+const Home_StackNavigator = createStackNavigator({
+	//All the screen from the Screen1 will be indexed here
+	Home: {
+		screen: HomeScreen,
+		navigationOptions: ({ navigation }) => ({
+			title: 'Demo Screen 0',
+			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerStyle: {
+				backgroundColor: 'black'
+			},
+			headerTintColor: 'black'
+		})
+	}
+});
+
+const FirstActivity_StackNavigator = createStackNavigator({
+	//All the screen from the Screen1 will be indexed here
+	SignUp: {
+		screen: SignUp,
+		navigationOptions: ({ navigation }) => ({
+			title: 'Demo Screen 1',
+			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerStyle: {
+				backgroundColor: 'black'
+			},
+			headerTintColor: 'black'
+		})
+	}
+});
+
+const Screen2_StackNavigator = createStackNavigator({
+	//All the screen from the Screen2 will be indexed here
+	SignIn: {
+		screen: SignIn,
+		navigationOptions: ({ navigation }) => ({
+			title: 'Demo Screen 2',
+			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerStyle: {
+				backgroundColor: 'black'
+			},
+			headerTintColor: 'black'
+		})
+	}
+});
+
+const Screen3_StackNavigator = createStackNavigator({
+	//All the screen from the Screen2 will be indexed here
+	AddCar: {
+		screen: AddCar,
+		navigationOptions: ({ navigation }) => ({
+			title: 'Demo Screen 3',
+			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerStyle: {
+				backgroundColor: 'black'
+			},
+			headerTintColor: 'black'
+		})
+	}
+});
+
+const DrawerNavigatorExample = createDrawerNavigator({
+	//Drawer Optons and indexing
+	Screen1: {
+		//Title
+		screen: Home_StackNavigator,
+		navigationOptions: {
+			drawerLabel: 'Demo Screen 1'
+		}
+	},
+	Screen2: {
+		//Title
+		screen: FirstActivity_StackNavigator,
+		navigationOptions: {
+			drawerLabel: 'Demo Screen 1'
+		}
+	},
+	Screen3: {
+		//Title
+		screen: Screen2_StackNavigator,
+		navigationOptions: {
+			drawerLabel: 'Demo Screen 2'
+		}
+	},
+	Screen4: {
+		//Title
+		screen: Screen3_StackNavigator,
+		navigationOptions: {
+			drawerLabel: 'Demo Screen 3'
+		}
+	}
+});
+
+const AppContainer = createAppContainer(DrawerNavigatorExample);
 
 export default class App extends React.Component {
 	render() {
 		return <AppContainer />;
 	}
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#DCDCDC'
-	},
-	inputContainer: {
-		borderBottomColor: '#F5FCFF',
-		backgroundColor: '#FFFFFF',
-		borderRadius: 30,
-		borderBottomWidth: 1,
-		width: 250,
-		height: 45,
-		marginBottom: 20,
-		flexDirection: 'row',
-		alignItems: 'center'
-	},
-	inputs: {
-		height: 45,
-		marginLeft: 16,
-		borderBottomColor: '#FFFFFF',
-		flex: 1,
-		borderColor: 'gray',
-		borderWidth: 1
-	},
-	inputIcon: {
-		width: 30,
-		height: 30,
-		marginLeft: 15,
-		justifyContent: 'center'
-	},
-	buttonContainer: {
-		height: 45,
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginBottom: 20,
-		width: 250,
-		borderRadius: 30
-	},
-	setupButton: {
-		backgroundColor: '#00b5ec'
-	},
-	setupText: {
-		color: 'white'
-	}
-});
