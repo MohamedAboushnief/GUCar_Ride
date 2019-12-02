@@ -76,6 +76,7 @@ const signup = async (req, res, next) => {
 			});
 		}
 	} catch (error) {
+		console.log(error);
 		return res.status(404).json({
 			status: 'Failure',
 			message: 'Something went wrong!'

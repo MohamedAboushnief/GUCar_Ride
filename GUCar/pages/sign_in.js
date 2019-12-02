@@ -23,7 +23,7 @@ export default class SignIn extends React.Component {
 		};
 	}
 
-	onClickListener = viewId => {
+	onClickListener = (viewId) => {
 		var apiBaseUrl = `http://10.78.71.103:3000/routes/users/login`;
 
 		var payload = {
@@ -32,11 +32,11 @@ export default class SignIn extends React.Component {
 		};
 		axios
 			.post(apiBaseUrl, payload)
-			.then(res => {
+			.then((res) => {
 				console.log(res.data.message);
 				alert(res.data.message);
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.log(err);
 				alert(err.response.data.message);
 			});
@@ -49,7 +49,6 @@ export default class SignIn extends React.Component {
 					<ThemeProvider>
 						<Header
 							leftComponent={{ icon: 'menu', color: 'grey' }}
-							onPress={() => this.props.navigation.navigate('SignIn')}
 							containerStyle={{
 								backgroundColor: 'black',
 								justifyContent: 'space-around'
@@ -76,7 +75,7 @@ export default class SignIn extends React.Component {
 								containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
 								placeholder="Email"
 								leftIcon={{ type: 'font-awesome', name: 'envelope-o', iconStyle: { marginRight: 13 } }}
-								onChangeText={email => this.setState({ email })}
+								onChangeText={(email) => this.setState({ email })}
 							/>
 						</View>
 						<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom: 200 }}>
@@ -84,7 +83,7 @@ export default class SignIn extends React.Component {
 								containerStyle={{ width: 280, alignSelf: 'center' }}
 								placeholder="Password"
 								leftIcon={{ type: 'font-awesome', name: 'lock', iconStyle: { marginRight: 13 } }}
-								onChangeText={password => this.setState({ password })}
+								onChangeText={(password) => this.setState({ password })}
 								secureTextEntry={true}
 							/>
 						</View>
