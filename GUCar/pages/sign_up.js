@@ -1,17 +1,20 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, SafeAreaView, Platform, Picker } from 'react-native';
-import { Button, ThemeProvider, Input, HeaderSideMenu, List, ListItem, Header, SideMenu } from 'react-native-elements';
+import {
+	Button,
+	ThemeProvider,
+	Input,
+	HeaderSideMenu,
+	List,
+	ListItem,
+	Header,
+	SideMenu,
+	Image
+} from 'react-native-elements';
 import axios from 'axios';
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
-
-// let datesWhitelist = [
-// 	{
-// 		start: moment(),
-// 		end: moment().add(3, 'days') // total 4 days enabled
-// 	}
-// ];
-// let datesBlacklist = [ moment().add(1, 'days') ]; // 1 day disabled
+import * as SecureStore from 'expo-secure-store';
 
 export default class SignUp extends React.Component {
 	constructor(props) {
@@ -23,12 +26,12 @@ export default class SignUp extends React.Component {
 			password: '',
 			guc_id: '',
 			date_of_birth: '',
-			gender: 'gender',
+			gender: '',
 			genderList: [ 'male', 'female' ],
 			address: '',
 			addressList: [ 'Maadi', '5th Settlement', 'Heliopolis' ],
 			rating: '',
-			mobile_number: '',
+			mobile_number: [],
 			isOpen: false
 		};
 		this.onClickListener = this.onClickListener.bind(this);
@@ -43,7 +46,7 @@ export default class SignUp extends React.Component {
 
 	componentDidMount() {}
 
-	onClickListener = () => {
+	onClickListener = async () => {
 		var apiBaseUrl = `http://192.168.43.245:3000/routes/users/sign_up`;
 		var payload = {
 			first_name: this.state.first_name,
@@ -55,12 +58,15 @@ export default class SignUp extends React.Component {
 			gender: this.state.gender,
 			address: this.state.address,
 			rating: 0,
-			mobile_number: [ '010027646793' ]
+			mobile_number: this.state.mobile_number
 		};
 
 		axios({ method: 'post', url: apiBaseUrl, data: payload })
 			.then((res) => {
-				console.log(res.status.message);
+				console.log(res.data.message);
+				alert(res.data.message);
+				console.log(res.data.token);
+				SecureStore.setItemAsync('token', JSON.stringify(res.data.token));
 			})
 			.catch((err) => {
 				alert(err.response.data.message);
@@ -78,10 +84,50 @@ export default class SignUp extends React.Component {
 				}}
 			>
 				<Header
-					leftComponent={{ icon: 'menu', color: '#fff' }}
-					centerComponent={{ text: 'Sign Up', style: { color: '#fff' } }}
-					rightComponent={{ icon: 'home', color: '#fff' }}
+					containerStyle={{
+						backgroundColor: 'black',
+						justifyContent: 'space-around'
+					}}
+					leftComponent={{ icon: 'menu', color: 'grey' }}
+					// centerComponent={{ text: 'Sign Up', style: { color: '#fff' } }}
+					// rightComponent={{ icon: 'home', color: '#fff' }}
 				/>
+				<View
+					style={{
+						flex: 1,
+						alignItems: 'center',
+						position: 'absolute',
+						marginTop: 32,
+						marginLeft: 300
+					}}
+				>
+					<Button
+						buttonStyle={{ backgroundColor: 'black' }}
+						icon={{
+							name: 'home',
+							size: 25,
+							color: 'grey'
+						}}
+						onPress={() => this.props.navigation.navigate('Home')}
+					/>
+				</View>
+				<View
+					style={{
+						flex: 1,
+						position: 'absolute'
+					}}
+				>
+					<Image
+						source={require('../assets/gucarWhite.png')}
+						style={{
+							width: 400,
+							height: 100,
+							position: 'absolute',
+							alignSelf: 'center'
+						}}
+					/>
+				</View>
+
 				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 					<ScrollView showsVerticalScrollIndicator={false}>
 						<Input
@@ -111,7 +157,11 @@ export default class SignUp extends React.Component {
 							onChangeText={(guc_id) => this.setState({ guc_id })}
 							placeholder="GUC ID"
 						/>
-
+						<Input
+							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
+							onChangeText={(mobile_number) => this.setState({ mobile_number: [ mobile_number ] })}
+							placeholder="Mobile Number"
+						/>
 						<View>
 							<CalendarStrip
 								ref={(ref) => {
@@ -144,15 +194,39 @@ export default class SignUp extends React.Component {
 						</View>
 
 						<Picker selectedValue={this.state.gender} onValueChange={this.updateGender}>
-							<Picker.Item label="Male" value="male" />
-							<Picker.Item label="Female" value="female" />
+							<Picker.Item label="male" value="male" />
+							<Picker.Item label="female" value="female" />
 						</Picker>
 						<Picker selectedValue={this.state.address} onValueChange={this.updateAddress}>
 							<Picker.Item label="Maadi" value="Maadi" />
 							<Picker.Item label="Heliopolis" value="Heliopolis" />
 						</Picker>
-
-						<Button title="signUp" onPress={() => this.onClickListener('Sign Up')} />
+						{/* <View
+							style={{
+								flex: 1,
+								alignItems: 'center',
+								justifyContent: 'center',
+								position: 'absolute',
+								alignSelf: 'center',
+								marginTop: 550
+							}}
+						> */}
+						<Button
+							style={{
+								width: 100,
+								flex: 1,
+								alignItems: 'center',
+								justifyContent: 'center',
+								position: 'absolute',
+								alignSelf: 'center',
+								marginTop: 550
+							}}
+							title="signUp"
+							buttonStyle={{ backgroundColor: 'black' }}
+							titleStyle={{ color: 'grey' }}
+							onPress={() => this.onClickListener('Sign Up')}
+						/>
+						{/* </View> */}
 					</ScrollView>
 				</View>
 			</SafeAreaView>

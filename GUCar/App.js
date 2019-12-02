@@ -28,12 +28,30 @@ class HomeScreen extends React.Component {
 				}}
 			>
 				<Header
+					containerStyle={{
+						backgroundColor: 'black',
+						justifyContent: 'space-around'
+					}}
 					leftComponent={{ icon: 'menu', color: '#fff' }}
-					centerComponent={{ text: 'Home Page', style: { color: '#fff' } }}
-					rightComponent={{ icon: 'home', color: '#fff' }}
 				/>
+
+				<View
+					style={{
+						flex: 1,
+						position: 'absolute'
+					}}
+				>
+					<Image
+						source={require('./assets/gucarWhite.png')}
+						style={{
+							width: 400,
+							height: 100,
+							alignSelf: 'center'
+						}}
+					/>
+				</View>
+
 				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-					<Text>GUCar Ride</Text>
 					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 						<Button title="Sign Up" onPress={() => this.props.navigation.navigate('SignUp')} />
 					</View>
