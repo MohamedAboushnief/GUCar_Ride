@@ -1,6 +1,8 @@
 import React from 'react';
 import SignUp from './pages/sign_up';
 import SignIn from './pages/sign_in';
+import AddCar from './pages/add_car';
+
 import { StyleSheet, Text, View, TextInput, Button, TouchableHighlight, Image, Alert } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -28,7 +30,8 @@ const RootStack = createStackNavigator(
 	{
 		Home: HomeScreen,
 		SignUp: { screen: SignUp },
-		SignIn: { screen: SignIn, navigationOptions: { header: null } }
+		SignIn: { screen: SignIn, navigationOptions: { header: null } },
+		AddCar: { screen: AddCar, navigationOptions: { header: null } }
 	},
 	{
 		initialRouteName: 'Home'
