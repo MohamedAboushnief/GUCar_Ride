@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SignUp from './pages/sign_up';
 import SignIn from './pages/sign_in';
 import EditInfo from './pages/edit_profile';
+import Profile from './pages/profile_page';
 import { ThemeProvider, Input, Header } from 'react-native-elements';
 import {
 	StyleSheet,
@@ -142,6 +143,20 @@ const Screen3_StackNavigator = createStackNavigator({
 	}
 });
 
+const Screen4_StackNavigator = createStackNavigator({
+	//All the screen from the Screen2 will be indexed here
+	SignIn: {
+		screen: Profile,
+		navigationOptions: ({ navigation }) => ({
+			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerStyle: {
+				backgroundColor: 'black'
+			},
+			headerTintColor: 'black'
+		})
+	}
+});
+
 const DrawerNavigatorExample = createDrawerNavigator({
 	//Drawer Optons and indexing
 	Screen1: {
@@ -155,21 +170,28 @@ const DrawerNavigatorExample = createDrawerNavigator({
 		//Title
 		screen: FirstActivity_StackNavigator,
 		navigationOptions: {
-			drawerLabel: 'Demo Screen 1'
+			drawerLabel: 'Demo Screen 2'
 		}
 	},
 	Screen3: {
 		//Title
 		screen: Screen2_StackNavigator,
 		navigationOptions: {
-			drawerLabel: 'Demo Screen 2'
+			drawerLabel: 'Demo Screen 3'
 		}
 	},
 	Screen4: {
 		//Title
 		screen: Screen3_StackNavigator,
 		navigationOptions: {
-			drawerLabel: 'Demo Screen 2'
+			drawerLabel: 'Demo Screen 4'
+		}
+	},
+	Screen5: {
+		//Title
+		screen: Screen4_StackNavigator,
+		navigationOptions: {
+			drawerLabel: 'Demo Screen 5'
 		}
 	}
 });
