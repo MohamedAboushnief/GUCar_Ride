@@ -13,6 +13,7 @@ import axios from 'axios';
 
 import { Button, ThemeProvider, Input, Image, Header, Text } from 'react-native-elements';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import * as SecureStore from 'expo-secure-store';
 
 export default class SignIn extends React.Component {
 	constructor(props) {
@@ -35,6 +36,7 @@ export default class SignIn extends React.Component {
 			.then(res => {
 				console.log(res.data.message);
 				alert(res.data.message);
+				SecureStore.setItemAsync('token', JSON.stringify(res.data.token));
 			})
 			.catch(err => {
 				console.log(err);
@@ -49,7 +51,6 @@ export default class SignIn extends React.Component {
 					<ThemeProvider>
 						<Header
 							leftComponent={{ icon: 'menu', color: 'grey' }}
-							onPress={() => this.props.navigation.navigate('SignIn')}
 							containerStyle={{
 								backgroundColor: 'black',
 								justifyContent: 'space-around'

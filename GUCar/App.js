@@ -4,6 +4,18 @@ import SignIn from './pages/sign_in';
 import AddCar from './pages/add_car';
 
 import { StyleSheet, Text, View, TextInput, Button, TouchableHighlight, Image, Alert } from 'react-native';
+import { ThemeProvider, Input, Header } from 'react-native-elements';
+import {
+	StyleSheet,
+	Text,
+	View,
+	TextInput,
+	Button,
+	TouchableHighlight,
+	Image,
+	Alert,
+	SafeAreaView
+} from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
@@ -13,15 +25,44 @@ class HomeScreen extends React.Component {
 	}
 	render() {
 		return (
-			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-				<Text>GUCar Ride</Text>
-				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-					<Button title="Sign Up" onPress={() => this.props.navigation.navigate('SignUp')} />
+			<SafeAreaView
+				style={{
+					flex: 1
+				}}
+			>
+				<Header
+					containerStyle={{
+						backgroundColor: 'black',
+						justifyContent: 'space-around'
+					}}
+					leftComponent={{ icon: 'menu', color: '#fff' }}
+				/>
+
+				<View
+					style={{
+						flex: 1,
+						position: 'absolute'
+					}}
+				>
+					<Image
+						source={require('./assets/gucarWhite.png')}
+						style={{
+							width: 400,
+							height: 100,
+							alignSelf: 'center'
+						}}
+					/>
 				</View>
+
 				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-					<Button title="Sign In" onPress={() => this.props.navigation.navigate('SignIn')} />
+					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+						<Button title="Sign Up" onPress={() => this.props.navigation.navigate('SignUp')} />
+					</View>
+					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+						<Button title="Sign In" onPress={() => this.props.navigation.navigate('SignIn')} />
+					</View>
 				</View>
-			</View>
+			</SafeAreaView>
 		);
 	}
 }
