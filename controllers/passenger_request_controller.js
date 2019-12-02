@@ -17,25 +17,35 @@ const bcrypt = require('bcrypt');
 
 const create_requests = async (req, res, next) => {
 	try {
-		const checkExist = await PassengerRequestModel.findOne({ where: { passenger_id: req.user.id } });
+		const checkExist = await PassengerRequestModel.findAll({ where: { passenger_id: req.user.id } });
+		var exist = false;
 		if (checkExist) {
+			for (i = 0; i < checkExist.length; i++) {
+				if (checkExist[i].status !== 'rejected') {
+					exist = true;
+				}
+			}
+		}
+		if (exist) {
 			return res.status(409).json({
 				status: 'failure',
 				message: 'You have already requested a driver !'
 			});
 		}
-		console.log(req.params.driver_id);
+
 		const newRequest = await PassengerRequestModel.create({
 			passenger_id: req.user.id,
 			driver_id: req.params.driver_id,
 			status: 'pending'
 		});
+
 		if (!newRequest) {
 			return res.status(400).json({
 				status: 'failure',
 				message: 'Could not create request !'
 			});
 		}
+
 		return res.status(200).json({
 			status: 'success',
 			message: 'Request sent successfully !'
