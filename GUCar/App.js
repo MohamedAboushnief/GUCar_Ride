@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SignUp from './pages/sign_up';
 import SignIn from './pages/sign_in';
+import EditInfo from './pages/edit_profile';
 import { ThemeProvider, Input, Header } from 'react-native-elements';
 import {
 	StyleSheet,
@@ -104,7 +105,6 @@ const FirstActivity_StackNavigator = createStackNavigator({
 	SignUp: {
 		screen: SignUp,
 		navigationOptions: ({ navigation }) => ({
-			title: 'Demo Screen 1',
 			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
 			headerStyle: {
 				backgroundColor: 'black'
@@ -119,7 +119,20 @@ const Screen2_StackNavigator = createStackNavigator({
 	SignIn: {
 		screen: SignIn,
 		navigationOptions: ({ navigation }) => ({
-			title: 'Demo Screen 2',
+			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerStyle: {
+				backgroundColor: 'black'
+			},
+			headerTintColor: 'black'
+		})
+	}
+});
+
+const Screen3_StackNavigator = createStackNavigator({
+	//All the screen from the Screen2 will be indexed here
+	SignIn: {
+		screen: EditInfo,
+		navigationOptions: ({ navigation }) => ({
 			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
 			headerStyle: {
 				backgroundColor: 'black'
@@ -148,6 +161,13 @@ const DrawerNavigatorExample = createDrawerNavigator({
 	Screen3: {
 		//Title
 		screen: Screen2_StackNavigator,
+		navigationOptions: {
+			drawerLabel: 'Demo Screen 2'
+		}
+	},
+	Screen4: {
+		//Title
+		screen: Screen3_StackNavigator,
 		navigationOptions: {
 			drawerLabel: 'Demo Screen 2'
 		}

@@ -13,6 +13,7 @@ import axios from 'axios';
 
 import { Button, ThemeProvider, Input, Image, Header, Text } from 'react-native-elements';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import * as SecureStore from 'expo-secure-store';
 
 export default class SignIn extends React.Component {
 	constructor(props) {
@@ -24,7 +25,7 @@ export default class SignIn extends React.Component {
 	}
 
 	onClickListener = (viewId) => {
-		var apiBaseUrl = `http://10.78.71.103:3000/routes/users/login`;
+		var apiBaseUrl = `http://192.168.1.34:3000/routes/users/login`;
 
 		var payload = {
 			email: this.state.email,
@@ -35,6 +36,8 @@ export default class SignIn extends React.Component {
 			.then((res) => {
 				console.log(res.data.message);
 				alert(res.data.message);
+				console.log(res.data.token);
+				SecureStore.setItemAsync('token', JSON.stringify(res.data.token));
 			})
 			.catch((err) => {
 				console.log(err);
