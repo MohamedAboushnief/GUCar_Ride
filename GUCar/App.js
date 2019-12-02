@@ -1,34 +1,56 @@
 import React from 'react';
 import SignUp from './pages/sign_up';
 import SignIn from './pages/sign_in';
-import { StyleSheet, Text, View, TextInput, Button, TouchableHighlight, Image, Alert } from 'react-native';
+import { ThemeProvider, Input, Header } from 'react-native-elements';
+import {
+	StyleSheet,
+	Text,
+	View,
+	TextInput,
+	Button,
+	TouchableHighlight,
+	Image,
+	Alert,
+	SafeAreaView
+} from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
 	constructor(props) {
 		super(props);
 	}
 	render() {
 		return (
-			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-				<Text>GUCar Ride</Text>
+			<SafeAreaView
+				style={{
+					flex: 1
+				}}
+			>
+				<Header
+					leftComponent={{ icon: 'menu', color: '#fff' }}
+					centerComponent={{ text: 'Home Page', style: { color: '#fff' } }}
+					rightComponent={{ icon: 'home', color: '#fff' }}
+				/>
 				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-					<Button title="Sign Up" onPress={() => this.props.navigation.navigate('SignUp')} />
+					<Text>GUCar Ride</Text>
+					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+						<Button title="Sign Up" onPress={() => this.props.navigation.navigate('SignUp')} />
+					</View>
+					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+						<Button title="Sign In" onPress={() => this.props.navigation.navigate('SignIn')} />
+					</View>
 				</View>
-				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-					<Button title="Sign In" onPress={() => this.props.navigation.navigate('SignIn')} />
-				</View>
-			</View>
+			</SafeAreaView>
 		);
 	}
 }
 
 const RootStack = createStackNavigator(
 	{
-		Home: HomeScreen,
-		SignUp: { screen: SignUp },
-		SignIn: { screen: SignIn }
+		Home: { screen: HomeScreen, navigationOptions: { header: null } },
+		SignUp: { screen: SignUp, navigationOptions: { header: null } },
+		SignIn: { screen: SignIn, navigationOptions: { header: null } }
 	},
 	{
 		initialRouteName: 'Home'
@@ -37,7 +59,7 @@ const RootStack = createStackNavigator(
 
 const AppContainer = createAppContainer(RootStack);
 
-class App extends React.Component {
+export default class App extends React.Component {
 	render() {
 		return <AppContainer />;
 	}
