@@ -86,23 +86,6 @@ class NavigationDrawerStructure extends Component {
 				<TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
 					{/*Donute Button Image */}
 					<Image source={require('./image/drawer.png')} style={{ width: 25, height: 25, marginLeft: 5 }} />
-					<View
-						style={{
-							flex: 1,
-							position: 'absolute',
-							marginBottom: 100
-						}}
-					>
-						<Image
-							source={require('./assets/gucarWhite.png')}
-							style={{
-								width: 385,
-								height: 35,
-								position: 'absolute',
-								alignSelf: 'center'
-							}}
-						/>
-					</View>
 				</TouchableOpacity>
 			</View>
 		);
@@ -114,8 +97,18 @@ const Home_StackNavigator = createStackNavigator({
 	Home: {
 		screen: HomeScreen,
 		navigationOptions: ({ navigation }) => ({
-			title: 'Demo Screen 0',
-			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerBackground: (
+				<Image
+					source={require('./assets/gucarWhite.png')}
+					style={{
+						marginTop: 40,
+						width: 390,
+						height: 35,
+						position: 'absolute'
+					}}
+				/>
+			),
+			// headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
 			headerStyle: {
 				backgroundColor: 'black'
 			},
@@ -129,7 +122,18 @@ const signUp_StackNavigator = createStackNavigator({
 	SignUp: {
 		screen: SignUp,
 		navigationOptions: ({ navigation }) => ({
-			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			// headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerBackground: (
+				<Image
+					source={require('./assets/gucarWhite.png')}
+					style={{
+						marginTop: 40,
+						width: 390,
+						height: 35,
+						position: 'absolute'
+					}}
+				/>
+			),
 			headerStyle: {
 				backgroundColor: 'black'
 			},
@@ -143,7 +147,18 @@ const signIn_StackNavigator = createStackNavigator({
 	SignIn: {
 		screen: SignIn,
 		navigationOptions: ({ navigation }) => ({
-			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			// headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerBackground: (
+				<Image
+					source={require('./assets/gucarWhite.png')}
+					style={{
+						marginTop: 40,
+						width: 390,
+						height: 35,
+						position: 'absolute'
+					}}
+				/>
+			),
 			headerStyle: {
 				backgroundColor: 'black'
 			},
@@ -154,10 +169,21 @@ const signIn_StackNavigator = createStackNavigator({
 
 const editInfo_StackNavigator = createStackNavigator({
 	//All the screen from the Screen2 will be indexed here
-	SignIn: {
+	EditInfo: {
 		screen: EditInfo,
 		navigationOptions: ({ navigation }) => ({
 			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerBackground: (
+				<Image
+					source={require('./assets/gucarWhite.png')}
+					style={{
+						marginTop: 40,
+						width: 390,
+						height: 35,
+						position: 'absolute'
+					}}
+				/>
+			),
 			headerStyle: {
 				backgroundColor: 'black'
 			},
@@ -168,10 +194,21 @@ const editInfo_StackNavigator = createStackNavigator({
 
 const profile_StackNavigator = createStackNavigator({
 	//All the screen from the Screen2 will be indexed here
-	SignIn: {
+	Profile: {
 		screen: Profile,
 		navigationOptions: ({ navigation }) => ({
 			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerBackground: (
+				<Image
+					source={require('./assets/gucarWhite.png')}
+					style={{
+						marginTop: 40,
+						width: 390,
+						height: 35,
+						position: 'absolute'
+					}}
+				/>
+			),
 			headerStyle: {
 				backgroundColor: 'black'
 			},
@@ -185,7 +222,18 @@ const addCar_StackNavigator = createStackNavigator({
 	AddCar: {
 		screen: AddCar,
 		navigationOptions: ({ navigation }) => ({
-			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			// headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerBackground: (
+				<Image
+					source={require('./assets/gucarWhite.png')}
+					style={{
+						marginTop: 40,
+						width: 390,
+						height: 35,
+						position: 'absolute'
+					}}
+				/>
+			),
 			headerStyle: {
 				backgroundColor: 'black'
 			},
@@ -200,6 +248,17 @@ const signOut_StackNavigator = createStackNavigator({
 		screen: HomeScreen,
 		navigationOptions: ({ navigation }) => ({
 			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerBackground: (
+				<Image
+					source={require('./assets/gucarWhite.png')}
+					style={{
+						marginTop: 40,
+						width: 390,
+						height: 35,
+						position: 'absolute'
+					}}
+				/>
+			),
 			headerStyle: {
 				backgroundColor: 'black'
 			},

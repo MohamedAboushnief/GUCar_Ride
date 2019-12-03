@@ -7,7 +7,7 @@ const driver_car = require('./routes/driver_car');
 const trip = require('./routes/trip');
 const passenger_request = require('./routes/passenger_request');
 var passport = require('passport');
-const port = 3000;
+const port = 5000;
 
 const Sequelize = require('./config/databaseConfig');
 

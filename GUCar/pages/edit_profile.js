@@ -61,7 +61,7 @@ export default class EditInfo extends React.Component {
 		axios.defaults.headers.common['Authorization'] = token;
 
 		axios
-			.put('http://192.168.1.34:3000/routes/users/edit_info', {
+			.put('http://192.168.43.245:5000/routes/users/edit_info', {
 				method: 'PUT',
 				mode: 'cors',
 				data: payload

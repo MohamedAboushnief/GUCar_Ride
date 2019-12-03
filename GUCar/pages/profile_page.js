@@ -25,7 +25,7 @@ export default class Profile extends Component {
 		axios.defaults.headers.common['Authorization'] = token;
 
 		axios
-			.get('http://192.168.1.34:3000/routes/users/userInfo', {
+			.get('http://192.168.43.245:5000/routes/users/userInfo', {
 				method: 'GET',
 				mode: 'cors'
 			})
