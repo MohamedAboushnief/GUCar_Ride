@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import SignUp from './pages/sign_up';
 import SignIn from './pages/sign_in';
+import AddTrip from './pages/add_trip';
+
 import EditInfo from './pages/edit_profile';
 import Profile from './pages/profile_page';
 import { ThemeProvider, Input, Header } from 'react-native-elements';
@@ -32,30 +34,6 @@ class HomeScreen extends React.Component {
 					flex: 1
 				}}
 			>
-				{/* <Header
-					containerStyle={{
-						backgroundColor: 'black',
-						justifyContent: 'space-around'
-					}}
-					leftComponent={{ icon: 'menu', color: '#fff' }}
-				/>
-
-				<View
-					style={{
-						flex: 1,
-						position: 'absolute'
-					}}
-				>
-					<Image
-						source={require('./assets/gucarWhite.png')}
-						style={{
-							width: 400,
-							height: 100,
-							alignSelf: 'center'
-						}}
-					/>
-				</View> */}
-
 				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 						<Button title="Sign Up" onPress={() => this.props.navigation.navigate('SignUp')} />
@@ -66,6 +44,9 @@ class HomeScreen extends React.Component {
 
 					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 						<Button title="Test To Add car" onPress={() => this.props.navigation.navigate('AddCar')} />
+					</View>
+					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+						<Button title="Test To Add car" onPress={() => this.props.navigation.navigate('AddTrip')} />
 					</View>
 				</View>
 			</SafeAreaView>
@@ -242,6 +223,31 @@ const addCar_StackNavigator = createStackNavigator({
 	}
 });
 
+const addTrip_StackNavigator = createStackNavigator({
+	//All the screen from the Screen2 will be indexed here
+	AddTrip: {
+		screen: AddTrip,
+		navigationOptions: ({ navigation }) => ({
+			// headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerBackground: (
+				<Image
+					source={require('./assets/gucarWhite.png')}
+					style={{
+						marginTop: 40,
+						width: 390,
+						height: 35,
+						position: 'absolute'
+					}}
+				/>
+			),
+			headerStyle: {
+				backgroundColor: 'black'
+			},
+			headerTintColor: 'black'
+		})
+	}
+});
+
 const signOut_StackNavigator = createStackNavigator({
 	//All the screen from the Screen1 will be indexed here
 	signOut: {
@@ -312,6 +318,13 @@ const DrawerNavigatorExample = createDrawerNavigator({
 		}
 	},
 	Screen7: {
+		//Title
+		screen: addTrip_StackNavigator,
+		navigationOptions: {
+			drawerLabel: 'Add a Trip'
+		}
+	},
+	Screen8: {
 		//Title
 		screen: Home_StackNavigator,
 		navigationOptions: {
