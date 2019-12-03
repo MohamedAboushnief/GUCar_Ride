@@ -15,6 +15,9 @@ import axios from 'axios';
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
 import * as SecureStore from 'expo-secure-store';
+import Profile from './profile_page';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 
 export default class SignUp extends React.Component {
 	constructor(props) {
@@ -46,7 +49,22 @@ export default class SignUp extends React.Component {
 	componentDidMount() {}
 
 	onClickListener = async () => {
-		var apiBaseUrl = `http://192.168.1.34:3000/routes/users/sign_up`;
+		const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+		let finalStatus = existingStatus;
+		if (existingStatus !== 'granted') {
+			// Android remote notification permissions are granted during the app
+			// install, so this will only ask on iOS
+			const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+			finalStatus = status;
+		}
+		// Stop here if the user did not grant permissios
+		if (finalStatus !== 'granted') {
+			return;
+		}
+		let token = await Notifications.getExpoPushTokenAsync();
+		console.log(token);
+
+		var apiBaseUrl = `http://192.168.43.245:5000/routes/users/sign_up`;
 		var payload = {
 			first_name: this.state.first_name,
 			last_name: this.state.last_name,
@@ -57,7 +75,8 @@ export default class SignUp extends React.Component {
 			gender: this.state.gender,
 			address: this.state.address,
 			rating: 0,
-			mobile_number: this.state.mobile_number
+			mobile_number: this.state.mobile_number,
+			token: token
 		};
 
 		axios({ method: 'post', url: apiBaseUrl, data: payload })
@@ -66,8 +85,10 @@ export default class SignUp extends React.Component {
 				alert(res.data.message);
 				console.log(res.data.token);
 				SecureStore.setItemAsync('token', JSON.stringify(res.data.token));
+				this.props.navigation.navigate('Profile');
 			})
 			.catch((err) => {
+				console.log(err);
 				alert(err.response.data.message);
 				console.log(err.response.data.message);
 			});
