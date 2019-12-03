@@ -57,12 +57,14 @@ export default class Profile extends Component {
 						<Text style={styles.name}>
 							{this.state.first_name} {this.state.last_name}
 						</Text>
+						<Text style={styles.name}>{this.state.guc_id}</Text>
+						<Text style={styles.name}>{this.state.mobile_number}</Text>
 
 						<TouchableOpacity style={styles.buttonContainer}>
-							<Text>Opcion 1</Text>
+							<Text style={{ color: 'white', fontSize: 22 }}>Request a ride</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={styles.buttonContainer}>
-							<Text>Opcion 2</Text>
+							<Text style={{ color: 'white', fontSize: 22 }}>Create a trip</Text>
 						</TouchableOpacity>
 					</View>
 				</View>

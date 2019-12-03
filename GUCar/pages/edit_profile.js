@@ -71,7 +71,6 @@ export default class EditInfo extends React.Component {
 				alert(res.data.message);
 			})
 			.catch((error) => {
-				console.log('ssssssss');
 				console.log(error.response);
 				alert(error.response.data.error);
 			});

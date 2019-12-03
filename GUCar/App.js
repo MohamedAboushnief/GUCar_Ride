@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import SignUp from './pages/sign_up';
 import SignIn from './pages/sign_in';
-<<<<<<< HEAD
 import EditInfo from './pages/edit_profile';
 import Profile from './pages/profile_page';
 import { ThemeProvider, Input, Header } from 'react-native-elements';
@@ -17,12 +16,7 @@ import {
 	SafeAreaView,
 	TouchableOpacity
 } from 'react-native';
-=======
 import AddCar from './pages/add_car';
-
-import { ThemeProvider, Input, Header, Image } from 'react-native-elements';
-import { Text, View, TextInput, Button, TouchableHighlight, Alert, SafeAreaView, TouchableOpacity } from 'react-native';
->>>>>>> 70fefb7d13f6cf2d73654fa4dfc10e293be689f3
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
@@ -85,6 +79,7 @@ class NavigationDrawerStructure extends Component {
 		//Props to open/close the drawer
 		this.props.navigationProps.toggleDrawer();
 	};
+
 	render() {
 		return (
 			<View style={{ flexDirection: 'row' }}>
@@ -129,7 +124,7 @@ const Home_StackNavigator = createStackNavigator({
 	}
 });
 
-const FirstActivity_StackNavigator = createStackNavigator({
+const signUp_StackNavigator = createStackNavigator({
 	//All the screen from the Screen1 will be indexed here
 	SignUp: {
 		screen: SignUp,
@@ -143,7 +138,7 @@ const FirstActivity_StackNavigator = createStackNavigator({
 	}
 });
 
-const Screen2_StackNavigator = createStackNavigator({
+const signIn_StackNavigator = createStackNavigator({
 	//All the screen from the Screen2 will be indexed here
 	SignIn: {
 		screen: SignIn,
@@ -157,7 +152,7 @@ const Screen2_StackNavigator = createStackNavigator({
 	}
 });
 
-const Screen3_StackNavigator = createStackNavigator({
+const editInfo_StackNavigator = createStackNavigator({
 	//All the screen from the Screen2 will be indexed here
 	SignIn: {
 		screen: EditInfo,
@@ -171,7 +166,7 @@ const Screen3_StackNavigator = createStackNavigator({
 	}
 });
 
-const Screen4_StackNavigator = createStackNavigator({
+const profile_StackNavigator = createStackNavigator({
 	//All the screen from the Screen2 will be indexed here
 	SignIn: {
 		screen: Profile,
@@ -185,12 +180,25 @@ const Screen4_StackNavigator = createStackNavigator({
 	}
 });
 
-const Screen3_StackNavigator = createStackNavigator({
+const addCar_StackNavigator = createStackNavigator({
 	//All the screen from the Screen2 will be indexed here
 	AddCar: {
 		screen: AddCar,
 		navigationOptions: ({ navigation }) => ({
-			title: 'Demo Screen 3',
+			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerStyle: {
+				backgroundColor: 'black'
+			},
+			headerTintColor: 'black'
+		})
+	}
+});
+
+const signOut_StackNavigator = createStackNavigator({
+	//All the screen from the Screen1 will be indexed here
+	signOut: {
+		screen: HomeScreen,
+		navigationOptions: ({ navigation }) => ({
 			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
 			headerStyle: {
 				backgroundColor: 'black'
@@ -206,42 +214,49 @@ const DrawerNavigatorExample = createDrawerNavigator({
 		//Title
 		screen: Home_StackNavigator,
 		navigationOptions: {
-			drawerLabel: 'Demo Screen 1'
+			drawerLabel: 'Home Page'
 		}
 	},
 	Screen2: {
 		//Title
-		screen: FirstActivity_StackNavigator,
+		screen: signUp_StackNavigator,
 		navigationOptions: {
-			drawerLabel: 'Demo Screen 2'
+			drawerLabel: 'Sign Up'
 		}
 	},
 	Screen3: {
 		//Title
-		screen: Screen2_StackNavigator,
+		screen: signIn_StackNavigator,
 		navigationOptions: {
-			drawerLabel: 'Demo Screen 3'
+			drawerLabel: 'Sign In'
 		}
 	},
 	Screen4: {
 		//Title
-		screen: Screen3_StackNavigator,
+		screen: editInfo_StackNavigator,
 		navigationOptions: {
-			drawerLabel: 'Demo Screen 4'
+			drawerLabel: 'Edit Profile'
 		}
 	},
 	Screen5: {
 		//Title
-		screen: Screen4_StackNavigator,
+		screen: profile_StackNavigator,
 		navigationOptions: {
-			drawerLabel: 'Demo Screen 5'
+			drawerLabel: 'Your Profile'
 		}
 	},
-	Screen4: {
+	Screen6: {
 		//Title
-		screen: Screen3_StackNavigator,
+		screen: addCar_StackNavigator,
 		navigationOptions: {
-			drawerLabel: 'Demo Screen 3'
+			drawerLabel: 'Add a vehicle'
+		}
+	},
+	Screen7: {
+		//Title
+		screen: Home_StackNavigator,
+		navigationOptions: {
+			drawerLabel: 'Sign Out'
 		}
 	}
 });
