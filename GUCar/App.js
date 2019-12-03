@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SignUp from './pages/sign_up';
 import SignIn from './pages/sign_in';
 import AddTrip from './pages/add_trip';
-
+import ViewTrips from './pages/view_trips';
 import EditInfo from './pages/edit_profile';
 import Profile from './pages/profile_page';
 import { ThemeProvider, Input, Header } from 'react-native-elements';
@@ -248,6 +248,31 @@ const addTrip_StackNavigator = createStackNavigator({
 	}
 });
 
+const viewTrips_StackNavigator = createStackNavigator({
+	//All the screen from the Screen2 will be indexed here
+	ViewTrips: {
+		screen: ViewTrips,
+		navigationOptions: ({ navigation }) => ({
+			// headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerBackground: (
+				<Image
+					source={require('./assets/gucarWhite.png')}
+					style={{
+						marginTop: 40,
+						width: 390,
+						height: 35,
+						position: 'absolute'
+					}}
+				/>
+			),
+			headerStyle: {
+				backgroundColor: 'black'
+			},
+			headerTintColor: 'black'
+		})
+	}
+});
+
 const signOut_StackNavigator = createStackNavigator({
 	//All the screen from the Screen1 will be indexed here
 	signOut: {
@@ -325,6 +350,13 @@ const DrawerNavigatorExample = createDrawerNavigator({
 		}
 	},
 	Screen8: {
+		//Title
+		screen: viewTrips_StackNavigator,
+		navigationOptions: {
+			drawerLabel: 'View Trips'
+		}
+	},
+	Screen9: {
 		//Title
 		screen: Home_StackNavigator,
 		navigationOptions: {
