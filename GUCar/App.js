@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SignUp from './pages/sign_up';
 import SignIn from './pages/sign_in';
 import AddCar from './pages/add_car';
+import AddTrip from './pages/add_trip';
 
 import { ThemeProvider, Input, Header, Image } from 'react-native-elements';
 import { Text, View, TextInput, Button, TouchableHighlight, Alert, SafeAreaView, TouchableOpacity } from 'react-native';
@@ -54,6 +55,10 @@ class HomeScreen extends React.Component {
 
 					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 						<Button title="Test To Add car" onPress={() => this.props.navigation.navigate('AddCar')} />
+					</View>
+
+					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+						<Button title="Test To Add trip" onPress={() => this.props.navigation.navigate('AddTrip')} />
 					</View>
 				</View>
 			</SafeAreaView>
@@ -156,6 +161,21 @@ const Screen3_StackNavigator = createStackNavigator({
 	}
 });
 
+const Screen4_StackNavigator = createStackNavigator({
+	//All the screen from the Screen2 will be indexed here
+	AddTrip: {
+		screen: AddTrip,
+		navigationOptions: ({ navigation }) => ({
+			title: 'Demo Screen 4',
+			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerStyle: {
+				backgroundColor: 'black'
+			},
+			headerTintColor: 'black'
+		})
+	}
+});
+
 const DrawerNavigatorExample = createDrawerNavigator({
 	//Drawer Optons and indexing
 	Screen1: {
@@ -184,6 +204,13 @@ const DrawerNavigatorExample = createDrawerNavigator({
 		screen: Screen3_StackNavigator,
 		navigationOptions: {
 			drawerLabel: 'Demo Screen 3'
+		}
+	},
+	Screen5: {
+		//Title
+		screen: Screen4_StackNavigator,
+		navigationOptions: {
+			drawerLabel: 'Demo Screen 4'
 		}
 	}
 });

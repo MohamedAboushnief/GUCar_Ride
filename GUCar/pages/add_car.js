@@ -33,7 +33,6 @@ export default class AddCar extends React.Component {
 			car_plate_number: this.state.car_plate_number,
 			car_color: this.state.car_color
 		};
-		console.log(payload.car_model + 'lllllllllllllllllllllllllllllllllllllllllll');
 		const token = JSON.parse(await SecureStore.getItemAsync('token'));
 		console.log(token);
 		axios.defaults.headers.common['Authorization'] = token;
@@ -81,43 +80,6 @@ export default class AddCar extends React.Component {
 							/>
 						</View>
 
-						{/* <View
-							style={{
-								flex: 1,
-								alignItems: 'center',
-								justifyContent: 'center',
-								position: 'absolute',
-								alignSelf: 'center',
-								marginTop: 117
-							}}
-						>
-							<Text h1 h1Style={{ marginLeft: 50 }}>
-								Log In
-							</Text>
-						</View> */}
-
-						{/* <View
-							style={{
-								flex: 1,
-								alignItems: 'center',
-								justifyContent: 'center',
-								position: 'absolute',
-								alignSelf: 'center',
-								marginTop: 120
-							}}
-						>
-							<Icon name="sign-in" type="evilicon" color="grey" size={50} style={{ marginRight: 150 }} />
-						</View> */}
-						{/* <View
-							style={{
-								flex: 1,
-								alignItems: 'center',
-								justifyContent: 'center',
-								position: 'absolute',
-								alignSelf: 'center',
-								marginTop: 350
-							}}
-						> */}
 						<Button
 							buttonStyle={{
 								backgroundColor: 'black',

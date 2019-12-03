@@ -13,15 +13,16 @@ Trip.init(
 			autoIncrement: true
 		},
 		pricing: {
-			type: Sequelize.FLOAT,
+			type: Sequelize.STRING,
 			validate: {
 				max: 100,
-				notEmpty: true
+				notEmpty: true,
+				allowNull: false
 			}
 		},
 		guc_slot: {
 			type: Sequelize.ENUM,
-			values: [ 'First', 'Second', 'Third', 'Fourth', 'Fifth' ],
+			values: ['1st slot', '2nd slot', '3rd slot', '4rth slot', '5th slot'],
 			notEmpty: true
 		}
 	},
