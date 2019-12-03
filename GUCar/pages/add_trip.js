@@ -49,7 +49,7 @@ export default class AddTrip extends React.Component {
 			.post('http://10.78.71.103:5000/routes/trips/create_trip', {
 				method: 'POST',
 				mode: 'cors',
-				data: payload.data
+				data: payload
 			})
 			.then(res => {
 				console.log(res.data.message);
