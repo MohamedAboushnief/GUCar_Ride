@@ -26,27 +26,28 @@ export default class AddCar extends React.Component {
 	}
 
 	onClickListener = async () => {
-		//var apiBaseUrl = `http://192.168.1.5:3000/routes/drivers_cars/create`;
-
 		var payload = {
 			car_model: this.state.car_model,
 			car_plate_number: this.state.car_plate_number,
 			car_color: this.state.car_color
 		};
-		console.log(payload.car_model + 'lllllllllllllllllllllllllllllllllllllllllll');
 		const token = JSON.parse(await SecureStore.getItemAsync('token'));
 		console.log(token);
 		axios.defaults.headers.common['Authorization'] = token;
 		axios
-			.post('http://192.168.43.192:5000/routes/drivers_cars/create', payload, {
-				method: 'POST',
-				mode: 'cors'
-			})
-			.then(res => {
+			.post(
+				'http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/drivers_cars/create',
+				payload,
+				{
+					method: 'POST',
+					mode: 'cors'
+				}
+			)
+			.then((res) => {
 				console.log(res.data.message);
 				alert(res.data.message);
 			})
-			.catch(err => {
+			.catch((err) => {
 				alert(err.response.data.message);
 			});
 	};
@@ -61,7 +62,7 @@ export default class AddCar extends React.Component {
 								containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
 								placeholder="Car model"
 								leftIcon={{ type: 'font-awesome', name: 'car', iconStyle: { marginRight: 13 } }}
-								onChangeText={car_model => this.setState({ car_model })}
+								onChangeText={(car_model) => this.setState({ car_model })}
 							/>
 							<Input
 								containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
@@ -71,13 +72,13 @@ export default class AddCar extends React.Component {
 									name: 'paint-brush',
 									iconStyle: { marginRight: 13 }
 								}}
-								onChangeText={car_color => this.setState({ car_color })}
+								onChangeText={(car_color) => this.setState({ car_color })}
 							/>
 							<Input
 								containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
 								placeholder="Car plate number"
 								leftIcon={{ type: 'font-awesome', name: 'language', iconStyle: { marginRight: 13 } }}
-								onChangeText={car_plate_number => this.setState({ car_plate_number })}
+								onChangeText={(car_plate_number) => this.setState({ car_plate_number })}
 							/>
 						</View>
 

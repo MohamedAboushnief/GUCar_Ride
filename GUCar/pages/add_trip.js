@@ -27,10 +27,10 @@ export default class AddTrip extends React.Component {
 		this.onClickListener = this.onClickListener.bind(this);
 	}
 
-	updatePrice = pricing => {
+	updatePrice = (pricing) => {
 		this.setState({ pricing: pricing });
 	};
-	updateGucSlot = guc_slot => {
+	updateGucSlot = (guc_slot) => {
 		this.setState({ guc_slot: guc_slot });
 	};
 
@@ -46,16 +46,16 @@ export default class AddTrip extends React.Component {
 		console.log(payload);
 		axios.defaults.headers.common['Authorization'] = token;
 		axios
-			.post('http://192.168.43.192:5000/routes/trips/create_trip', {
+			.post('http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/trips/create_trip', {
 				method: 'POST',
 				mode: 'cors',
 				data: payload
 			})
-			.then(res => {
+			.then((res) => {
 				console.log(res.data.message);
 				alert(res.data.message);
 			})
-			.catch(err => {
+			.catch((err) => {
 				alert(err.response.data.message);
 			});
 	};
