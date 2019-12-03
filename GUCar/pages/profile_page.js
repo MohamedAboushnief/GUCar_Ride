@@ -25,11 +25,11 @@ export default class Profile extends Component {
 		axios.defaults.headers.common['Authorization'] = token;
 
 		axios
-			.get('http://192.168.43.245:5000/routes/users/userInfo', {
+			.get('http://192.168.43.192:5000/routes/users/userInfo', {
 				method: 'GET',
 				mode: 'cors'
 			})
-			.then((res) => {
+			.then(res => {
 				this.setState({
 					first_name: res.data.user.first_name,
 					last_name: res.data.user.last_name,
@@ -41,7 +41,7 @@ export default class Profile extends Component {
 					mobile_number: res.data.mobile.mobile_number
 				});
 			})
-			.catch((error) => {
+			.catch(error => {
 				console.log(error.response);
 				alert(error.response.data.error);
 			});
