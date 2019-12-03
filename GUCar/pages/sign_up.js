@@ -47,7 +47,7 @@ export default class SignUp extends React.Component {
 	componentDidMount() {}
 
 	onClickListener = async () => {
-		var apiBaseUrl = `http://192.168.1.5:3000/routes/users/sign_up`;
+		var apiBaseUrl = `http://10.78.71.140:3000/routes/users/sign_up`;
 		var payload = {
 			first_name: this.state.first_name,
 			last_name: this.state.last_name,
