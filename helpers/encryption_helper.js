@@ -1,10 +1,10 @@
-const bcrypt = require('bcryptjs');
+const bcryptjs = require('bcryptjs');
 async function checkEncryptedEqualVal(nonEncryptedValue, encryptedValue) {
-	return bcrypt.compare(nonEncryptedValue, encryptedValue);
+	return bcryptjs.compare(nonEncryptedValue, encryptedValue);
 }
 function EncryptPassword(password) {
 	return new Promise(function(resolve, reject) {
-		bcrypt.hash(password, 10, function(_err, hash) {
+		bcryptjs.hash(password, 10, function(_err, hash) {
 			// Store hash in database
 			resolve(hash);
 		});

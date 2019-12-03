@@ -10,7 +10,7 @@ const Mobile = new MobileModel(sequelize, Sequelize);
 const User = new UserModel(sequelize, Sequelize);
 const jwt = require('jsonwebtoken');
 var passport = require('passport');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 
 const view_available_drivers = async (req, res, next) => {
 	try {
