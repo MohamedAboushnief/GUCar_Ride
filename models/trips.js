@@ -23,7 +23,8 @@ Trip.init(
 		guc_slot: {
 			type: Sequelize.ENUM,
 			values: ['1st slot', '2nd slot', '3rd slot', '4rth slot', '5th slot'],
-			notEmpty: true
+			notEmpty: true,
+			allowNull: false
 		}
 	},
 	{
