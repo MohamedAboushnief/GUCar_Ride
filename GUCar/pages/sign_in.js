@@ -24,8 +24,8 @@ export default class SignIn extends React.Component {
 		};
 	}
 
-	onClickListener = async () => {
-		var apiBaseUrl = `http://192.168.1.5:3000/routes/users/login`;
+	onClickListener = (viewId) => {
+		var apiBaseUrl = `http://192.168.43.245:5000/routes/users/login`;
 
 		var payload = {
 			email: this.state.email,
@@ -34,13 +34,14 @@ export default class SignIn extends React.Component {
 
 		axios
 			.post(apiBaseUrl, payload)
-			.then(res => {
+			.then((res) => {
 				console.log(res.data.message);
 				alert(res.data.message);
-				console.log(JSON.stringify(res.data.token));
+				console.log(res.data.token);
 				SecureStore.setItemAsync('token', JSON.stringify(res.data.token));
+				this.props.navigation.navigate('Profile');
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.log(err);
 				alert(err.response.data.message);
 			});
@@ -63,7 +64,7 @@ export default class SignIn extends React.Component {
 								containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
 								placeholder="Email"
 								leftIcon={{ type: 'font-awesome', name: 'envelope-o', iconStyle: { marginRight: 13 } }}
-								onChangeText={email => this.setState({ email })}
+								onChangeText={(email) => this.setState({ email })}
 							/>
 						</View>
 						<View
@@ -79,7 +80,7 @@ export default class SignIn extends React.Component {
 								containerStyle={{ width: 280, alignSelf: 'center' }}
 								placeholder="Password"
 								leftIcon={{ type: 'font-awesome', name: 'lock', iconStyle: { marginRight: 13 } }}
-								onChangeText={password => this.setState({ password })}
+								onChangeText={(password) => this.setState({ password })}
 								secureTextEntry={true}
 							/>
 						</View>

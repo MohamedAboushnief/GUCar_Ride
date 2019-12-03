@@ -11,8 +11,16 @@ var passport = require('passport');
 const bcrypt = require('bcrypt');
 const { checkEncryptedEqualVal } = require('../helpers/encryption_helper');
 
+const postToken = async (req, res, next) => {
+	try {
+		token = req.body.token;
+	} catch (error) {}
+};
+
 const signup = async (req, res, next) => {
 	try {
+		pushToken = req.body.token;
+		console.log(pushToken);
 		const checkUser = await UserModel.findOne({
 			where: {
 				email: req.body.email
@@ -46,7 +54,8 @@ const signup = async (req, res, next) => {
 			date_of_birth: new Date(req.body.date_of_birth),
 			gender: req.body.gender,
 			address: req.body.address,
-			rating: req.body.rating
+			rating: req.body.rating,
+			push_token: pushToken
 		});
 
 		for (var i = 0; i < req.body.mobile_number.length; i++) {
@@ -67,7 +76,7 @@ const signup = async (req, res, next) => {
 			const token = jwt.sign(jwt_data, sequelize.secretOrKey, {
 				expiresIn: '1h'
 			});
-
+			console.log('Push token is set successfully in the server');
 			return res.status(200).json({
 				user,
 				token: `Bearer ${token}`,
@@ -174,6 +183,8 @@ const getInfo = async (req, res, next) => {
 };
 
 const editInfo = async (req, res, next) => {
+	console.log('asssssssssssss');
+
 	try {
 		const user = await UserModel.findByPk(req.user.id);
 
@@ -358,5 +369,6 @@ module.exports = {
 	getInfo,
 	editInfo,
 	delete_user,
-	change_password
+	change_password,
+	postToken
 };

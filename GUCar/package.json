@@ -10,6 +10,7 @@
 	"dependencies": {
 		"axios": "^0.19.0",
 		"expo": "^35.0.0",
+		"expo-permissions": "^7.0.0",
 		"expo-secure-store": "^7.0.0",
 		"material-design-icons": "^3.0.1",
 		"moment": "^2.24.0",
