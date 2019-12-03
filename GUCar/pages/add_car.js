@@ -26,7 +26,7 @@ export default class AddCar extends React.Component {
 	}
 
 	onClickListener = async () => {
-		//var apiBaseUrl = `http://10.78.71.140:3000/routes/drivers_cars/create`;
+		//var apiBaseUrl = `http://10.78.71.103:5000/routes/drivers_cars/create`;
 
 		var payload = {
 			car_model: this.state.car_model,
@@ -37,7 +37,7 @@ export default class AddCar extends React.Component {
 		console.log(token);
 		axios.defaults.headers.common['Authorization'] = token;
 		axios
-			.post('http://10.78.71.140:3000/routes/drivers_cars/create', payload, {
+			.post('http://10.78.71.103:5000/routes/drivers_cars/create', payload, {
 				method: 'POST',
 				mode: 'cors'
 			})

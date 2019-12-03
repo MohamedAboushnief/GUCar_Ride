@@ -44,7 +44,7 @@ export default class EditInfo extends React.Component {
 	componentDidMount() {}
 
 	onClickListener = async () => {
-		var apiBaseUrl = `http://192.168.1.34:3000/routes/users/edit_info`;
+		var apiBaseUrl = `http://192.168.1.34:5000/routes/users/edit_info`;
 		var payload = {
 			first_name: this.state.first_name,
 			last_name: this.state.last_name,
