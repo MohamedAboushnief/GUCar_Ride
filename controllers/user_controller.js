@@ -183,8 +183,6 @@ const getInfo = async (req, res, next) => {
 };
 
 const editInfo = async (req, res, next) => {
-	console.log('asssssssssssss');
-
 	try {
 		const user = await UserModel.findByPk(req.user.id);
 

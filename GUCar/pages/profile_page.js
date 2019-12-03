@@ -29,7 +29,7 @@ export default class Profile extends Component {
 				method: 'GET',
 				mode: 'cors'
 			})
-			.then(res => {
+			.then((res) => {
 				this.setState({
 					first_name: res.data.user.first_name,
 					last_name: res.data.user.last_name,
@@ -41,7 +41,7 @@ export default class Profile extends Component {
 					mobile_number: res.data.mobile.mobile_number
 				});
 			})
-			.catch(error => {
+			.catch((error) => {
 				console.log(error.response);
 				alert(error.response.data.error);
 			});
@@ -60,7 +60,10 @@ export default class Profile extends Component {
 						<Text style={styles.name}>{this.state.guc_id}</Text>
 						<Text style={styles.name}>{this.state.mobile_number}</Text>
 
-						<TouchableOpacity style={styles.buttonContainer}>
+						<TouchableOpacity
+							style={styles.buttonContainer}
+							onPress={() => this.props.navigation.navigate('ViewTrips')}
+						>
 							<Text style={{ color: 'white', fontSize: 22 }}>Request a ride</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={styles.buttonContainer}>
