@@ -13,7 +13,7 @@ const Passenger = new PassengerRequestModel(sequelize, Sequelize);
 
 const jwt = require('jsonwebtoken');
 var passport = require('passport');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 
 const create_requests = async (req, res, next) => {
 	try {
