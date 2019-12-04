@@ -5,6 +5,7 @@ import AddTrip from './pages/add_trip';
 import ViewTrips from './pages/view_trips';
 import EditInfo from './pages/edit_profile';
 import Profile from './pages/profile_page';
+import ViewRequests from './pages/view_driver_requests';
 import { ThemeProvider, Input, Header } from 'react-native-elements';
 import {
 	StyleSheet,
@@ -77,6 +78,31 @@ const Home_StackNavigator = createStackNavigator({
 	//All the screen from the Screen1 will be indexed here
 	Home: {
 		screen: HomeScreen,
+		navigationOptions: ({ navigation }) => ({
+			headerBackground: (
+				<Image
+					source={require('./assets/gucarWhite.png')}
+					style={{
+						marginTop: 40,
+						width: 390,
+						height: 35,
+						position: 'absolute'
+					}}
+				/>
+			),
+			// headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerStyle: {
+				backgroundColor: 'black'
+			},
+			headerTintColor: 'black'
+		})
+	}
+});
+
+const ViewRequests_StackNavigator = createStackNavigator({
+	//All the screen from the Screen1 will be indexed here
+	ViewRequests: {
+		screen: ViewRequests,
 		navigationOptions: ({ navigation }) => ({
 			headerBackground: (
 				<Image
@@ -357,6 +383,14 @@ const DrawerNavigatorExample = createDrawerNavigator({
 		}
 	},
 	Screen9: {
+		//Title
+		screen: ViewRequests_StackNavigator,
+		navigationOptions: {
+			drawerLabel: 'View Requests'
+		}
+	},
+
+	Screen10: {
 		//Title
 		screen: Home_StackNavigator,
 		navigationOptions: {
