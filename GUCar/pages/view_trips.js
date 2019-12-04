@@ -21,9 +21,9 @@ import * as SecureStore from 'expo-secure-store';
 import Profile from './profile_page';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
-import tripCard from './trip_card';
+import TripsCard from './trip_card';
 
-export default class App extends React.Component {
+export default class ViewTrips extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -33,6 +33,7 @@ export default class App extends React.Component {
 	}
 
 	componentDidMount() {
+		console.log('hhhhhhhhhhhhhhhhhhhhhhhhhh');
 		// Get the user's location
 		this.getTrips();
 	}
@@ -43,14 +44,18 @@ export default class App extends React.Component {
 		axios.defaults.headers.common['Authorization'] = token;
 
 		axios
-			.get('http://192.168.43.192:5000/routes/trips/view_available_drivers', {
-				method: 'GET',
-				mode: 'cors'
-			})
+			.get(
+				'http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/trips/view_available_drivers',
+				{
+					method: 'GET',
+					mode: 'cors'
+				}
+			)
 			.then((res) => {
 				this.setState({
 					trips: res.data.arrayOfTrips
 				});
+				console.log(this.state.trips);
 			})
 			.catch((error) => {
 				console.log(error.response);
@@ -61,10 +66,22 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<FlatList
-				data={this.state.trips.list}
+				data={this.state.trips}
 				style={{ marginTop: 20 }}
-				keyExtractor={(item) => item.dt_txt}
-				renderItem={({ item }) => <tripCard detail={item} Slot={this.state.trips.trip.guc_slot} />}
+				keyExtractor={(item, index) => item.key}
+				// keyExtractor={(item) => item.dt_txt}
+				renderItem={({ item, index }) => (
+					<TripsCard
+						detail={item}
+						First_name={this.state.trips[index].first_name}
+						Last_name={this.state.trips[index].last_name}
+						Mobile={this.state.trips[index].mobile_numbers[0].mobile_number}
+						Rating={this.state.trips[index].Rating}
+						Slot={this.state.trips[index].trip.guc_slot}
+						Price={this.state.trips[index].trip.pricing}
+						Driver_id={this.state.trips[index].trip.user_id}
+					/>
+				)}
 			/>
 		);
 	}
