@@ -74,7 +74,8 @@ const get_requests = async (req, res, next) => {
 				first_name: details.first_name,
 				last_name: details.last_name,
 				guc_id: details.guc_id,
-				pick_up_location: passengers[i].pick_up_location
+				pick_up_location: passengers[i].pick_up_location,
+				passenger_id: passengers[i].passenger_id
 			};
 			available_passengers.push(appendDetails);
 		}

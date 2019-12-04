@@ -8,26 +8,46 @@ export default class TripsCard extends Component {
 		super(props);
 
 		this.state = {
-			status: ''
+			status: '',
+			request: 'Request',
+			pick_up_location: 'zahraa El maadi'
 		};
 	}
 
 	onClickListener = async () => {
 		const Driver = this.props.Driver_id;
-		console.log('aaaaaaaaaaaaaa');
 
-		console.log(Driver);
-		console.log('aaaaaaaaaaaaaa');
-		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/passenger_request/create_passenger_request/${Driver}`;
+		var apiBaseUrl1 = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/passenger_request/create_passenger_request/${Driver}`;
+		var apiBaseUrl2 = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/create/${Driver}`;
 
-		axios({ method: 'post', url: apiBaseUrl })
+		var payload = {
+			pick_up_location: this.state.pick_up_location
+		};
+
+		axios({ method: 'post', url: apiBaseUrl1 })
 			.then((res) => {
 				console.log(res.data.status);
 				console.log(res.data.message);
 				alert(res.data.message);
 				this.setState({
-					status: res.data.status
+					status: res.data.newRequest.status,
+					request: 'Requested'
 				});
+			})
+			.catch((err) => {
+				console.log(err.response);
+				alert(err.response.data.message);
+				console.log(err.response.data.message);
+			});
+
+		axios({ method: 'post', url: apiBaseUrl2, data: payload })
+			.then((res) => {
+				console.log(res.data.status);
+				console.log(res.data.message);
+				// this.setState({
+				// 	status: res.data.newRequest.status,
+				// 	request: 'Requested'
+				// });
 			})
 			.catch((err) => {
 				console.log(err.response);
@@ -62,7 +82,7 @@ export default class TripsCard extends Component {
 							marginTop: 20,
 							marginLeft: 180
 						}}
-						title="Request"
+						title={this.state.request}
 						titleStyle={{ color: 'white' }}
 					/>
 				</View>

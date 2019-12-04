@@ -21,41 +21,37 @@ import * as SecureStore from 'expo-secure-store';
 import Profile from './profile_page';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
-import TripsCard from './trip_card';
+import Driver_Request_Card from './driver_request_card';
 
-export default class ViewTrips extends React.Component {
+export default class ViewDriverRequests extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			trips: []
+			requests: []
 		};
 	}
 
 	componentDidMount() {
-		console.log('hhhhhhhhhhhhhhhhhhhhhhhhhh');
 		// Get the user's location
-		this.getTrips();
+		this.getRequests();
 	}
 
-	getTrips = async () => {
+	getRequests = async () => {
 		const token = JSON.parse(await SecureStore.getItemAsync('token'));
 
 		axios.defaults.headers.common['Authorization'] = token;
 
 		axios
-			.get(
-				'http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/trips/view_available_drivers',
-				{
-					method: 'GET',
-					mode: 'cors'
-				}
-			)
+			.get('http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/requests', {
+				method: 'GET',
+				mode: 'cors'
+			})
 			.then((res) => {
 				this.setState({
-					trips: res.data.arrayOfTrips
+					requests: res.data.available_passengers
 				});
-				console.log(this.state.trips);
+				console.log(res.data.available_passengers);
 			})
 			.catch((error) => {
 				console.log(error.response);
@@ -64,23 +60,24 @@ export default class ViewTrips extends React.Component {
 	};
 
 	render() {
+		console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+		console.log(this.state.requests);
+		console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
 		return (
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<FlatList
-					data={this.state.trips}
+					data={this.state.requests}
 					style={{ marginTop: 20 }}
 					keyExtractor={(item, index) => item.key}
 					// keyExtractor={(item) => item.dt_txt}
 					renderItem={({ item, index }) => (
-						<TripsCard
+						<Driver_Request_Card
 							detail={item}
-							First_name={this.state.trips[index].first_name}
-							Last_name={this.state.trips[index].last_name}
-							Mobile={this.state.trips[index].mobile_numbers[0].mobile_number}
-							Rating={this.state.trips[index].Rating}
-							Slot={this.state.trips[index].trip.guc_slot}
-							Price={this.state.trips[index].trip.pricing}
-							Driver_id={this.state.trips[index].trip.user_id}
+							First_name={this.state.requests[index].first_name}
+							Last_name={this.state.requests[index].last_name}
+							GUC_slot={this.state.requests[index].guc_id}
+							Pick_up_location={this.state.requests[index].pick_up_location}
+							Passenger={this.state.requests[index].passenger_id}
 						/>
 					)}
 				/>

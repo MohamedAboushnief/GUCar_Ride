@@ -21,6 +21,7 @@ export default class Profile extends Component {
 
 	componentDidMount = async () => {
 		const token = JSON.parse(await SecureStore.getItemAsync('token'));
+		console.log(token);
 
 		axios.defaults.headers.common['Authorization'] = token;
 
@@ -66,7 +67,10 @@ export default class Profile extends Component {
 						>
 							<Text style={{ color: 'white', fontSize: 22 }}>Request a ride</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.buttonContainer}>
+						<TouchableOpacity
+							style={styles.buttonContainer}
+							onPress={() => this.props.navigation.navigate('AddTrip')}
+						>
 							<Text style={{ color: 'white', fontSize: 22 }}>Create a trip</Text>
 						</TouchableOpacity>
 					</View>
