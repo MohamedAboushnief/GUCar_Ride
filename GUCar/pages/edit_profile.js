@@ -59,7 +59,8 @@ export default class EditInfo extends React.Component {
 		const token = JSON.parse(await SecureStore.getItemAsync('token'));
 
 		axios.defaults.headers.common['Authorization'] = token;
-
+		console.log('ssssssssss');
+		console.log(this.state.first_name);
 		axios
 			.put('http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/users/edit_info', {
 				method: 'PUT',
