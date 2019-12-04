@@ -21,6 +21,7 @@ export default class Profile extends Component {
 
 	componentDidMount = async () => {
 		const token = JSON.parse(await SecureStore.getItemAsync('token'));
+		console.log(token);
 
 		axios.defaults.headers.common['Authorization'] = token;
 

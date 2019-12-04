@@ -60,6 +60,9 @@ export default class ViewDriverRequests extends React.Component {
 	};
 
 	render() {
+		console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+		console.log(this.state.requests);
+		console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
 		return (
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<FlatList
@@ -74,6 +77,7 @@ export default class ViewDriverRequests extends React.Component {
 							Last_name={this.state.requests[index].last_name}
 							GUC_slot={this.state.requests[index].guc_id}
 							Pick_up_location={this.state.requests[index].pick_up_location}
+							Passenger={this.state.requests[index].passenger_id}
 						/>
 					)}
 				/>

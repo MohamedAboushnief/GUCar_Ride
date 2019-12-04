@@ -11,20 +11,18 @@ export default class DriverRequestCard extends Component {
 	}
 
 	onClickListener1 = async () => {
-		const Driver = this.props.Driver_id;
-
-		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/accept_request/:passenger_id`;
+		const Passenger = this.props.Passenger;
+		console.log(Passenger);
+		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/accept_request/${Passenger}`;
 
 		axios({ method: 'post', url: apiBaseUrl })
 			.then((res) => {
 				console.log(res.data.status);
 				console.log(res.data.message);
 				alert(res.data.message);
-				this.setState({
-					status: res.data.newRequest.status
-				});
 			})
 			.catch((err) => {
+				console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
 				console.log(err.response);
 				alert(err.response.data.message);
 				console.log(err.response.data.message);
@@ -32,18 +30,15 @@ export default class DriverRequestCard extends Component {
 	};
 
 	onClickListener2 = async () => {
-		const Driver = this.props.Driver_id;
+		const Passenger = this.props.Passenger;
 
-		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/cancel_request/:passenger_id`;
+		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/cancel_request/${Passenger}`;
 
 		axios({ method: 'delete', url: apiBaseUrl })
 			.then((res) => {
 				console.log(res.data.status);
 				console.log(res.data.message);
 				alert(res.data.message);
-				this.setState({
-					status: res.data.newRequest.status
-				});
 			})
 			.catch((err) => {
 				console.log(err.response);
@@ -53,9 +48,9 @@ export default class DriverRequestCard extends Component {
 	};
 
 	onClickListener3 = async () => {
-		const Driver = this.props.Driver_id;
+		const Passenger = this.props.Passenger;
 
-		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/arrived_to_pickUp/:passenger_id`;
+		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/arrived_to_pickUp/${Passenger}`;
 
 		axios({ method: 'post', url: apiBaseUrl })
 			.then((res) => {
