@@ -1,10 +1,42 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import { Text, Card, Divider, Button } from 'react-native-elements';
+import axios from 'axios';
 
 export default class TripsCard extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			status: ''
+		};
+	}
+
+	onClickListener = async () => {
+		const Driver = this.props.Driver_id;
+		console.log('aaaaaaaaaaaaaa');
+
+		console.log(Driver);
+		console.log('aaaaaaaaaaaaaa');
+		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/passenger_request/create_passenger_request/${Driver}`;
+
+		axios({ method: 'post', url: apiBaseUrl })
+			.then((res) => {
+				console.log(res.data.status);
+				console.log(res.data.message);
+				alert(res.data.message);
+				this.setState({
+					status: res.data.status
+				});
+			})
+			.catch((err) => {
+				console.log(err.response);
+				alert(err.response.data.message);
+				console.log(err.response.data.message);
+			});
+	};
+
 	render() {
-		//console.log(this.props.Slot);
 		return (
 			<Card key={this.props.guc_id} containerStyle={styles.card}>
 				<Text style={styles.notes}>{this.props.First_name}</Text>
@@ -12,6 +44,7 @@ export default class TripsCard extends Component {
 				<Text style={styles.notes}>{this.props.Rating}</Text>
 				<Text style={styles.notes}>{this.props.Slot}</Text>
 				<Text style={styles.notes}>{this.props.Price}</Text>
+				<Text style={styles.notes}>{this.state.status}</Text>
 
 				<View style={{ justifyContent: 'space-between', alignItems: 'center' }}>
 					{/* <Image
@@ -21,6 +54,7 @@ export default class TripsCard extends Component {
 						}}
 					/> */}
 					<Button
+						onPress={() => this.onClickListener()}
 						buttonStyle={{
 							backgroundColor: 'orange',
 							width: 100,

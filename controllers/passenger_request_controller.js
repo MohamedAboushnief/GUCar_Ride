@@ -48,7 +48,8 @@ const create_requests = async (req, res, next) => {
 
 		return res.status(200).json({
 			status: 'success',
-			message: 'Request sent successfully !'
+			message: 'Request sent successfully !',
+			newRequest
 		});
 	} catch (error) {
 		next(error);

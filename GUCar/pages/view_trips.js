@@ -38,12 +38,6 @@ export default class ViewTrips extends React.Component {
 		this.getTrips();
 	}
 
-	// componentDidUpdate() {
-	// 	console.log('hhhhhhhhhhhhhhhhhhhhhhhhhh');
-	// 	// Get the user's location
-	// 	this.getTrips();
-	// }
-
 	getTrips = async () => {
 		const token = JSON.parse(await SecureStore.getItemAsync('token'));
 
@@ -85,6 +79,7 @@ export default class ViewTrips extends React.Component {
 						Rating={this.state.trips[index].Rating}
 						Slot={this.state.trips[index].trip.guc_slot}
 						Price={this.state.trips[index].trip.pricing}
+						Driver_id={this.state.trips[index].trip.user_id}
 					/>
 				)}
 			/>
