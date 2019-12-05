@@ -44,10 +44,13 @@ export default class ViewTrips extends React.Component {
 		axios.defaults.headers.common['Authorization'] = token;
 
 		axios
-			.get('http://10.1.0.108:5000/routes/trips/view_available_drivers', {
-				method: 'GET',
-				mode: 'cors'
-			})
+			.get(
+				'http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/trips/view_available_drivers',
+				{
+					method: 'GET',
+					mode: 'cors'
+				}
+			)
 			.then((res) => {
 				this.setState({
 					trips: res.data.arrayOfTrips

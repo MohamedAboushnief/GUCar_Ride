@@ -18,9 +18,9 @@ export default class TripsCard extends Component {
 		const Driver = this.props.Driver_id;
 		console.log(Driver + '  kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
 
-		var apiBaseUrl1 = `http://10.1.0.108:5000/routes/passenger_request/create_passenger_request/${Driver}`;
-		var apiBaseUrl2 = `http://10.1.0.108:5000/routes/requests/create/${Driver}`;
-		var apiBaseUrl3 = `http://10.1.0.108:5000/routes/passenger_request/view_passenger_request/${Driver}`;
+		var apiBaseUrl1 = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/passenger_request/create_passenger_request/${Driver}`;
+		var apiBaseUrl2 = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/create/${Driver}`;
+		var apiBaseUrl3 = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/passenger_request/view_passenger_request/${Driver}`;
 
 		var payload = {
 			pick_up_location: this.state.pick_up_location

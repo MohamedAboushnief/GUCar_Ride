@@ -43,7 +43,7 @@ export default class ViewDriverRequests extends React.Component {
 		axios.defaults.headers.common['Authorization'] = token;
 
 		axios
-			.get('http://10.1.0.108:5000/routes/requests/requests', {
+			.get('http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/requests', {
 				method: 'GET',
 				mode: 'cors'
 			})

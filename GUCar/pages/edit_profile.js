@@ -62,7 +62,7 @@ export default class EditInfo extends React.Component {
 		console.log('ssssssssss');
 		console.log(this.state.first_name);
 		axios
-			.put('http://10.1.0.108:5000/routes/users/edit_info', {
+			.put('http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/users/edit_info', {
 				method: 'PUT',
 				mode: 'cors',
 				data: payload

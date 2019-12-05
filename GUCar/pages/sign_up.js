@@ -64,7 +64,7 @@ export default class SignUp extends React.Component {
 		let token = await Notifications.getExpoPushTokenAsync();
 		console.log(token);
 
-		var apiBaseUrl = `http://10.1.0.108:5000/routes/users/sign_up`;
+		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/users/sign_up`;
 		var payload = {
 			first_name: this.state.first_name,
 			last_name: this.state.last_name,

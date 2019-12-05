@@ -45,10 +45,14 @@ export default class AddTrip extends React.Component {
 		console.log(payload);
 		axios.defaults.headers.common['Authorization'] = token;
 		axios
-			.post('http://10.1.0.108:5000/routes/trips/create_trip', payload, {
-				method: 'POST',
-				mode: 'cors'
-			})
+			.post(
+				'http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/trips/create_trip',
+				payload,
+				{
+					method: 'POST',
+					mode: 'cors'
+				}
+			)
 			.then((res) => {
 				console.log(res.data.message);
 				alert(res.data.message);

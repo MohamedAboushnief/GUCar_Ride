@@ -25,7 +25,7 @@ export default class SignIn extends React.Component {
 	}
 
 	onClickListener = (viewId) => {
-		var apiBaseUrl = `http://10.1.0.108:5000/routes/users/login`;
+		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/users/login`;
 
 		var payload = {
 			email: this.state.email,
