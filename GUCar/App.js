@@ -6,7 +6,7 @@ import ViewTrips from './pages/view_trips';
 import EditInfo from './pages/edit_profile';
 import Profile from './pages/profile_page';
 import ViewRequests from './pages/view_driver_requests';
-import { ThemeProvider, Input, Header } from 'react-native-elements';
+import { ThemeProvider, Input, Header, Icon } from 'react-native-elements';
 import {
 	StyleSheet,
 	Text,
@@ -23,6 +23,9 @@ import AddCar from './pages/add_car';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
+import * as SecureStore from 'expo-secure-store';
+
+// import { Icon } from 'react-native-vector-icons/Icon';
 
 class HomeScreen extends React.Component {
 	constructor(props) {
@@ -62,12 +65,22 @@ class NavigationDrawerStructure extends Component {
 		this.props.navigationProps.toggleDrawer();
 	};
 
+	onClickListener = async (viewId) => {
+		await SecureStore.deleteItemAsync('token');
+		this.props.navigation.navigate('Home');
+	};
+
 	render() {
 		return (
 			<View style={{ flexDirection: 'row' }}>
 				<TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
 					{/*Donute Button Image */}
 					<Image source={require('./image/drawer.png')} style={{ width: 25, height: 25, marginLeft: 5 }} />
+				</TouchableOpacity>
+
+				<TouchableOpacity onPress={() => this.onClickListener()}>
+					{/*Donute Button Image */}
+					<Icon name="sign-out" type="evilicon" color="grey" size={50} style={{ marginRight: 150 }} />
 				</TouchableOpacity>
 			</View>
 		);

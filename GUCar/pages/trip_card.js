@@ -16,9 +16,11 @@ export default class TripsCard extends Component {
 
 	onClickListener = async () => {
 		const Driver = this.props.Driver_id;
+		console.log(Driver + '  kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
 
 		var apiBaseUrl1 = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/passenger_request/create_passenger_request/${Driver}`;
 		var apiBaseUrl2 = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/create/${Driver}`;
+		var apiBaseUrl3 = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/passenger_request/view_passenger_request/${Driver}`;
 
 		var payload = {
 			pick_up_location: this.state.pick_up_location
@@ -54,6 +56,21 @@ export default class TripsCard extends Component {
 				alert(err.response.data.message);
 				console.log(err.response.data.message);
 			});
+
+		axios({ method: 'get', url: apiBaseUrl3 })
+			.then((res) => {
+				console.log(res.data.request.status);
+				console.log(res.data.message);
+
+				this.setState({
+					status: res.data.request.status
+				});
+			})
+			.catch((err) => {
+				console.log(err.response);
+				alert(err.response.data.message);
+				console.log(err.response.data.message);
+			});
 	};
 
 	render() {
@@ -67,12 +84,6 @@ export default class TripsCard extends Component {
 				<Text style={styles.notes}>{this.state.status}</Text>
 
 				<View style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-					{/* <Image
-						style={{ width: 100, height: 100 }}
-						source={{
-							uri: 'https://openweathermap.org/img/w/' + this.props.detail.weather[0].icon + '.png'
-						}}
-					/> */}
 					<Button
 						onPress={() => this.onClickListener()}
 						buttonStyle={{

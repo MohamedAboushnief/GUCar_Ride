@@ -37,13 +37,8 @@ export default class SignIn extends React.Component {
 			.then(async (res) => {
 				console.log(res.data.message);
 				alert(res.data.message);
-
-				console.log(await SecureStore.getItemAsync('token'));
-
 				console.log(res.data.token);
 				await SecureStore.setItemAsync('token', JSON.stringify(res.data.token));
-				console.log(await SecureStore.getItemAsync('token'));
-
 				this.props.navigation.navigate('Profile');
 			})
 			.catch((err) => {

@@ -22,7 +22,6 @@ export default class DriverRequestCard extends Component {
 				alert(res.data.message);
 			})
 			.catch((err) => {
-				console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
 				console.log(err.response);
 				alert(err.response.data.message);
 				console.log(err.response.data.message);
