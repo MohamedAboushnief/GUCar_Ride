@@ -13,7 +13,7 @@ export default class DriverRequestCard extends Component {
 	onClickListener1 = async () => {
 		const Passenger = this.props.Passenger;
 		console.log(Passenger);
-		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/accept_request/${Passenger}`;
+		var apiBaseUrl = `http://10.1.0.108:5000/routes/requests/accept_request/${Passenger}`;
 
 		axios({ method: 'post', url: apiBaseUrl })
 			.then((res) => {
@@ -22,7 +22,6 @@ export default class DriverRequestCard extends Component {
 				alert(res.data.message);
 			})
 			.catch((err) => {
-				console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
 				console.log(err.response);
 				alert(err.response.data.message);
 				console.log(err.response.data.message);
@@ -32,7 +31,7 @@ export default class DriverRequestCard extends Component {
 	onClickListener2 = async () => {
 		const Passenger = this.props.Passenger;
 
-		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/cancel_request/${Passenger}`;
+		var apiBaseUrl = `http://10.1.0.108:5000/routes/requests/cancel_request/${Passenger}`;
 
 		axios({ method: 'delete', url: apiBaseUrl })
 			.then((res) => {
@@ -50,7 +49,7 @@ export default class DriverRequestCard extends Component {
 	onClickListener3 = async () => {
 		const Passenger = this.props.Passenger;
 
-		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/arrived_to_pickUp/${Passenger}`;
+		var apiBaseUrl = `http://10.1.0.108:5000/routes/requests/arrived_to_pickUp/${Passenger}`;
 
 		axios({ method: 'post', url: apiBaseUrl })
 			.then((res) => {

@@ -25,7 +25,7 @@ export default class SignIn extends React.Component {
 	}
 
 	onClickListener = (viewId) => {
-		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/users/login`;
+		var apiBaseUrl = `http://10.1.0.108:5000/routes/users/login`;
 
 		var payload = {
 			email: this.state.email,
@@ -37,13 +37,8 @@ export default class SignIn extends React.Component {
 			.then(async (res) => {
 				console.log(res.data.message);
 				alert(res.data.message);
-
-				console.log(await SecureStore.getItemAsync('token'));
-
 				console.log(res.data.token);
 				await SecureStore.setItemAsync('token', JSON.stringify(res.data.token));
-				console.log(await SecureStore.getItemAsync('token'));
-
 				this.props.navigation.navigate('Profile');
 			})
 			.catch((err) => {

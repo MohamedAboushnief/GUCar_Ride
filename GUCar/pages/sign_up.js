@@ -64,7 +64,7 @@ export default class SignUp extends React.Component {
 		let token = await Notifications.getExpoPushTokenAsync();
 		console.log(token);
 
-		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/users/sign_up`;
+		var apiBaseUrl = `http://10.1.0.108:5000/routes/users/sign_up`;
 		var payload = {
 			first_name: this.state.first_name,
 			last_name: this.state.last_name,
@@ -103,51 +103,6 @@ export default class SignUp extends React.Component {
 					flex: 1
 				}}
 			>
-				{/* <Header
-					containerStyle={{
-						backgroundColor: 'black',
-						justifyContent: 'space-around'
-					}}
-					leftComponent={{ icon: 'menu', color: 'grey' }}
-					// centerComponent={{ text: 'Sign Up', style: { color: '#fff' } }}
-					// rightComponent={{ icon: 'home', color: '#fff' }}
-				/>
-				<View
-					style={{
-						flex: 1,
-						alignItems: 'center',
-						position: 'absolute',
-						marginTop: 32,
-						marginLeft: 300
-					}}
-				>
-					<Button
-						buttonStyle={{ backgroundColor: 'black' }}
-						icon={{
-							name: 'home',
-							size: 25,
-							color: 'grey'
-						}}
-						onPress={() => this.props.navigation.navigate('Home')}
-					/>
-				</View>
-				<View
-					style={{
-						flex: 1,
-						position: 'absolute'
-					}}
-				>
-					<Image
-						source={require('../assets/gucarWhite.png')}
-						style={{
-							width: 400,
-							height: 100,
-							position: 'absolute',
-							alignSelf: 'center'
-						}}
-					/>
-				</View> */}
-
 				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 					<ScrollView showsVerticalScrollIndicator={false}>
 						<Input
@@ -219,10 +174,12 @@ export default class SignUp extends React.Component {
 						</View>
 
 						<Picker selectedValue={this.state.gender} onValueChange={this.updateGender}>
+							<Picker.Item label="Select your gender" />
 							<Picker.Item label="male" value="male" />
 							<Picker.Item label="female" value="female" />
 						</Picker>
 						<Picker selectedValue={this.state.address} onValueChange={this.updateAddress}>
+							<Picker.Item label="Select your address" />
 							<Picker.Item label="Maadi" value="Maadi" />
 							<Picker.Item label="Heliopolis" value="Heliopolis" />
 						</Picker>
