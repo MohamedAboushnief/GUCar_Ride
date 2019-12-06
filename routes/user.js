@@ -15,4 +15,6 @@ router.put('/change_password', passport.authenticate('jwt', { session: false }),
 router.put('/rate_driver');
 router.post('/push-token', users.postToken);
 
+router.post('/googleLogin', users.googleLogin);
+
 module.exports = router;
