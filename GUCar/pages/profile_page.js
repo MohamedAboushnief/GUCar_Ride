@@ -32,7 +32,7 @@ export default class Profile extends Component {
 				method: 'GET',
 				mode: 'cors'
 			})
-			.then(async (res) => {
+			.then(async res => {
 				this.setState({
 					first_name: res.data.user.first_name,
 					last_name: res.data.user.last_name,
@@ -41,10 +41,10 @@ export default class Profile extends Component {
 					date_of_birth: res.data.user.date_of_birth,
 					gender: res.data.user.gender,
 					address: res.data.user.address,
-					mobile_number: res.data.mobile.mobile_number
+					mobile_number: res.data.mobile
 				});
 			})
-			.catch((error) => {
+			.catch(error => {
 				console.log(error.response);
 				alert(error.response.data.error);
 			});
