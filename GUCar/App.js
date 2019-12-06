@@ -74,11 +74,18 @@ class NavigationDrawerStructure extends Component {
 		this.props.navigationProps.toggleDrawer();
 	};
 
-	onClickListener = async viewId => {
+	onClickListener = async (viewId) => {
 		await SecureStore.deleteItemAsync('token');
 
 		// this.props.navigationProps.navigate('Home');
 		this.props.navigationProps.dismiss();
+		this.props.navigation.dispatch(
+			StackActions.reset({
+				index: 0,
+				key: null,
+				actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
+			})
+		);
 
 		// const resetAction = StackActions.reset({
 		// 	index: 0,
@@ -110,9 +117,9 @@ class NavigationDrawerStructure2 extends Component {
 		this.props.navigationProps.toggleDrawer();
 	};
 
-	onClickListener = async viewId => {
-		//this.props.navigationProps.navigate('Profile');
-		this.props.navigationProps.dismiss();
+	onClickListener = async (viewId) => {
+		this.props.navigationProps.navigate('Profile');
+		//this.props.navigationProps.dismiss();
 	};
 
 	render() {
