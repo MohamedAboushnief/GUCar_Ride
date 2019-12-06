@@ -320,6 +320,38 @@ const arrived_to_pickUp = async (req, res, next) => {
 			},
 			{ where: { passenger_id: req.params.passenger_id } }
 		);
+
+		const Passenger = await UserModel.findByPk(req.params.passenger_id);
+
+		let expo = new Expo();
+		let messages = [];
+		let pushToken = Passenger.push_token;
+		console.log(pushToken);
+		// Check that your push token appear to be valid Expo push token
+		if (!Expo.isExpoPushToken(pushToken)) {
+			console.error(`Push token ${pushToken} is not a valid Expo push token`);
+		} else {
+			messages.push({
+				to: pushToken,
+				sound: 'default',
+				body: 'Driver arrived to pickup location !',
+				data: { withSome: 'data' }
+			});
+			let chunks = expo.chunkPushNotifications(messages);
+			let tickets = [];
+			(async () => {
+				for (let chunk of chunks) {
+					try {
+						let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
+						console.log(ticketChunk);
+						tickets.push(...ticketChunk);
+					} catch (error) {
+						console.error(error);
+					}
+				}
+			})();
+		}
+
 		return res.status(200).json({
 			status: 'success',
 			message: 'Notification to passenger sent successfully !',

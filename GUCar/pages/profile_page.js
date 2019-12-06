@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import { createAppContainer, NavigationActions, StackActions, NavigationEvents } from 'react-navigation';
 
 export default class Profile extends Component {
 	constructor(props) {
@@ -17,7 +18,16 @@ export default class Profile extends Component {
 			address: '',
 			mobile_number: ''
 		};
+		this.componentDidMount = this.componentDidMount.bind(this);
 	}
+
+	// componentDidUpdate(prevProps, prevState) {
+	// 	if (prevState.email !== this.state.email) {
+	// 		// Use the `this.props.isFocused` boolean
+	// 		// Call any action
+	// 		this.setState({});
+	// 	}
+	// }
 
 	componentDidMount = async () => {
 		const token = JSON.parse(await SecureStore.getItemAsync('token'));

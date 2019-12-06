@@ -14,6 +14,7 @@ import axios from 'axios';
 import { Button, ThemeProvider, Input, Image, Header, Text } from 'react-native-elements';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as SecureStore from 'expo-secure-store';
+import { createAppContainer, NavigationActions, StackActions, NavigationEvents } from 'react-navigation';
 
 export default class SignIn extends React.Component {
 	constructor(props) {

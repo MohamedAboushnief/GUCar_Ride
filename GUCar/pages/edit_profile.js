@@ -148,10 +148,14 @@ export default class EditInfo extends React.Component {
 						</View>
 
 						<Picker selectedValue={this.state.gender} onValueChange={this.updateGender}>
+							<Picker.Item label="Select your gender" />
+
 							<Picker.Item label="male" value="male" />
 							<Picker.Item label="female" value="female" />
 						</Picker>
 						<Picker selectedValue={this.state.address} onValueChange={this.updateAddress}>
+							<Picker.Item label="Select your address" />
+
 							<Picker.Item label="Maadi" value="Maadi" />
 							<Picker.Item label="Heliopolis" value="Heliopolis" />
 						</Picker>
@@ -166,7 +170,7 @@ export default class EditInfo extends React.Component {
 								alignSelf: 'center',
 								marginTop: 550
 							}}
-							title="signUp"
+							title="Edit Profile"
 							buttonStyle={{ backgroundColor: 'black' }}
 							titleStyle={{ color: 'grey' }}
 							onPress={() => this.onClickListener('Sign Up')}
