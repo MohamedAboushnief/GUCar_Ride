@@ -46,7 +46,7 @@ export default class AddTrip extends React.Component {
 		console.log(payload);
 		axios.defaults.headers.common['Authorization'] = token;
 		axios
-			.post('http://192.168.1.5:5000/routes/trips/create_trip', {
+			.post('http://10.78.71.110:5000/routes/trips/create_trip', {
 				method: 'POST',
 				mode: 'cors',
 				data: payload

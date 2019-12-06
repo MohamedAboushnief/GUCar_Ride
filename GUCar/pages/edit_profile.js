@@ -44,7 +44,7 @@ export default class EditInfo extends React.Component {
 	componentDidMount() {}
 
 	onClickListener = async () => {
-		var apiBaseUrl = `http://192.168.1.5:3000/routes/users/edit_info`;
+		var apiBaseUrl = `http://10.78.71.110:3000/routes/users/edit_info`;
 		var payload = {
 			first_name: this.state.first_name,
 			last_name: this.state.last_name,
@@ -61,7 +61,7 @@ export default class EditInfo extends React.Component {
 		axios.defaults.headers.common['Authorization'] = token;
 
 		axios
-			.put('http://192.168.1.5:5000/routes/users/edit_info', {
+			.put('http://10.78.71.110:5000/routes/users/edit_info', {
 				method: 'PUT',
 				mode: 'cors',
 				data: payload

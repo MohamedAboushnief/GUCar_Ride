@@ -24,8 +24,8 @@ export default class Profile extends Component {
 
 		axios.defaults.headers.common['Authorization'] = token;
 
-		axios
-			.get('http://192.168.1.5:5000/routes/users/userInfo', {
+		await axios
+			.get('http://10.78.71.110:5000/routes/users/userInfo', {
 				method: 'GET',
 				mode: 'cors'
 			})
@@ -38,7 +38,7 @@ export default class Profile extends Component {
 					date_of_birth: res.data.user.date_of_birth,
 					gender: res.data.user.gender,
 					address: res.data.user.address,
-					mobile_number: res.data.mobile.mobile_number
+					mobile_number: res.data.mobile
 				});
 			})
 			.catch(error => {
