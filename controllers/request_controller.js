@@ -11,6 +11,14 @@ const { Expo } = require('expo-server-sdk');
 
 const add_request = async (req, res, next) => {
 	try {
+		const checkTrip = await TripModel.findOne({ where: { user_id: req.user.id } });
+		if (checkTrip) {
+			return res.status(400).json({
+				status: 'failure',
+				message: 'You cannot request a driver while you have a trip !'
+			});
+		}
+
 		if (req.user.id != req.params.driver_id) {
 			const checkExist = await RequestModel.findOne({ where: { passenger_id: req.user.id } });
 
