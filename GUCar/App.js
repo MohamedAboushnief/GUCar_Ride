@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import SignUp from './pages/sign_up';
 import SignIn from './pages/sign_in';
 import AddTrip from './pages/add_trip';
+import GoogleSignIn from './pages/google_sign_in';
+// import GoogleLogin from './pages/google_sign_in';
 
 import EditInfo from './pages/edit_profile';
 import Profile from './pages/profile_page';
+import * as Google from 'expo-google-app-auth';
+import Expo from 'expo';
 import { ThemeProvider, Input, Header } from 'react-native-elements';
 import {
 	StyleSheet,
@@ -23,10 +27,13 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 
+// import { GoogleSignin, GoogleSigninButton } from '@react-native-community/google-signin';
+
 class HomeScreen extends React.Component {
 	constructor(props) {
 		super(props);
 	}
+
 	render() {
 		return (
 			<SafeAreaView
@@ -47,6 +54,9 @@ class HomeScreen extends React.Component {
 					</View>
 					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 						<Button title="Test To Add car" onPress={() => this.props.navigation.navigate('AddTrip')} />
+					</View>
+					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+						<Button title="GoogleSignIn" onPress={() => this.props.navigation.navigate('GoogleSignIn')} />
 					</View>
 				</View>
 			</SafeAreaView>
@@ -247,7 +257,30 @@ const addTrip_StackNavigator = createStackNavigator({
 		})
 	}
 });
-
+const googleSignIn_StackNavigator = createStackNavigator({
+	//All the screen from the Screen2 will be indexed here
+	GoogleSignIn: {
+		screen: GoogleSignIn,
+		navigationOptions: ({ navigation }) => ({
+			// headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerBackground: (
+				<Image
+					source={require('./assets/gucarWhite.png')}
+					style={{
+						marginTop: 40,
+						width: 390,
+						height: 35,
+						position: 'absolute'
+					}}
+				/>
+			),
+			headerStyle: {
+				backgroundColor: 'black'
+			},
+			headerTintColor: 'black'
+		})
+	}
+});
 const signOut_StackNavigator = createStackNavigator({
 	//All the screen from the Screen1 will be indexed here
 	signOut: {
@@ -325,6 +358,14 @@ const DrawerNavigatorExample = createDrawerNavigator({
 		}
 	},
 	Screen8: {
+		//Title
+		screen: googleSignIn_StackNavigator,
+		navigationOptions: {
+			drawerLabel: 'Sign in with google'
+		}
+	},
+
+	Screen9: {
 		//Title
 		screen: Home_StackNavigator,
 		navigationOptions: {

@@ -38,7 +38,7 @@ export default class AddCar extends React.Component {
 		console.log(token);
 		axios.defaults.headers.common['Authorization'] = token;
 		axios
-			.post('http://192.168.43.192:5000/routes/drivers_cars/create', payload, {
+			.post('http://192.168.1.5:5000/routes/drivers_cars/create', payload, {
 				method: 'POST',
 				mode: 'cors'
 			})

@@ -362,6 +362,63 @@ const change_password = async (req, res, next) => {
 	}
 };
 
+const googleLogin = async (req, res, next) => {
+	try {
+		const guc_id = req.body.guc_id;
+		const address = req.body.address;
+		if (!guc_id) {
+			return res.status(422).json({
+				status: 'Failure',
+				message: 'Please enter your GUC ID'
+			});
+		}
+		if (!address) {
+			return res.status(422).json({
+				status: 'Failure',
+				message: 'Please enter your address'
+			});
+		}
+		const checkUser = await UserModel.findOne({
+			where: {
+				email: req.body.email
+			}
+		});
+		if (!checkUser) {
+			var user = await UserModel.create({
+				first_name: req.body.name,
+				last_name: req.body.name,
+				email: req.body.email,
+				password: 'google account',
+				guc_id: guc_id,
+				date_of_birth: '1998-1-1'
+			});
+			const jwt_data = { user_id: user.id, email: user.email };
+			const token = jwt.sign(jwt_data, sequelize.secretOrKey, {
+				expiresIn: '1h'
+			});
+			return res.status(200).json({
+				id: user.id,
+				email: user.email,
+				token: `Bearer ${token}`,
+				message: 'logged in successfully'
+			});
+		} else {
+			const jwt_data = { user_id: checkUser.id, email: checkUser.email };
+			const token = jwt.sign(jwt_data, sequelize.secretOrKey, {
+				expiresIn: '1h'
+			});
+			return res.status(200).json({
+				id: user.id,
+				email: user.email,
+				token: `Bearer ${token}`,
+				message: 'logged in successfully'
+			});
+		}
+	} catch (e) {
+		next(e);
+	}
+};
+
 module.exports = {
 	signup,
 	login,
@@ -370,5 +427,6 @@ module.exports = {
 	editInfo,
 	delete_user,
 	change_password,
-	postToken
+	postToken,
+	googleLogin
 };
