@@ -7,9 +7,18 @@ const TripModel = require('../models/trips');
 const pass_req = require('../models/passengers_requests');
 const User = new UserModel(sequelize, Sequelize);
 var passport = require('passport');
+const { Expo } = require('expo-server-sdk');
 
 const add_request = async (req, res, next) => {
 	try {
+		const checkTrip = await TripModel.findOne({ where: { user_id: req.user.id } });
+		if (checkTrip) {
+			return res.status(400).json({
+				status: 'failure',
+				message: 'You cannot request a driver while you have a trip !'
+			});
+		}
+
 		if (req.user.id != req.params.driver_id) {
 			const checkExist = await RequestModel.findOne({ where: { passenger_id: req.user.id } });
 
@@ -39,6 +48,37 @@ const add_request = async (req, res, next) => {
 					status: 'failure',
 					message: 'Could not create request !'
 				});
+			}
+
+			const Driver = await UserModel.findByPk(req.params.driver_id);
+
+			let expo = new Expo();
+			let messages = [];
+			let pushToken = Driver.push_token;
+			console.log(pushToken);
+			// Check that your push token appear to be valid Expo push token
+			if (!Expo.isExpoPushToken(pushToken)) {
+				console.error(`Push token ${pushToken} is not a valid Expo push token`);
+			} else {
+				messages.push({
+					to: pushToken,
+					sound: 'default',
+					body: 'You received a request from a passenger',
+					data: { withSome: 'data' }
+				});
+				let chunks = expo.chunkPushNotifications(messages);
+				let tickets = [];
+				(async () => {
+					for (let chunk of chunks) {
+						try {
+							let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
+							console.log(ticketChunk);
+							tickets.push(...ticketChunk);
+						} catch (error) {
+							console.error(error);
+						}
+					}
+				})();
 			}
 
 			return res.status(200).json({
@@ -74,7 +114,8 @@ const get_requests = async (req, res, next) => {
 				first_name: details.first_name,
 				last_name: details.last_name,
 				guc_id: details.guc_id,
-				pick_up_location: passengers[i].pick_up_location
+				pick_up_location: passengers[i].pick_up_location,
+				passenger_id: passengers[i].passenger_id
 			};
 			available_passengers.push(appendDetails);
 		}
@@ -88,6 +129,65 @@ const get_requests = async (req, res, next) => {
 			status: 'success',
 			message: 'Available requests ...',
 			available_passengers
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+const delete_request_from_passenger = async (req, res, next) => {
+	try {
+		const request = await RequestModel.findOne({ where: { passenger_id: req.user.id } });
+		const driver_id = request.driver_id;
+
+		const deletedRequest = await RequestModel.destroy({
+			where: {
+				passenger_id: req.user.id,
+				driver_id: driver_id
+			}
+		});
+		if (!deletedRequest) {
+			return res.status(400).json({
+				status: 'failure',
+				message: 'Cannot delete request !'
+			});
+		}
+
+		const Driver = await UserModel.findByPk(driver_id);
+
+		let expo = new Expo();
+		let messages = [];
+		let pushToken = Driver.push_token;
+		console.log(pushToken);
+		// Check that your push token appear to be valid Expo push token
+		if (!Expo.isExpoPushToken(pushToken)) {
+			console.error(`Push token ${pushToken} is not a valid Expo push token`);
+		} else {
+			messages.push({
+				to: pushToken,
+				sound: 'default',
+				body: 'Passenger cancelled his request !',
+				data: { withSome: 'data' }
+			});
+			let chunks = expo.chunkPushNotifications(messages);
+			let tickets = [];
+			(async () => {
+				for (let chunk of chunks) {
+					try {
+						let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
+						console.log(ticketChunk);
+						tickets.push(...ticketChunk);
+					} catch (error) {
+						console.error(error);
+					}
+				}
+			})();
+		}
+
+		return res.status(200).json({
+			status: 'success',
+			message: 'Request deleted successfully !',
+			requestStatus: 'rejected'
 		});
 	} catch (error) {
 		next(error);
@@ -114,6 +214,38 @@ const delete_request = async (req, res, next) => {
 			},
 			{ where: { passenger_id: req.params.passenger_id } }
 		);
+
+		const Passenger = await UserModel.findByPk(req.params.passenger_id);
+
+		let expo = new Expo();
+		let messages = [];
+		let pushToken = Passenger.push_token;
+		console.log(pushToken);
+		// Check that your push token appear to be valid Expo push token
+		if (!Expo.isExpoPushToken(pushToken)) {
+			console.error(`Push token ${pushToken} is not a valid Expo push token`);
+		} else {
+			messages.push({
+				to: pushToken,
+				sound: 'default',
+				body: 'You request was rejected !',
+				data: { withSome: 'data' }
+			});
+			let chunks = expo.chunkPushNotifications(messages);
+			let tickets = [];
+			(async () => {
+				for (let chunk of chunks) {
+					try {
+						let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
+						console.log(ticketChunk);
+						tickets.push(...ticketChunk);
+					} catch (error) {
+						console.error(error);
+					}
+				}
+			})();
+		}
+
 		return res.status(200).json({
 			status: 'success',
 			message: 'Request deleted successfully !',
@@ -182,6 +314,38 @@ const accept_request = async (req, res, next) => {
 			},
 			{ where: { passenger_id: req.params.passenger_id } }
 		);
+
+		const Passenger = await UserModel.findByPk(req.params.passenger_id);
+
+		let expo = new Expo();
+		let messages = [];
+		let pushToken = Passenger.push_token;
+		console.log(pushToken);
+		// Check that your push token appear to be valid Expo push token
+		if (!Expo.isExpoPushToken(pushToken)) {
+			console.error(`Push token ${pushToken} is not a valid Expo push token`);
+		} else {
+			messages.push({
+				to: pushToken,
+				sound: 'default',
+				body: 'Your request was accepted !',
+				data: { withSome: 'data' }
+			});
+			let chunks = expo.chunkPushNotifications(messages);
+			let tickets = [];
+			(async () => {
+				for (let chunk of chunks) {
+					try {
+						let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
+						console.log(ticketChunk);
+						tickets.push(...ticketChunk);
+					} catch (error) {
+						console.error(error);
+					}
+				}
+			})();
+		}
+
 		return res.status(200).json({
 			status: 'success',
 			message: 'Request accepted successfully !',
@@ -223,6 +387,38 @@ const arrived_to_pickUp = async (req, res, next) => {
 			},
 			{ where: { passenger_id: req.params.passenger_id } }
 		);
+
+		const Passenger = await UserModel.findByPk(req.params.passenger_id);
+
+		let expo = new Expo();
+		let messages = [];
+		let pushToken = Passenger.push_token;
+		console.log(pushToken);
+		// Check that your push token appear to be valid Expo push token
+		if (!Expo.isExpoPushToken(pushToken)) {
+			console.error(`Push token ${pushToken} is not a valid Expo push token`);
+		} else {
+			messages.push({
+				to: pushToken,
+				sound: 'default',
+				body: 'Driver arrived to pickup location !',
+				data: { withSome: 'data' }
+			});
+			let chunks = expo.chunkPushNotifications(messages);
+			let tickets = [];
+			(async () => {
+				for (let chunk of chunks) {
+					try {
+						let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
+						console.log(ticketChunk);
+						tickets.push(...ticketChunk);
+					} catch (error) {
+						console.error(error);
+					}
+				}
+			})();
+		}
+
 		return res.status(200).json({
 			status: 'success',
 			message: 'Notification to passenger sent successfully !',
@@ -239,5 +435,6 @@ module.exports = {
 	delete_request,
 	accept_request,
 	arrived_to_pickUp,
-	delete_all_requests
+	delete_all_requests,
+	delete_request_from_passenger
 };

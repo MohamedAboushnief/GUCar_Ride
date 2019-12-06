@@ -73,6 +73,9 @@ User.init(
 		},
 		rating: {
 			type: Sequelize.FLOAT
+		},
+		push_token: {
+			type: Sequelize.STRING
 		}
 	},
 	{
