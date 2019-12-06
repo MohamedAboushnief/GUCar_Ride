@@ -24,7 +24,6 @@ import { createAppContainer, NavigationActions, StackActions } from 'react-navig
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import * as SecureStore from 'expo-secure-store';
-import RNRestart from 'react-native-restart';
 // import { Icon } from 'react-native-vector-icons/Icon';
 
 class HomeScreen extends React.Component {
@@ -60,13 +59,14 @@ class NavigationDrawerStructure extends Component {
 
 	onClickListener = async (viewId) => {
 		await SecureStore.deleteItemAsync('token');
-		this.props.navigationProps.navigate('Home');
-		//RNRestart.Restart();
-		const resetAction = StackActions.reset({
-			index: 0,
-			actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
-		});
-		this.props.navigationProps.dispatch(resetAction);
+		// this.props.navigationProps.navigate('Home');
+		this.props.navigationProps.dismiss();
+
+		// const resetAction = StackActions.reset({
+		// 	index: 0,
+		// 	actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
+		// });
+		//this.props.navigationProps.dispatch(resetAction);
 		//RNRestart.Restart();
 	};
 
@@ -95,7 +95,8 @@ class NavigationDrawerStructure2 extends Component {
 	};
 
 	onClickListener = async (viewId) => {
-		this.props.navigationProps.navigate('Profile');
+		//this.props.navigationProps.navigate('Profile');
+		this.props.navigationProps.dismiss();
 	};
 
 	render() {

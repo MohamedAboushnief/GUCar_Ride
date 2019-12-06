@@ -40,7 +40,7 @@ export default class SignIn extends React.Component {
 				alert(res.data.message);
 				console.log(res.data.token);
 				await SecureStore.setItemAsync('token', JSON.stringify(res.data.token));
-				this.props.navigation.navigate('Profile');
+				this.props.navigation.push('Profile');
 			})
 			.catch((err) => {
 				console.log(err);

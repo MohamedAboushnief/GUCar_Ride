@@ -1,4 +1,6 @@
-services: 
-    backend:
-      build: .
-      image: gucar
+version: '2.1'
+services:
+  app:
+    build: .
+    ports:
+      - 8000:5000
