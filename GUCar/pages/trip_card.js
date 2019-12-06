@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import { Text, Card, Divider, Button } from 'react-native-elements';
 import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
 
 export default class TripsCard extends Component {
 	constructor(props) {
@@ -13,6 +14,41 @@ export default class TripsCard extends Component {
 			pick_up_location: 'zahraa El maadi'
 		};
 	}
+
+	onClickListener2 = async () => {
+		const token = JSON.parse(await SecureStore.getItemAsync('token'));
+
+		axios.defaults.headers.common['Authorization'] = token;
+		var apiBaseUrl1 = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/passenger_request/cancel_passenger_request`;
+		var apiBaseUrl2 = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/passenger_cancel_request`;
+
+		axios({ method: 'delete', url: apiBaseUrl1 })
+			.then((res) => {
+				console.log(res.data.status);
+				console.log(res.data.message);
+				alert(res.data.message);
+				this.setState({
+					request: 'Request'
+				});
+			})
+			.catch((err) => {
+				console.log(err.response);
+				alert(err.response.data.message);
+				console.log(err.response.data.message);
+			});
+
+		axios({ method: 'delete', url: apiBaseUrl2 })
+			.then((res) => {
+				console.log(res.data.status);
+				console.log(res.data.message);
+				alert(res.data.message);
+			})
+			.catch((err) => {
+				console.log(err.response);
+				alert(err.response.data.message);
+				console.log(err.response.data.message);
+			});
+	};
 
 	onClickListener = async () => {
 		const Driver = this.props.Driver_id;
@@ -26,6 +62,9 @@ export default class TripsCard extends Component {
 			pick_up_location: this.state.pick_up_location
 		};
 
+		const token = JSON.parse(await SecureStore.getItemAsync('token'));
+
+		axios.defaults.headers.common['Authorization'] = token;
 		axios({ method: 'post', url: apiBaseUrl1 })
 			.then((res) => {
 				console.log(res.data.status);
@@ -46,10 +85,6 @@ export default class TripsCard extends Component {
 			.then((res) => {
 				console.log(res.data.status);
 				console.log(res.data.message);
-				// this.setState({
-				// 	status: res.data.newRequest.status,
-				// 	request: 'Requested'
-				// });
 			})
 			.catch((err) => {
 				console.log(err.response);
@@ -94,6 +129,18 @@ export default class TripsCard extends Component {
 							marginLeft: 180
 						}}
 						title={this.state.request}
+						titleStyle={{ color: 'white' }}
+					/>
+					<Button
+						onPress={() => this.onClickListener2()}
+						buttonStyle={{
+							backgroundColor: 'orange',
+							width: 100,
+							height: 40,
+							marginTop: 20,
+							marginLeft: 180
+						}}
+						title="Delete Request"
 						titleStyle={{ color: 'white' }}
 					/>
 				</View>

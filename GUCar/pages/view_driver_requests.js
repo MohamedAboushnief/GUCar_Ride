@@ -32,6 +32,11 @@ export default class ViewDriverRequests extends React.Component {
 		};
 	}
 
+	handleDelete = (itemId) => {
+		const newRequests = this.state.requests.filter((item) => item.passenger_id !== itemId);
+		this.setState({ requests: newRequests });
+	};
+
 	componentDidMount() {
 		// Get the user's location
 		this.getRequests();
@@ -78,6 +83,7 @@ export default class ViewDriverRequests extends React.Component {
 							GUC_slot={this.state.requests[index].guc_id}
 							Pick_up_location={this.state.requests[index].pick_up_location}
 							Passenger={this.state.requests[index].passenger_id}
+							onDelete={this.handleDelete}
 						/>
 					)}
 				/>

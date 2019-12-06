@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 27612,
-  "expoServerNgrokUrl": "https://ep-bj7.mohamedaboushenif.gucar.exp.direct",
-  "packagerNgrokUrl": "https://packager.ep-bj7.mohamedaboushenif.gucar.exp.direct",
-  "ngrokPid": 26744,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": "https://9r-egu.mohamedaboushenif.gucar.exp.direct",
+  "packagerNgrokUrl": "https://packager.9r-egu.mohamedaboushenif.gucar.exp.direct",
+  "ngrokPid": 25240,
   "webpackServerPort": null
 }

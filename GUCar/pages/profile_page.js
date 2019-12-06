@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import { createAppContainer, NavigationActions, StackActions, NavigationEvents } from 'react-navigation';
 
 export default class Profile extends Component {
 	constructor(props) {
@@ -17,6 +18,7 @@ export default class Profile extends Component {
 			address: '',
 			mobile_number: ''
 		};
+		this.componentDidMount = this.componentDidMount.bind(this);
 	}
 
 	componentDidMount = async () => {
@@ -30,7 +32,7 @@ export default class Profile extends Component {
 				method: 'GET',
 				mode: 'cors'
 			})
-			.then((res) => {
+			.then(async (res) => {
 				this.setState({
 					first_name: res.data.user.first_name,
 					last_name: res.data.user.last_name,

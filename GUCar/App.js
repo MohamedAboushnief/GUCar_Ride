@@ -20,11 +20,10 @@ import {
 	TouchableOpacity
 } from 'react-native';
 import AddCar from './pages/add_car';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, NavigationActions, StackActions } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import * as SecureStore from 'expo-secure-store';
-
 // import { Icon } from 'react-native-vector-icons/Icon';
 
 class HomeScreen extends React.Component {
@@ -45,13 +44,6 @@ class HomeScreen extends React.Component {
 					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 						<Button title="Sign In" onPress={() => this.props.navigation.navigate('SignIn')} />
 					</View>
-
-					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-						<Button title="Test To Add car" onPress={() => this.props.navigation.navigate('AddCar')} />
-					</View>
-					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-						<Button title="Test To Add car" onPress={() => this.props.navigation.navigate('AddTrip')} />
-					</View>
 				</View>
 			</SafeAreaView>
 		);
@@ -67,20 +59,51 @@ class NavigationDrawerStructure extends Component {
 
 	onClickListener = async (viewId) => {
 		await SecureStore.deleteItemAsync('token');
-		this.props.navigation.navigate('Home');
+
+		// this.props.navigationProps.navigate('Home');
+		this.props.navigationProps.dismiss();
+
+		// const resetAction = StackActions.reset({
+		// 	index: 0,
+		// 	actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
+		// });
+		//this.props.navigationProps.dispatch(resetAction);
+		//RNRestart.Restart();
 	};
 
 	render() {
 		return (
 			<View style={{ flexDirection: 'row' }}>
 				<TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
-					{/*Donute Button Image */}
-					<Image source={require('./image/drawer.png')} style={{ width: 25, height: 25, marginLeft: 5 }} />
+					<Image source={require('./image/drawer.png')} style={{ width: 35, height: 35, marginLeft: 5 }} />
 				</TouchableOpacity>
 
 				<TouchableOpacity onPress={() => this.onClickListener()}>
+					<Icon name="sign-out" type="font-awesome" color="grey" size={50} style={{ marginLeft: 120 }} />
+				</TouchableOpacity>
+			</View>
+		);
+	}
+}
+
+class NavigationDrawerStructure2 extends Component {
+	//Structure for the navigatin Drawer
+	toggleDrawer = () => {
+		//Props to open/close the drawer
+		this.props.navigationProps.toggleDrawer();
+	};
+
+	onClickListener = async (viewId) => {
+		//this.props.navigationProps.navigate('Profile');
+		this.props.navigationProps.dismiss();
+	};
+
+	render() {
+		return (
+			<View style={{ flexDirection: 'row' }}>
+				<TouchableOpacity onPress={() => this.onClickListener()}>
 					{/*Donute Button Image */}
-					<Icon name="sign-out" type="evilicon" color="grey" size={50} style={{ marginRight: 150 }} />
+					<Icon name="home" type="font-awesome" color="grey" size={50} style={{ marginRight: 150 }} />
 				</TouchableOpacity>
 			</View>
 		);
@@ -128,7 +151,7 @@ const ViewRequests_StackNavigator = createStackNavigator({
 					}}
 				/>
 			),
-			// headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerLeft: <NavigationDrawerStructure2 navigationProps={navigation} />,
 			headerStyle: {
 				backgroundColor: 'black'
 			},
@@ -192,7 +215,7 @@ const editInfo_StackNavigator = createStackNavigator({
 	EditInfo: {
 		screen: EditInfo,
 		navigationOptions: ({ navigation }) => ({
-			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerLeft: <NavigationDrawerStructure2 navigationProps={navigation} />,
 			headerBackground: (
 				<Image
 					source={require('./assets/gucarWhite.png')}
@@ -242,7 +265,7 @@ const addCar_StackNavigator = createStackNavigator({
 	AddCar: {
 		screen: AddCar,
 		navigationOptions: ({ navigation }) => ({
-			// headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerLeft: <NavigationDrawerStructure2 navigationProps={navigation} />,
 			headerBackground: (
 				<Image
 					source={require('./assets/gucarWhite.png')}
@@ -267,7 +290,7 @@ const addTrip_StackNavigator = createStackNavigator({
 	AddTrip: {
 		screen: AddTrip,
 		navigationOptions: ({ navigation }) => ({
-			// headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerLeft: <NavigationDrawerStructure2 navigationProps={navigation} />,
 			headerBackground: (
 				<Image
 					source={require('./assets/gucarWhite.png')}
@@ -292,7 +315,7 @@ const viewTrips_StackNavigator = createStackNavigator({
 	ViewTrips: {
 		screen: ViewTrips,
 		navigationOptions: ({ navigation }) => ({
-			// headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerLeft: <NavigationDrawerStructure2 navigationProps={navigation} />,
 			headerBackground: (
 				<Image
 					source={require('./assets/gucarWhite.png')}
