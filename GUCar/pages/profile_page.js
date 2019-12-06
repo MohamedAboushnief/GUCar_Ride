@@ -21,14 +21,6 @@ export default class Profile extends Component {
 		this.componentDidMount = this.componentDidMount.bind(this);
 	}
 
-	// componentDidUpdate(prevProps, prevState) {
-	// 	if (prevState.email !== this.state.email) {
-	// 		// Use the `this.props.isFocused` boolean
-	// 		// Call any action
-	// 		this.setState({});
-	// 	}
-	// }
-
 	componentDidMount = async () => {
 		const token = JSON.parse(await SecureStore.getItemAsync('token'));
 		console.log(token);
@@ -40,7 +32,7 @@ export default class Profile extends Component {
 				method: 'GET',
 				mode: 'cors'
 			})
-			.then((res) => {
+			.then(async (res) => {
 				this.setState({
 					first_name: res.data.user.first_name,
 					last_name: res.data.user.last_name,

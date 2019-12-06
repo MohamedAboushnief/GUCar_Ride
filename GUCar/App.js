@@ -59,6 +59,7 @@ class NavigationDrawerStructure extends Component {
 
 	onClickListener = async (viewId) => {
 		await SecureStore.deleteItemAsync('token');
+
 		// this.props.navigationProps.navigate('Home');
 		this.props.navigationProps.dismiss();
 
@@ -74,12 +75,10 @@ class NavigationDrawerStructure extends Component {
 		return (
 			<View style={{ flexDirection: 'row' }}>
 				<TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
-					{/*Donute Button Image */}
 					<Image source={require('./image/drawer.png')} style={{ width: 35, height: 35, marginLeft: 5 }} />
 				</TouchableOpacity>
 
 				<TouchableOpacity onPress={() => this.onClickListener()}>
-					{/*Donute Button Image */}
 					<Icon name="sign-out" type="font-awesome" color="grey" size={50} style={{ marginLeft: 120 }} />
 				</TouchableOpacity>
 			</View>
@@ -95,8 +94,8 @@ class NavigationDrawerStructure2 extends Component {
 	};
 
 	onClickListener = async (viewId) => {
-		this.props.navigationProps.navigate('Profile');
-		//this.props.navigationProps.dismiss();
+		//this.props.navigationProps.navigate('Profile');
+		this.props.navigationProps.dismiss();
 	};
 
 	render() {

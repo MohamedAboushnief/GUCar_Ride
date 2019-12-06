@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import { Text, Card, Divider, Button } from 'react-native-elements';
 import axios from 'axios';
-
+import * as SecureStore from 'expo-secure-store';
 export default class DriverRequestCard extends Component {
 	constructor(props) {
 		super(props);
@@ -13,6 +13,9 @@ export default class DriverRequestCard extends Component {
 	onClickListener1 = async () => {
 		const Passenger = this.props.Passenger;
 		console.log(Passenger);
+		const token = JSON.parse(await SecureStore.getItemAsync('token'));
+
+		axios.defaults.headers.common['Authorization'] = token;
 		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/accept_request/${Passenger}`;
 
 		axios({ method: 'post', url: apiBaseUrl })
@@ -30,6 +33,10 @@ export default class DriverRequestCard extends Component {
 
 	onClickListener2 = async () => {
 		const Passenger = this.props.Passenger;
+
+		const token = JSON.parse(await SecureStore.getItemAsync('token'));
+
+		axios.defaults.headers.common['Authorization'] = token;
 
 		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/cancel_request/${Passenger}`;
 
@@ -85,7 +92,10 @@ export default class DriverRequestCard extends Component {
 						titleStyle={{ color: 'white' }}
 					/>
 					<Button
-						onPress={() => this.onClickListener2()}
+						onPress={() => {
+							this.onClickListener2();
+							this.props.onDelete(this.props.Passenger);
+						}}
 						buttonStyle={{
 							backgroundColor: 'orange',
 							width: 100,

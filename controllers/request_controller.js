@@ -127,6 +127,65 @@ const get_requests = async (req, res, next) => {
 	}
 };
 
+const delete_request_from_passenger = async (req, res, next) => {
+	try {
+		const request = await RequestModel.findOne({ where: { passenger_id: req.user.id } });
+		const driver_id = request.driver_id;
+
+		const deletedRequest = await RequestModel.destroy({
+			where: {
+				passenger_id: req.user.id,
+				driver_id: driver_id
+			}
+		});
+		if (!deletedRequest) {
+			return res.status(400).json({
+				status: 'failure',
+				message: 'Cannot delete request !'
+			});
+		}
+
+		const Driver = await UserModel.findByPk(driver_id);
+
+		let expo = new Expo();
+		let messages = [];
+		let pushToken = Driver.push_token;
+		console.log(pushToken);
+		// Check that your push token appear to be valid Expo push token
+		if (!Expo.isExpoPushToken(pushToken)) {
+			console.error(`Push token ${pushToken} is not a valid Expo push token`);
+		} else {
+			messages.push({
+				to: pushToken,
+				sound: 'default',
+				body: 'Passenger cancelled his request !',
+				data: { withSome: 'data' }
+			});
+			let chunks = expo.chunkPushNotifications(messages);
+			let tickets = [];
+			(async () => {
+				for (let chunk of chunks) {
+					try {
+						let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
+						console.log(ticketChunk);
+						tickets.push(...ticketChunk);
+					} catch (error) {
+						console.error(error);
+					}
+				}
+			})();
+		}
+
+		return res.status(200).json({
+			status: 'success',
+			message: 'Request deleted successfully !',
+			requestStatus: 'rejected'
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
 const delete_request = async (req, res, next) => {
 	try {
 		const deletedRequest = await RequestModel.destroy({
@@ -368,5 +427,6 @@ module.exports = {
 	delete_request,
 	accept_request,
 	arrived_to_pickUp,
-	delete_all_requests
+	delete_all_requests,
+	delete_request_from_passenger
 };
