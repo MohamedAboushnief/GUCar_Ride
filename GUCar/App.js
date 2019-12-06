@@ -95,8 +95,8 @@ class NavigationDrawerStructure2 extends Component {
 	};
 
 	onClickListener = async (viewId) => {
-		//this.props.navigationProps.navigate('Profile');
-		this.props.navigationProps.dismiss();
+		this.props.navigationProps.navigate('Profile');
+		//this.props.navigationProps.dismiss();
 	};
 
 	render() {
