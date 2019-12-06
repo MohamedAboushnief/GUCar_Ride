@@ -26,22 +26,23 @@ export default class AddCar extends React.Component {
 	}
 
 	onClickListener = async () => {
-		//var apiBaseUrl = `http://10.78.71.110:3000/routes/drivers_cars/create`;
-
 		var payload = {
 			car_model: this.state.car_model,
 			car_plate_number: this.state.car_plate_number,
 			car_color: this.state.car_color
 		};
-		console.log(payload.car_model + 'lllllllllllllllllllllllllllllllllllllllllll');
 		const token = JSON.parse(await SecureStore.getItemAsync('token'));
 		console.log(token);
 		axios.defaults.headers.common['Authorization'] = token;
 		axios
-			.post('http://10.78.71.110:5000/routes/drivers_cars/create', payload, {
-				method: 'POST',
-				mode: 'cors'
-			})
+			.post(
+				'http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/drivers_cars/create',
+				payload,
+				{
+					method: 'POST',
+					mode: 'cors'
+				}
+			)
 			.then(res => {
 				console.log(res.data.message);
 				alert(res.data.message);

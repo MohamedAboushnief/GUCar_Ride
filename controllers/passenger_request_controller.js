@@ -13,10 +13,18 @@ const Passenger = new PassengerRequestModel(sequelize, Sequelize);
 
 const jwt = require('jsonwebtoken');
 var passport = require('passport');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 
 const create_requests = async (req, res, next) => {
 	try {
+		const checkTrip = await TripModel.findOne({ where: { user_id: req.user.id } });
+		if (checkTrip) {
+			return res.status(400).json({
+				status: 'failure',
+				message: 'You cannot request a driver while you have a trip !'
+			});
+		}
+
 		const checkExist = await PassengerRequestModel.findAll({ where: { passenger_id: req.user.id } });
 		var exist = false;
 		if (checkExist) {
@@ -48,14 +56,11 @@ const create_requests = async (req, res, next) => {
 
 		return res.status(200).json({
 			status: 'success',
-			message: 'Request sent successfully !'
+			message: 'Request sent successfully !',
+			newRequest
 		});
 	} catch (error) {
 		next(error);
-		// return res.status(400).json({
-		// 	status: 'failure',
-		// 	message: 'Something went wrong !'
-		// });
 	}
 };
 
@@ -86,10 +91,6 @@ const delete_request = async (req, res, next) => {
 		});
 	} catch (error) {
 		next(error);
-		// return res.status(400).json({
-		// 	status: 'failure',
-		// 	message: 'Something went wrong !'
-		// });
 	}
 };
 

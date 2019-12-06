@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
-
 import { Button, ThemeProvider, Input, Image, Header, Text } from 'react-native-elements';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as SecureStore from 'expo-secure-store';
@@ -46,14 +45,18 @@ export default class AddTrip extends React.Component {
 		console.log(payload);
 		axios.defaults.headers.common['Authorization'] = token;
 		axios
-			.post('http://10.78.71.110:5000/routes/trips/create_trip', {
-				method: 'POST',
-				mode: 'cors',
-				data: payload
-			})
+			.post(
+				'http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/trips/create_trip',
+				payload,
+				{
+					method: 'POST',
+					mode: 'cors'
+				}
+			)
 			.then(res => {
 				console.log(res.data.message);
 				alert(res.data.message);
+				this.props.navigation.navigate('AddTrip');
 			})
 			.catch(err => {
 				alert(err.response.data.message);
@@ -110,17 +113,21 @@ export default class AddTrip extends React.Component {
 							onValueChange={this.updateGucSlot}
 							style={{ width: 250, marginTop: 100 }}
 						>
-							<Picker.Item label="1st slot" value="1st slot" />
-							<Picker.Item label="2nd slot" value="2nd slot" />
-							<Picker.Item label="3rd slot" value="3rd slot" />
-							<Picker.Item label="4rth slot" value="4rth slot" />
-							<Picker.Item label="5th slot" value="5th slot" />
+							<Picker.Item label="Select GUC slot" />
+							<Picker.Item label="First" value="First" />
+							<Picker.Item label="Second" value="Second" />
+							<Picker.Item label="Third" value="Third" />
+							<Picker.Item label="Fourth" value="Fourth" />
+							<Picker.Item label="Fifth" value="Fifth" />
 						</Picker>
+
 						<Picker
 							selectedValue={this.state.pricing}
 							onValueChange={this.updatePrice}
 							style={{ width: 250, marginTop: 50 }}
 						>
+							<Picker.Item label="Select your fare" />
+
 							<Picker.Item label="Volunteer" value="Volunteer" />
 							<Picker.Item label="2 LE" value="2 LE" />
 							<Picker.Item label="4 LE" value="4 LE" />

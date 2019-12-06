@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import { createAppContainer, NavigationActions, StackActions, NavigationEvents } from 'react-navigation';
 
 export default class Profile extends Component {
 	constructor(props) {
@@ -17,19 +18,21 @@ export default class Profile extends Component {
 			address: '',
 			mobile_number: ''
 		};
+		this.componentDidMount = this.componentDidMount.bind(this);
 	}
 
 	componentDidMount = async () => {
 		const token = JSON.parse(await SecureStore.getItemAsync('token'));
+		console.log(token);
 
 		axios.defaults.headers.common['Authorization'] = token;
 
-		await axios
-			.get('http://10.78.71.110:5000/routes/users/userInfo', {
+		axios
+			.get('http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/users/userInfo', {
 				method: 'GET',
 				mode: 'cors'
 			})
-			.then(res => {
+			.then(async res => {
 				this.setState({
 					first_name: res.data.user.first_name,
 					last_name: res.data.user.last_name,
@@ -60,10 +63,16 @@ export default class Profile extends Component {
 						<Text style={styles.name}>{this.state.guc_id}</Text>
 						<Text style={styles.name}>{this.state.mobile_number}</Text>
 
-						<TouchableOpacity style={styles.buttonContainer}>
+						<TouchableOpacity
+							style={styles.buttonContainer}
+							onPress={() => this.props.navigation.navigate('ViewTrips')}
+						>
 							<Text style={{ color: 'white', fontSize: 22 }}>Request a ride</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.buttonContainer}>
+						<TouchableOpacity
+							style={styles.buttonContainer}
+							onPress={() => this.props.navigation.navigate('AddTrip')}
+						>
 							<Text style={{ color: 'white', fontSize: 22 }}>Create a trip</Text>
 						</TouchableOpacity>
 					</View>

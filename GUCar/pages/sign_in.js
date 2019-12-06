@@ -14,6 +14,7 @@ import axios from 'axios';
 import { Button, ThemeProvider, Input, Image, Header, Text } from 'react-native-elements';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as SecureStore from 'expo-secure-store';
+import { createAppContainer, NavigationActions, StackActions, NavigationEvents } from 'react-navigation';
 
 export default class SignIn extends React.Component {
 	constructor(props) {
@@ -25,7 +26,7 @@ export default class SignIn extends React.Component {
 	}
 
 	onClickListener = viewId => {
-		var apiBaseUrl = `http://10.78.71.110:5000/routes/users/login`;
+		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/users/login`;
 
 		var payload = {
 			email: this.state.email,
@@ -34,12 +35,12 @@ export default class SignIn extends React.Component {
 
 		axios
 			.post(apiBaseUrl, payload)
-			.then(res => {
+			.then(async res => {
 				console.log(res.data.message);
 				alert(res.data.message);
 				console.log(res.data.token);
-				SecureStore.setItemAsync('token', JSON.stringify(res.data.token));
-				this.props.navigation.navigate('Profile');
+				await SecureStore.setItemAsync('token', JSON.stringify(res.data.token));
+				this.props.navigation.push('Profile');
 			})
 			.catch(err => {
 				console.log(err);

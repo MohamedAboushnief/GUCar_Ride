@@ -3,13 +3,14 @@ import SignUp from './pages/sign_up';
 import SignIn from './pages/sign_in';
 import AddTrip from './pages/add_trip';
 import GoogleSignIn from './pages/google_sign_in';
-// import GoogleLogin from './pages/google_sign_in';
-
 import EditInfo from './pages/edit_profile';
 import Profile from './pages/profile_page';
 import * as Google from 'expo-google-app-auth';
 import Expo from 'expo';
-import { ThemeProvider, Input, Header } from 'react-native-elements';
+import ViewRequests from './pages/view_driver_requests';
+import ViewTrips from './pages/view_trips';
+
+import { ThemeProvider, Input, Header, Icon } from 'react-native-elements';
 import {
 	StyleSheet,
 	Text,
@@ -23,9 +24,11 @@ import {
 	TouchableOpacity
 } from 'react-native';
 import AddCar from './pages/add_car';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, NavigationActions, StackActions } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
+import * as SecureStore from 'expo-secure-store';
+// import { Icon } from 'react-native-vector-icons/Icon';
 
 // import { GoogleSignin, GoogleSigninButton } from '@react-native-community/google-signin';
 
@@ -71,12 +74,53 @@ class NavigationDrawerStructure extends Component {
 		this.props.navigationProps.toggleDrawer();
 	};
 
+	onClickListener = async viewId => {
+		await SecureStore.deleteItemAsync('token');
+
+		// this.props.navigationProps.navigate('Home');
+		this.props.navigationProps.dismiss();
+
+		// const resetAction = StackActions.reset({
+		// 	index: 0,
+		// 	actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
+		// });
+		//this.props.navigationProps.dispatch(resetAction);
+		//RNRestart.Restart();
+	};
+
 	render() {
 		return (
 			<View style={{ flexDirection: 'row' }}>
 				<TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
+					<Image source={require('./image/drawer.png')} style={{ width: 35, height: 35, marginLeft: 5 }} />
+				</TouchableOpacity>
+
+				<TouchableOpacity onPress={() => this.onClickListener()}>
+					<Icon name="sign-out" type="font-awesome" color="grey" size={50} style={{ marginLeft: 120 }} />
+				</TouchableOpacity>
+			</View>
+		);
+	}
+}
+
+class NavigationDrawerStructure2 extends Component {
+	//Structure for the navigatin Drawer
+	toggleDrawer = () => {
+		//Props to open/close the drawer
+		this.props.navigationProps.toggleDrawer();
+	};
+
+	onClickListener = async viewId => {
+		//this.props.navigationProps.navigate('Profile');
+		this.props.navigationProps.dismiss();
+	};
+
+	render() {
+		return (
+			<View style={{ flexDirection: 'row' }}>
+				<TouchableOpacity onPress={() => this.onClickListener()}>
 					{/*Donute Button Image */}
-					<Image source={require('./image/drawer.png')} style={{ width: 25, height: 25, marginLeft: 5 }} />
+					<Icon name="home" type="font-awesome" color="grey" size={50} style={{ marginRight: 150 }} />
 				</TouchableOpacity>
 			</View>
 		);
@@ -100,6 +144,31 @@ const Home_StackNavigator = createStackNavigator({
 				/>
 			),
 			// headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerStyle: {
+				backgroundColor: 'black'
+			},
+			headerTintColor: 'black'
+		})
+	}
+});
+
+const ViewRequests_StackNavigator = createStackNavigator({
+	//All the screen from the Screen1 will be indexed here
+	ViewRequests: {
+		screen: ViewRequests,
+		navigationOptions: ({ navigation }) => ({
+			headerBackground: (
+				<Image
+					source={require('./assets/gucarWhite.png')}
+					style={{
+						marginTop: 40,
+						width: 390,
+						height: 35,
+						position: 'absolute'
+					}}
+				/>
+			),
+			headerLeft: <NavigationDrawerStructure2 navigationProps={navigation} />,
 			headerStyle: {
 				backgroundColor: 'black'
 			},
@@ -163,7 +232,7 @@ const editInfo_StackNavigator = createStackNavigator({
 	EditInfo: {
 		screen: EditInfo,
 		navigationOptions: ({ navigation }) => ({
-			headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerLeft: <NavigationDrawerStructure2 navigationProps={navigation} />,
 			headerBackground: (
 				<Image
 					source={require('./assets/gucarWhite.png')}
@@ -213,7 +282,7 @@ const addCar_StackNavigator = createStackNavigator({
 	AddCar: {
 		screen: AddCar,
 		navigationOptions: ({ navigation }) => ({
-			// headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerLeft: <NavigationDrawerStructure2 navigationProps={navigation} />,
 			headerBackground: (
 				<Image
 					source={require('./assets/gucarWhite.png')}
@@ -238,7 +307,32 @@ const addTrip_StackNavigator = createStackNavigator({
 	AddTrip: {
 		screen: AddTrip,
 		navigationOptions: ({ navigation }) => ({
-			// headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+			headerLeft: <NavigationDrawerStructure2 navigationProps={navigation} />,
+			headerBackground: (
+				<Image
+					source={require('./assets/gucarWhite.png')}
+					style={{
+						marginTop: 40,
+						width: 390,
+						height: 35,
+						position: 'absolute'
+					}}
+				/>
+			),
+			headerStyle: {
+				backgroundColor: 'black'
+			},
+			headerTintColor: 'black'
+		})
+	}
+});
+
+const viewTrips_StackNavigator = createStackNavigator({
+	//All the screen from the Screen2 will be indexed here
+	ViewTrips: {
+		screen: ViewTrips,
+		navigationOptions: ({ navigation }) => ({
+			headerLeft: <NavigationDrawerStructure2 navigationProps={navigation} />,
 			headerBackground: (
 				<Image
 					source={require('./assets/gucarWhite.png')}
@@ -366,6 +460,21 @@ const DrawerNavigatorExample = createDrawerNavigator({
 	},
 
 	Screen9: {
+		//Title
+		screen: viewTrips_StackNavigator,
+		navigationOptions: {
+			drawerLabel: 'View Trips'
+		}
+	},
+	Screen10: {
+		//Title
+		screen: ViewRequests_StackNavigator,
+		navigationOptions: {
+			drawerLabel: 'View Requests'
+		}
+	},
+
+	Screen11: {
 		//Title
 		screen: Home_StackNavigator,
 		navigationOptions: {

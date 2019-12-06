@@ -8,7 +8,7 @@ const Mobile = new MobileModel(sequelize, Sequelize);
 const User = new UserModel(sequelize, Sequelize);
 const jwt = require('jsonwebtoken');
 var passport = require('passport');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 const { checkEncryptedEqualVal } = require('../helpers/encryption_helper');
 
 const postToken = async (req, res, next) => {
@@ -42,8 +42,8 @@ const signup = async (req, res, next) => {
 			});
 		}
 
-		const salt = await bcrypt.genSalt(10);
-		encryptedPassword = await bcrypt.hash(req.body.password, salt);
+		const salt = await bcryptjs.genSalt(10);
+		encryptedPassword = await bcryptjs.hash(req.body.password, salt);
 
 		var user = await UserModel.create({
 			first_name: req.body.first_name,
@@ -161,7 +161,6 @@ const getInfo = async (req, res, next) => {
 	try {
 		const user = await UserModel.findByPk(req.user.id);
 		const mobile = await MobileModel.findOne({ where: { user_id: user.id } });
-		console.log(mobile.mobile_number + ' tessssssssssssssss dummm ' + user.id);
 		if (!user) {
 			return res.status(400).json({
 				status: 'failure',
@@ -184,8 +183,6 @@ const getInfo = async (req, res, next) => {
 };
 
 const editInfo = async (req, res, next) => {
-	console.log('asssssssssssss');
-
 	try {
 		const user = await UserModel.findByPk(req.user.id);
 
@@ -324,8 +321,8 @@ const change_password = async (req, res, next) => {
 		const match = await checkEncryptedEqualVal(oldPassword, user.password);
 		if (match) {
 			if (newPassword === confirmPassword) {
-				const salt = await bcrypt.genSalt(10);
-				encryptedPassword = await bcrypt.hash(newPassword, salt);
+				const salt = await bcryptjs.genSalt(10);
+				encryptedPassword = await bcryptjs.hash(newPassword, salt);
 				const updatedUser = await UserModel.update(
 					{
 						password: encryptedPassword
