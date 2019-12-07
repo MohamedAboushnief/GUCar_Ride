@@ -45,21 +45,42 @@ export default class GoogleSignIn extends React.Component {
 	};
 
 	logIn = async () => {
+		const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+		let finalStatus = existingStatus;
+		if (existingStatus !== 'granted') {
+			// Android remote notification permissions are granted during the app
+			// install, so this will only ask on iOS
+			const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+			finalStatus = status;
+		}
+		// Stop here if the user did not grant permissios
+		if (finalStatus !== 'granted') {
+			return;
+		}
+		let pushToken = await Notifications.getExpoPushTokenAsync();
+		console.log(pushToken);
+
 		const iD = { guc_id: this.state.guc_id };
 		const GU = Object.assign(payload, iD);
 		const add = { address: this.state.address };
 		const mob = { mobile_number: this.state.mobile_number };
 		var lastResult = Object.assign(GU, add);
 		var mergeObj = Object.assign(lastResult, mob);
+		const pushT = { token: pushToken };
+		var lastMerge = Object.assign(mergeObj, pushT);
 		console.log('wwwwwwwwwwwwwwwwwwwwwwwwww');
-		console.log(mergeObj);
+		console.log(lastMerge);
 		console.log('wwwwwwwwwwwwwwwwwwwwwwwwww');
 
 		await axios
-			.post('http://10.78.71.110:5000/routes/users/googleLogin', mergeObj, {
-				method: 'POST',
-				mode: 'cors'
-			})
+			.post(
+				'http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/users/googleLogin',
+				lastMerge,
+				{
+					method: 'POST',
+					mode: 'cors'
+				}
+			)
 			.then(res => {
 				console.log(res.data.message);
 				alert(res.data.message);

@@ -11,12 +11,6 @@ var passport = require('passport');
 const bcryptjs = require('bcryptjs');
 const { checkEncryptedEqualVal } = require('../helpers/encryption_helper');
 
-const postToken = async (req, res, next) => {
-	try {
-		token = req.body.token;
-	} catch (error) {}
-};
-
 const signup = async (req, res, next) => {
 	try {
 		pushToken = req.body.token;
@@ -368,6 +362,7 @@ const googleLogin = async (req, res, next) => {
 			}
 		});
 		if (!checkUser) {
+			pushToken = req.body.token;
 			const guc_id = req.body.guc_id;
 			const address = req.body.address;
 			if (!guc_id) {
@@ -390,7 +385,8 @@ const googleLogin = async (req, res, next) => {
 				password: 'google account',
 				guc_id: guc_id,
 				date_of_birth: '1998-1-1',
-				address: req.body.address
+				address: req.body.address,
+				push_token: pushToken
 			});
 
 			if (req.body.mobile_number.length == 0) {
@@ -442,6 +438,5 @@ module.exports = {
 	editInfo,
 	delete_user,
 	change_password,
-	postToken,
 	googleLogin
 };
