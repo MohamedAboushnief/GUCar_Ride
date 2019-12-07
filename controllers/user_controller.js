@@ -356,6 +356,7 @@ const change_password = async (req, res, next) => {
 
 const googleLogin = async (req, res, next) => {
 	try {
+		console.log(req.body);
 		const checkUser = await UserModel.findOne({
 			where: {
 				email: req.body.email
@@ -377,6 +378,7 @@ const googleLogin = async (req, res, next) => {
 					message: 'Please enter your address'
 				});
 			}
+			console.log('fffffffffffffffffff');
 
 			var user = await UserModel.create({
 				first_name: req.body.first_name,
@@ -388,6 +390,7 @@ const googleLogin = async (req, res, next) => {
 				address: req.body.address,
 				push_token: pushToken
 			});
+			console.log('sssssssssssssssssssss');
 
 			if (req.body.mobile_number.length == 0) {
 				return res.status(422).json({
@@ -395,7 +398,6 @@ const googleLogin = async (req, res, next) => {
 					message: 'Please enter your mobile number'
 				});
 			}
-
 			for (var i = 0; i < req.body.mobile_number.length; i++) {
 				console.log(req.body.mobile_number[i]);
 				await MobileModel.create({

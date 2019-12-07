@@ -26,18 +26,18 @@ export default class EditInfo extends React.Component {
 			guc_id: '',
 			date_of_birth: '',
 			gender: '',
-			genderList: ['male', 'female'],
+			genderList: [ 'male', 'female' ],
 			address: '',
-			addressList: ['Maadi', '5th Settlement', 'Heliopolis'],
+			addressList: [ 'Maadi', '5th Settlement', 'Heliopolis' ],
 			mobile_number: []
 		};
 		this.onClickListener = this.onClickListener.bind(this);
 	}
 
-	updateAddress = address => {
+	updateAddress = (address) => {
 		this.setState({ address: address });
 	};
-	updateGender = gender => {
+	updateGender = (gender) => {
 		this.setState({ gender: gender });
 	};
 
@@ -67,11 +67,12 @@ export default class EditInfo extends React.Component {
 				mode: 'cors',
 				data: payload
 			})
-			.then(res => {
+			.then((res) => {
 				console.log(res.data.message);
 				alert(res.data.message);
+				this.props.navigation.push('Profile');
 			})
-			.catch(error => {
+			.catch((error) => {
 				console.log(error.response);
 				alert(error.response.data.error);
 			});
@@ -88,37 +89,37 @@ export default class EditInfo extends React.Component {
 					<ScrollView showsVerticalScrollIndicator={false}>
 						<Input
 							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-							onChangeText={first_name => this.setState({ first_name })}
+							onChangeText={(first_name) => this.setState({ first_name })}
 							placeholder="Change First Name"
 							leftIcon={{ type: 'font-awesome', name: 'user', iconStyle: { marginRight: 13 } }}
 						/>
 						<Input
 							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-							onChangeText={last_name => this.setState({ last_name })}
+							onChangeText={(last_name) => this.setState({ last_name })}
 							placeholder="Change Last Name"
 							leftIcon={{ type: 'font-awesome', name: 'user', iconStyle: { marginRight: 13 } }}
 						/>
 						<Input
 							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-							onChangeText={email => this.setState({ email })}
+							onChangeText={(email) => this.setState({ email })}
 							placeholder="Change Email"
 							leftIcon={{ type: 'font-awesome', name: 'envelope-o', iconStyle: { marginRight: 13 } }}
 						/>
 						<Input
 							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-							onChangeText={guc_id => this.setState({ guc_id })}
+							onChangeText={(guc_id) => this.setState({ guc_id })}
 							placeholder="Change GUC ID"
 							leftIcon={{ type: 'font-awesome', name: 'id-badge', iconStyle: { marginRight: 13 } }}
 						/>
 						<Input
 							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-							onChangeText={mobile_number => this.setState({ mobile_number: [mobile_number] })}
+							onChangeText={(mobile_number) => this.setState({ mobile_number: [ mobile_number ] })}
 							placeholder="Change Mobile Number"
 							leftIcon={{ type: 'font-awesome', name: 'mobile', iconStyle: { marginRight: 13 } }}
 						/>
 						<View>
 							<CalendarStrip
-								ref={ref => {
+								ref={(ref) => {
 									this.CalendarStrip = ref;
 								}}
 								onDateSelected={() =>

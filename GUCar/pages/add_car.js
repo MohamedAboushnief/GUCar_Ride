@@ -43,11 +43,12 @@ export default class AddCar extends React.Component {
 					mode: 'cors'
 				}
 			)
-			.then(res => {
+			.then((res) => {
 				console.log(res.data.message);
 				alert(res.data.message);
+				this.props.navigation.push('Profile');
 			})
-			.catch(err => {
+			.catch((err) => {
 				alert(err.response.data.message);
 			});
 	};
@@ -62,7 +63,7 @@ export default class AddCar extends React.Component {
 								containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
 								placeholder="Car model"
 								leftIcon={{ type: 'font-awesome', name: 'car', iconStyle: { marginRight: 13 } }}
-								onChangeText={car_model => this.setState({ car_model })}
+								onChangeText={(car_model) => this.setState({ car_model })}
 							/>
 							<Input
 								containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
@@ -72,13 +73,13 @@ export default class AddCar extends React.Component {
 									name: 'paint-brush',
 									iconStyle: { marginRight: 13 }
 								}}
-								onChangeText={car_color => this.setState({ car_color })}
+								onChangeText={(car_color) => this.setState({ car_color })}
 							/>
 							<Input
 								containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
 								placeholder="Car plate number"
 								leftIcon={{ type: 'font-awesome', name: 'language', iconStyle: { marginRight: 13 } }}
-								onChangeText={car_plate_number => this.setState({ car_plate_number })}
+								onChangeText={(car_plate_number) => this.setState({ car_plate_number })}
 							/>
 						</View>
 

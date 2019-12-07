@@ -5,6 +5,7 @@ import AddTrip from './pages/add_trip';
 import GoogleSignIn from './pages/google_sign_in';
 import EditInfo from './pages/edit_profile';
 import Profile from './pages/profile_page';
+import ChangePassword from './pages/change_password';
 import * as Google from 'expo-google-app-auth';
 import Expo from 'expo';
 import ViewRequests from './pages/view_driver_requests';
@@ -79,7 +80,7 @@ class NavigationDrawerStructure extends Component {
 
 		// this.props.navigationProps.navigate('Home');
 		this.props.navigationProps.dismiss();
-		this.props.navigation.dispatch(
+		this.props.navigationProps.dispatch(
 			StackActions.reset({
 				index: 0,
 				key: null,
@@ -118,8 +119,21 @@ class NavigationDrawerStructure2 extends Component {
 	};
 
 	onClickListener = async (viewId) => {
-		this.props.navigationProps.navigate('Profile');
+		//this.props.navigationProps.navigate('Profile');
 		//this.props.navigationProps.dismiss();
+
+		// this.props.navigationProps.dispatch(
+		// 	NavigationActions.reset({
+		// 		index: 1,
+		// 		key: null,
+		// 		actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
+		// 	})
+		// );
+		const pushAction = StackActions.push({
+			routeName: 'Profile'
+		});
+
+		this.props.navigationProps.dispatch(pushAction);
 	};
 
 	render() {
@@ -407,6 +421,31 @@ const signOut_StackNavigator = createStackNavigator({
 	}
 });
 
+const ChangePasswords_StackNavigator = createStackNavigator({
+	//All the screen from the Screen2 will be indexed here
+	ChangePassword: {
+		screen: ChangePassword,
+		navigationOptions: ({ navigation }) => ({
+			headerLeft: <NavigationDrawerStructure2 navigationProps={navigation} />,
+			headerBackground: (
+				<Image
+					source={require('./assets/gucarWhite.png')}
+					style={{
+						marginTop: 40,
+						width: 390,
+						height: 35,
+						position: 'absolute'
+					}}
+				/>
+			),
+			headerStyle: {
+				backgroundColor: 'black'
+			},
+			headerTintColor: 'black'
+		})
+	}
+});
+
 const DrawerNavigatorExample = createDrawerNavigator({
 	//Drawer Optons and indexing
 	Screen1: {
@@ -480,8 +519,14 @@ const DrawerNavigatorExample = createDrawerNavigator({
 			drawerLabel: 'View Requests'
 		}
 	},
-
 	Screen11: {
+		//Title
+		screen: ChangePasswords_StackNavigator,
+		navigationOptions: {
+			drawerLabel: 'Change Password'
+		}
+	},
+	Screen12: {
 		//Title
 		screen: Home_StackNavigator,
 		navigationOptions: {
