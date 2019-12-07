@@ -11,19 +11,27 @@ import Expo from 'expo';
 import ViewRequests from './pages/view_driver_requests';
 import ViewTrips from './pages/view_trips';
 
-import { ThemeProvider, Input, Header, Icon } from 'react-native-elements';
 import {
 	StyleSheet,
-	Text,
 	View,
 	TextInput,
-	Button,
 	TouchableHighlight,
 	Image,
 	Alert,
 	SafeAreaView,
 	TouchableOpacity
 } from 'react-native';
+import {
+	ThemeProvider,
+	Input,
+	Text,
+	Button,
+	HeaderSideMenu,
+	List,
+	ListItem,
+	Header,
+	SideMenu
+} from 'react-native-elements';
 import AddCar from './pages/add_car';
 import { createAppContainer, NavigationActions, StackActions } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -46,21 +54,65 @@ class HomeScreen extends React.Component {
 				}}
 			>
 				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-						<Button title="Sign Up" onPress={() => this.props.navigation.navigate('SignUp')} />
-					</View>
-					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-						<Button title="Sign In" onPress={() => this.props.navigation.navigate('SignIn')} />
-					</View>
+					<Image
+						source={require('./assets/car3.gif')}
+						style={{
+							width: 350,
+							height: 120,
+							alignSelf: 'center',
+							marginBottom: 70
+						}}
+					/>
+				</View>
 
-					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-						<Button title="Test To Add car" onPress={() => this.props.navigation.navigate('AddCar')} />
+				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+					<View>
+						<Button
+							buttonStyle={{
+								backgroundColor: 'black',
+								width: 150,
+								height: 50,
+								alignSelf: 'center',
+								justifyContent: 'center',
+								marginBottom: 50
+							}}
+							type={'outline'}
+							title="Sign up"
+							titleStyle={{ color: 'gainsboro' }}
+							onPress={() => this.props.navigation.navigate('SignUp')}
+						/>
 					</View>
-					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-						<Button title="Test To Add car" onPress={() => this.props.navigation.navigate('AddTrip')} />
+					<View>
+						<Button
+							buttonStyle={{
+								backgroundColor: 'darkred',
+								width: 150,
+								height: 50,
+								alignSelf: 'center',
+								justifyContent: 'center',
+								marginBottom: 50
+							}}
+							type={'outline'}
+							title="Google sign in"
+							titleStyle={{ color: 'gainsboro' }}
+							onPress={() => this.props.navigation.navigate('GoogleSignIn')}
+						/>
 					</View>
-					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-						<Button title="GoogleSignIn" onPress={() => this.props.navigation.navigate('GoogleSignIn')} />
+					<View>
+						<Button
+							buttonStyle={{
+								backgroundColor: 'gold',
+								width: 150,
+								height: 50,
+								alignSelf: 'center',
+								justifyContent: 'center',
+								marginBottom: 50
+							}}
+							type={'outline'}
+							title="GUCar sign in"
+							titleStyle={{ color: 'white' }}
+							onPress={() => this.props.navigation.navigate('SignIn')}
+						/>
 					</View>
 				</View>
 			</SafeAreaView>
@@ -87,13 +139,6 @@ class NavigationDrawerStructure extends Component {
 				actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
 			})
 		);
-
-		// const resetAction = StackActions.reset({
-		// 	index: 0,
-		// 	actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
-		// });
-		//this.props.navigationProps.dispatch(resetAction);
-		//RNRestart.Restart();
 	};
 
 	render() {

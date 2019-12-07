@@ -1,9 +1,1 @@
-{
-  "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://ci-k4v.mohamedaboushenif.gucar.exp.direct",
-  "packagerNgrokUrl": "https://packager.ci-k4v.mohamedaboushenif.gucar.exp.direct",
-  "ngrokPid": 6352,
-  "devToolsPort": 19002,
-  "packagerPort": 19001,
-  "packagerPid": 5328
-}
+{}
