@@ -1,6 +1,8 @@
 import * as Google from 'expo-google-app-auth';
 import Expo from 'expo';
 import React, { Component } from 'react';
+import * as Permissions from 'expo-permissions';
+import { Notifications } from 'expo';
 
 import {
 	StyleSheet,

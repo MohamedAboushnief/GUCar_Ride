@@ -1,9 +1,9 @@
 {
-  "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://ns-tgg.mohamedaboushenif.gucar.exp.direct",
-  "packagerNgrokUrl": "https://packager.ns-tgg.mohamedaboushenif.gucar.exp.direct",
-  "ngrokPid": 25620,
-  "devToolsPort": 19002,
-  "packagerPort": 19001,
-  "packagerPid": 24308
+	"expoServerPort": 19000,
+	"expoServerNgrokUrl": "https://ns-tgg.mohamedaboushenif.gucar.exp.direct",
+	"packagerNgrokUrl": "https://packager.ns-tgg.mohamedaboushenif.gucar.exp.direct",
+	"ngrokPid": 25620,
+	"devToolsPort": 19002,
+	"packagerPort": 19001,
+	"packagerPid": 24308
 }
