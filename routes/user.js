@@ -13,8 +13,6 @@ router.put('/edit_info', passport.authenticate('jwt', { session: false }), users
 router.delete('/delete_user', passport.authenticate('jwt', { session: false }), users.delete_user);
 router.put('/change_password', passport.authenticate('jwt', { session: false }), users.change_password);
 router.put('/rate_driver');
-router.post('/push-token', users.postToken);
-
 router.post('/googleLogin', users.googleLogin);
 
 module.exports = router;
