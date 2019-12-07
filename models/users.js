@@ -76,6 +76,9 @@ User.init(
 		},
 		push_token: {
 			type: Sequelize.STRING
+		},
+		mobile_number: {
+			type: Sequelize.STRING
 		}
 	},
 	{

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
-import { Text, Card, Divider, Button } from 'react-native-elements';
+import { Text, Card, Divider, Button, Input } from 'react-native-elements';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
@@ -11,7 +11,7 @@ export default class TripsCard extends Component {
 		this.state = {
 			status: '',
 			request: 'Request',
-			pick_up_location: 'zahraa El maadi'
+			pick_up_location: ''
 		};
 	}
 
@@ -116,6 +116,20 @@ export default class TripsCard extends Component {
 				<Text style={styles.notes}>{this.props.Slot}</Text>
 				<Text style={styles.notes}>{this.props.Price}</Text>
 				<Text style={styles.notes}>{this.state.status}</Text>
+
+				<View
+					style={{
+						flex: 1,
+						alignItems: 'center',
+						justifyContent: 'center'
+					}}
+				>
+					<Input
+						containerStyle={{ width: 280, alignSelf: 'center', padding: 20, backgroundColor: 'white' }}
+						placeholder="Enter pick up location"
+						onChangeText={(pick_up_location) => this.setState({ pick_up_location })}
+					/>
+				</View>
 
 				<View style={{ justifyContent: 'space-between', alignItems: 'center' }}>
 					<Button

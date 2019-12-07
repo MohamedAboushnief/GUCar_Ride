@@ -34,7 +34,7 @@ export default class SignUp extends React.Component {
 			address: '',
 			addressList: [ 'Maadi', '5th Settlement', 'Heliopolis' ],
 			rating: '',
-			mobile_number: []
+			mobile_number: ''
 		};
 		this.onClickListener = this.onClickListener.bind(this);
 	}
@@ -138,7 +138,7 @@ export default class SignUp extends React.Component {
 						/>
 						<Input
 							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-							onChangeText={(mobile_number) => this.setState({ mobile_number: [ mobile_number ] })}
+							onChangeText={(mobile_number) => this.setState({ mobile_number })}
 							placeholder="Mobile Number"
 							leftIcon={{ type: 'font-awesome', name: 'mobile', iconStyle: { marginRight: 13 } }}
 						/>

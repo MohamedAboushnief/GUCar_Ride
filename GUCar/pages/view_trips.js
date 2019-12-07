@@ -34,7 +34,6 @@ export default class ViewTrips extends React.Component {
 
 	componentDidMount() {
 		console.log('hhhhhhhhhhhhhhhhhhhhhhhhhh');
-		// Get the user's location
 		this.getTrips();
 	}
 
@@ -76,7 +75,7 @@ export default class ViewTrips extends React.Component {
 							detail={item}
 							First_name={this.state.trips[index].first_name}
 							Last_name={this.state.trips[index].last_name}
-							Mobile={this.state.trips[index].mobile_numbers[0].mobile_number}
+							Mobile={this.state.trips[index].mobile_number}
 							Rating={this.state.trips[index].Rating}
 							Slot={this.state.trips[index].trip.guc_slot}
 							Price={this.state.trips[index].trip.pricing}
