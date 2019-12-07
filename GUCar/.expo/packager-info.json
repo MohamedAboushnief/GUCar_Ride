@@ -1,1 +1,9 @@
-{}
+{
+  "devToolsPort": 19002,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 8132,
+  "expoServerNgrokUrl": "https://wd-6zk.anonymous.gucar.exp.direct",
+  "packagerNgrokUrl": "https://packager.wd-6zk.anonymous.gucar.exp.direct",
+  "ngrokPid": 6680
+}
