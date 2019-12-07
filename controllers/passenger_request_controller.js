@@ -25,6 +25,15 @@ const create_requests = async (req, res, next) => {
 			});
 		}
 
+		const checkDriverTrip = await TripModel.findOne({ where: { user_id: req.params.driver_id } });
+
+		if (!checkDriverTrip) {
+			return res.status(400).json({
+				status: 'failure',
+				message: 'Trip is not available anymore !'
+			});
+		}
+
 		const checkExist = await PassengerRequestModel.findAll({ where: { passenger_id: req.user.id } });
 		var exist = false;
 		if (checkExist) {
@@ -58,6 +67,28 @@ const create_requests = async (req, res, next) => {
 			status: 'success',
 			message: 'Request sent successfully !',
 			newRequest
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+const delete_all_request = async (req, res, next) => {
+	try {
+		const deletedRequest = await PassengerRequestModel.destroy({
+			where: {
+				driver_id: req.user.id
+			}
+		});
+		if (!deletedRequest) {
+			return res.status(400).json({
+				status: 'failure',
+				message: 'Cannot delete requests !'
+			});
+		}
+		return res.status(200).json({
+			status: 'success',
+			message: 'Requests deleted successfully !'
 		});
 	} catch (error) {
 		next(error);
@@ -113,22 +144,12 @@ const view_request = async (req, res, next) => {
 				message: 'No driver found !'
 			});
 		}
-		const driverNumber = await MobileModel.findOne({
-			where: {
-				user_id: driver.id
-			}
-		});
-		if (!driverNumber || driverNumber == null) {
-			return res.status(409).json({
-				status: 'Failure',
-				message: 'No mobile number found !'
-			});
-		}
+
 		return res.status(200).json({
 			request,
 			driverName: driver.first_name,
 			driverLastname: driver.last_name,
-			driverMobileNumber: driverNumber.mobile_number,
+			driverMobileNumber: driver.mobile_number,
 			status: 'Success',
 			message: 'request retrieved successfully !'
 		});
@@ -140,5 +161,6 @@ const view_request = async (req, res, next) => {
 module.exports = {
 	create_requests,
 	delete_request,
-	view_request
+	view_request,
+	delete_all_request
 };

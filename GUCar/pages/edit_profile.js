@@ -26,52 +26,78 @@ export default class EditInfo extends React.Component {
 			guc_id: '',
 			date_of_birth: '',
 			gender: '',
-			genderList: ['male', 'female'],
+			genderList: [ 'male', 'female' ],
 			address: '',
-			addressList: ['Maadi', '5th Settlement', 'Heliopolis'],
-			mobile_number: []
+			addressList: [ 'Maadi', '5th Settlement', 'Heliopolis' ],
+			mobile_number: ''
 		};
 		this.onClickListener = this.onClickListener.bind(this);
 	}
 
-	updateAddress = address => {
+	updateAddress = (address) => {
 		this.setState({ address: address });
 	};
-	updateGender = gender => {
+	updateGender = (gender) => {
 		this.setState({ gender: gender });
 	};
 
-	componentDidMount() {}
+	componentDidMount = async () => {
+		const token = JSON.parse(await SecureStore.getItemAsync('token'));
+		console.log(token);
+		axios.defaults.headers.common['Authorization'] = token;
+
+		axios
+			.get('http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/users/userInfo', {
+				method: 'GET',
+				mode: 'cors'
+			})
+			.then(async (res) => {
+				console.log(res.data);
+
+				this.setState({
+					first_name: res.data.user.first_name,
+					last_name: res.data.user.last_name,
+					email: res.data.user.email,
+					guc_id: res.data.user.guc_id,
+					date_of_birth: res.data.user.date_of_birth,
+					gender: res.data.user.gender,
+					address: res.data.user.address,
+					mobile_number: res.data.user.mobile_number
+				});
+			})
+			.catch((error) => {
+				console.log(error.response);
+				alert(error.response.data.error);
+			});
+	};
 
 	onClickListener = async () => {
-		var apiBaseUrl = `http://10.78.71.110:3000/routes/users/edit_info`;
 		var payload = {
 			first_name: this.state.first_name,
 			last_name: this.state.last_name,
 			email: this.state.email,
-			password: this.state.password,
 			guc_id: this.state.guc_id,
 			date_of_birth: this.state.date_of_birth,
 			gender: this.state.gender,
 			address: this.state.address,
 			mobile_number: this.state.mobile_number
 		};
+		console.log(payload);
 		const token = JSON.parse(await SecureStore.getItemAsync('token'));
 
 		axios.defaults.headers.common['Authorization'] = token;
-		console.log('ssssssssss');
-		console.log(this.state.first_name);
+
 		axios
-			.put('http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/users/edit_info', {
+			.put('http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/users/edit_info', payload, {
 				method: 'PUT',
-				mode: 'cors',
-				data: payload
+				mode: 'cors'
 			})
-			.then(res => {
+			.then((res) => {
 				console.log(res.data.message);
 				alert(res.data.message);
+				this.props.navigation.push('Profile');
 			})
-			.catch(error => {
+			.catch((error) => {
 				console.log(error.response);
 				alert(error.response.data.error);
 			});
@@ -88,37 +114,37 @@ export default class EditInfo extends React.Component {
 					<ScrollView showsVerticalScrollIndicator={false}>
 						<Input
 							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-							onChangeText={first_name => this.setState({ first_name })}
+							onChangeText={(first_name) => this.setState({ first_name })}
 							placeholder="Change First Name"
 							leftIcon={{ type: 'font-awesome', name: 'user', iconStyle: { marginRight: 13 } }}
 						/>
 						<Input
 							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-							onChangeText={last_name => this.setState({ last_name })}
+							onChangeText={(last_name) => this.setState({ last_name })}
 							placeholder="Change Last Name"
 							leftIcon={{ type: 'font-awesome', name: 'user', iconStyle: { marginRight: 13 } }}
 						/>
 						<Input
 							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-							onChangeText={email => this.setState({ email })}
+							onChangeText={(email) => this.setState({ email })}
 							placeholder="Change Email"
 							leftIcon={{ type: 'font-awesome', name: 'envelope-o', iconStyle: { marginRight: 13 } }}
 						/>
 						<Input
 							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-							onChangeText={guc_id => this.setState({ guc_id })}
+							onChangeText={(guc_id) => this.setState({ guc_id })}
 							placeholder="Change GUC ID"
 							leftIcon={{ type: 'font-awesome', name: 'id-badge', iconStyle: { marginRight: 13 } }}
 						/>
 						<Input
 							containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-							onChangeText={mobile_number => this.setState({ mobile_number: [mobile_number] })}
+							onChangeText={(mobile_number) => this.setState({ mobile_number })}
 							placeholder="Change Mobile Number"
 							leftIcon={{ type: 'font-awesome', name: 'mobile', iconStyle: { marginRight: 13 } }}
 						/>
 						<View>
 							<CalendarStrip
-								ref={ref => {
+								ref={(ref) => {
 									this.CalendarStrip = ref;
 								}}
 								onDateSelected={() =>

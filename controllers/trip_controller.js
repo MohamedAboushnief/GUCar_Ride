@@ -33,13 +33,6 @@ const view_available_drivers = async (req, res, next) => {
 				}
 			});
 
-			//if (trip.user_id != user.id) {
-			const mobile_numbers = await MobileModel.findAll({
-				where: {
-					user_id: user.id
-				}
-			});
-
 			if (trip) {
 				if (trip.user_id != user.id) {
 					const t = {
@@ -47,7 +40,7 @@ const view_available_drivers = async (req, res, next) => {
 						first_name: drivers[i].first_name,
 						last_name: drivers[i].last_name,
 						rating: drivers[i].rating,
-						mobile_numbers
+						mobile_number: drivers[i].mobile_number
 					};
 					arrayOfTrips.push(t);
 				}
