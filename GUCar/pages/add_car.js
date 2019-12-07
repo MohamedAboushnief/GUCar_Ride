@@ -83,43 +83,6 @@ export default class AddCar extends React.Component {
 							/>
 						</View>
 
-						{/* <View
-							style={{
-								flex: 1,
-								alignItems: 'center',
-								justifyContent: 'center',
-								position: 'absolute',
-								alignSelf: 'center',
-								marginTop: 117
-							}}
-						>
-							<Text h1 h1Style={{ marginLeft: 50 }}>
-								Log In
-							</Text>
-						</View> */}
-
-						{/* <View
-							style={{
-								flex: 1,
-								alignItems: 'center',
-								justifyContent: 'center',
-								position: 'absolute',
-								alignSelf: 'center',
-								marginTop: 120
-							}}
-						>
-							<Icon name="sign-in" type="evilicon" color="grey" size={50} style={{ marginRight: 150 }} />
-						</View> */}
-						{/* <View
-							style={{
-								flex: 1,
-								alignItems: 'center',
-								justifyContent: 'center',
-								position: 'absolute',
-								alignSelf: 'center',
-								marginTop: 350
-							}}
-						> */}
 						<Button
 							buttonStyle={{
 								backgroundColor: 'black',

@@ -39,7 +39,7 @@ export default class GoogleSignIn extends React.Component {
 			email: '',
 			guc_id: '',
 			address: '',
-			mobile_number: []
+			mobile_number: ''
 		};
 	}
 	updateAddress = (address) => {
@@ -152,7 +152,7 @@ export default class GoogleSignIn extends React.Component {
 				/>
 				<Input
 					containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-					onChangeText={(mobile_number) => this.setState({ mobile_number: [ mobile_number ] })}
+					onChangeText={(mobile_number) => this.setState({ mobile_number })}
 					placeholder="Mobile Number"
 					leftIcon={{ type: 'font-awesome', name: 'mobile', iconStyle: { marginRight: 13 } }}
 				/>

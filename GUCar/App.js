@@ -37,7 +37,7 @@ import { createAppContainer, NavigationActions, StackActions } from 'react-navig
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import * as SecureStore from 'expo-secure-store';
-// import { Icon } from 'react-native-vector-icons/Icon';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 // import { GoogleSignin, GoogleSigninButton } from '@react-native-community/google-signin';
 
@@ -145,11 +145,20 @@ class NavigationDrawerStructure extends Component {
 		return (
 			<View style={{ flexDirection: 'row' }}>
 				<TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
-					<Image source={require('./image/drawer.png')} style={{ width: 35, height: 35, marginLeft: 5 }} />
+					<Image
+						source={require('./image/drawer.png')}
+						style={{ width: 30, height: 30, marginLeft: 5, marginTop: 10 }}
+					/>
 				</TouchableOpacity>
 
 				<TouchableOpacity onPress={() => this.onClickListener()}>
-					<Icon name="sign-out" type="font-awesome" color="grey" size={50} style={{ marginLeft: 120 }} />
+					<Icon
+						name="sign-out"
+						type="font-awesome"
+						color="grey"
+						size={30}
+						style={{ marginLeft: 280, marginTop: 10 }}
+					/>
 				</TouchableOpacity>
 			</View>
 		);
@@ -186,7 +195,13 @@ class NavigationDrawerStructure2 extends Component {
 			<View style={{ flexDirection: 'row' }}>
 				<TouchableOpacity onPress={() => this.onClickListener()}>
 					{/*Donute Button Image */}
-					<Icon name="home" type="font-awesome" color="grey" size={50} style={{ marginRight: 150 }} />
+					<Icon
+						name="home"
+						type="font-awesome"
+						color="grey"
+						size={30}
+						style={{ marginRight: 150, marginLeft: 5 }}
+					/>
 				</TouchableOpacity>
 			</View>
 		);

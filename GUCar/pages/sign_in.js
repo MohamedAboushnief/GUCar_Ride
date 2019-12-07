@@ -25,7 +25,7 @@ export default class SignIn extends React.Component {
 		};
 	}
 
-	onClickListener = viewId => {
+	onClickListener = (viewId) => {
 		var apiBaseUrl = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/users/login`;
 
 		var payload = {
@@ -35,14 +35,14 @@ export default class SignIn extends React.Component {
 
 		axios
 			.post(apiBaseUrl, payload)
-			.then(async res => {
+			.then(async (res) => {
 				console.log(res.data.message);
 				alert(res.data.message);
 				console.log(res.data.token);
 				await SecureStore.setItemAsync('token', JSON.stringify(res.data.token));
 				this.props.navigation.push('Profile');
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.log(err);
 				alert(err.response.data.message);
 			});
@@ -65,7 +65,7 @@ export default class SignIn extends React.Component {
 								containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
 								placeholder="Email"
 								leftIcon={{ type: 'font-awesome', name: 'envelope-o', iconStyle: { marginRight: 13 } }}
-								onChangeText={email => this.setState({ email })}
+								onChangeText={(email) => this.setState({ email })}
 							/>
 						</View>
 						<View
@@ -81,7 +81,7 @@ export default class SignIn extends React.Component {
 								containerStyle={{ width: 280, alignSelf: 'center' }}
 								placeholder="Password"
 								leftIcon={{ type: 'font-awesome', name: 'lock', iconStyle: { marginRight: 13 } }}
-								onChangeText={password => this.setState({ password })}
+								onChangeText={(password) => this.setState({ password })}
 								secureTextEntry={true}
 							/>
 						</View>
