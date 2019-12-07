@@ -76,7 +76,7 @@ export default class SignUp extends React.Component {
 			address: this.state.address,
 			rating: 0,
 			mobile_number: this.state.mobile_number,
-			push_token: token
+			token: token
 		};
 
 		axios({ method: 'post', url: apiBaseUrl, data: payload })

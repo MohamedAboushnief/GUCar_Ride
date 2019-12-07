@@ -42,7 +42,7 @@ export default class GoogleSignIn extends React.Component {
 			mobile_number: []
 		};
 	}
-	updateAddress = address => {
+	updateAddress = (address) => {
 		this.setState({ address: address });
 	};
 
@@ -83,7 +83,7 @@ export default class GoogleSignIn extends React.Component {
 					mode: 'cors'
 				}
 			)
-			.then(res => {
+			.then((res) => {
 				console.log(res.data.message);
 				alert(res.data.message);
 				console.log(res.data.token);
@@ -91,8 +91,8 @@ export default class GoogleSignIn extends React.Component {
 				SecureStore.setItemAsync('token', JSON.stringify(res.data.token));
 				this.props.navigation.navigate('Profile');
 			})
-			.catch(err => {
-				console.log(err);
+			.catch((err) => {
+				console.log(err.response);
 				alert(err.response.data.message);
 				console.log(err.response.data.message);
 			});
@@ -101,7 +101,7 @@ export default class GoogleSignIn extends React.Component {
 		try {
 			const result = await Google.logInAsync({
 				androidClientId: '300848819413-l3aljuambsp9hqni712fib44mtc4ojgu.apps.googleusercontent.com',
-				scopes: ['profile', 'email']
+				scopes: [ 'profile', 'email' ]
 			});
 
 			if (result.type === 'success') {
@@ -146,13 +146,13 @@ export default class GoogleSignIn extends React.Component {
 				</View>
 				<Input
 					containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-					onChangeText={guc_id => this.setState({ guc_id })}
+					onChangeText={(guc_id) => this.setState({ guc_id })}
 					placeholder="GUC ID"
 					leftIcon={{ type: 'font-awesome', name: 'id-badge', iconStyle: { marginRight: 13 } }}
 				/>
 				<Input
 					containerStyle={{ width: 280, alignSelf: 'center', padding: 20 }}
-					onChangeText={mobile_number => this.setState({ mobile_number: [mobile_number] })}
+					onChangeText={(mobile_number) => this.setState({ mobile_number: [ mobile_number ] })}
 					placeholder="Mobile Number"
 					leftIcon={{ type: 'font-awesome', name: 'mobile', iconStyle: { marginRight: 13 } }}
 				/>
@@ -179,7 +179,7 @@ export default class GoogleSignIn extends React.Component {
 	}
 }
 
-const LoginPage = props => {
+const LoginPage = (props) => {
 	return (
 		<View>
 			<Button
@@ -200,7 +200,7 @@ const LoginPage = props => {
 		</View>
 	);
 };
-const LoggedInPage = props => {
+const LoggedInPage = (props) => {
 	return (
 		<View>
 			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom: 30 }}>

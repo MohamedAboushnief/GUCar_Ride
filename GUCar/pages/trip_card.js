@@ -52,7 +52,6 @@ export default class TripsCard extends Component {
 
 	onClickListener = async () => {
 		const Driver = this.props.Driver_id;
-		console.log(Driver + '  kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
 
 		var apiBaseUrl1 = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/passenger_request/create_passenger_request/${Driver}`;
 		var apiBaseUrl2 = `http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com:5000/routes/requests/create/${Driver}`;
