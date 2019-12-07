@@ -20,4 +20,10 @@ router.post(
 );
 router.delete('/arrived_to_guc', passport.authenticate('jwt', { session: false }), requests.delete_all_requests);
 
+router.delete(
+	'/passenger_cancel_request',
+	passport.authenticate('jwt', { session: false }),
+	requests.delete_request_from_passenger
+);
+
 module.exports = router;

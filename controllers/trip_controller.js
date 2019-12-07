@@ -2,15 +2,18 @@ const UserModel = require('../models/users');
 const MobileModel = require('../models/mobile_numbers');
 const CarModel = require('../models/drivers_cars');
 const TripModel = require('../models/trips');
+const RequestModel = require('../models/requests');
+const PassengerRequestModel = require('../models/passengers_requests');
 const Sequelize = require('sequelize');
 const sequelize = require('../config/keys_development');
 const trip = new TripModel(sequelize, Sequelize);
 const Car = new CarModel(sequelize, Sequelize);
 const Mobile = new MobileModel(sequelize, Sequelize);
 const User = new UserModel(sequelize, Sequelize);
+const Request = new RequestModel(sequelize, Sequelize);
 const jwt = require('jsonwebtoken');
 var passport = require('passport');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 
 const view_available_drivers = async (req, res, next) => {
 	try {
@@ -30,13 +33,6 @@ const view_available_drivers = async (req, res, next) => {
 				}
 			});
 
-			//if (trip.user_id != user.id) {
-			const mobile_numbers = await MobileModel.findAll({
-				where: {
-					user_id: user.id
-				}
-			});
-
 			if (trip) {
 				if (trip.user_id != user.id) {
 					const t = {
@@ -44,7 +40,7 @@ const view_available_drivers = async (req, res, next) => {
 						first_name: drivers[i].first_name,
 						last_name: drivers[i].last_name,
 						rating: drivers[i].rating,
-						mobile_numbers
+						mobile_number: drivers[i].mobile_number
 					};
 					arrayOfTrips.push(t);
 				}
@@ -66,6 +62,19 @@ const view_available_drivers = async (req, res, next) => {
 
 const create_trip = async (req, res, next) => {
 	try {
+		const request = await RequestModel.findOne({
+			where: {
+				passenger_id: req.user.id
+			}
+		});
+
+		if (request) {
+			return res.status(409).json({
+				status: 'Failure',
+				message: 'You cant create a trip after requesting a driver !'
+			});
+		}
+
 		const car = await CarModel.findOne({
 			where: {
 				user_id: req.user.id

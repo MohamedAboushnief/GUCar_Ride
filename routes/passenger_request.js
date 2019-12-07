@@ -19,6 +19,12 @@ router.delete(
 	passengers_requests.delete_request
 );
 
+router.delete(
+	'/cancel_all_passenger_request',
+	passport.authenticate('jwt', { session: false }),
+	passengers_requests.delete_all_request
+);
+
 router.get(
 	'/view_passenger_request/:driver_id',
 	passport.authenticate('jwt', { session: false }),
