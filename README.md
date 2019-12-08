@@ -47,7 +47,6 @@ docker-compose up
 "dependencies": {
 		"bcryptjs": "^2.4.3",
 		"cors": "^2.8.5",
-		"expo-server-sdk": "^3.4.0",
 		"express": "^4.17.1",
 		"jsonwebtoken": "^8.5.1",
 		"nodemon": "^2.0.1",
@@ -55,7 +54,6 @@ docker-compose up
 		"passport": "^0.4.0",
 		"passport-jwt": "^4.0.0",
 		"pg": "^7.14.0",
-		"react-native-restart": "0.0.13",
 		"sequelize": "^5.21.2"
 	}
 ```
