@@ -1,5 +1,7 @@
 # GUCar_Ride 
 
+A carpooling service application that is used to help GUC students on their commute everyday to save fuel and the hastle of parking spaces, by using this application a student can see and request another student who is going to the GUC and pay for him, also the student who is going with his car can request the fare that he wants on the passengers that are going with him or he can do it as volunteering. 
+
 ## Deployment Link
 
 http://ec2-54-93-247-139.eu-central-1.compute.amazonaws.com
