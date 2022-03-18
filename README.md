@@ -65,7 +65,7 @@ docker-compose up
 - AWS EC2 (Deployment)
 
 ## Contributors
-
+Mohamed Amr Aboushenif
 Ali ElSebaie 
 
 
