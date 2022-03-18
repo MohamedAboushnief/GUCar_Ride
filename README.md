@@ -64,8 +64,6 @@ docker-compose up
 - AWS RDS (Postgres)
 - AWS EC2 (Deployment)
 
-## Contributors
-Mohamed Amr Aboushenif
-Ali ElSebaie 
+
 
 
